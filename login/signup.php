@@ -4,6 +4,8 @@
         include("connection.php");
         include("functions.php");
 
+        $error_message ="";
+
         if($_SERVER['REQUEST_METHOD'] == "POST")
         {
             //something was posted
@@ -15,18 +17,19 @@
 
                 //save to database
                 $user_id = random_num(20);
-                $query = "insert into users (user_id, user_name, password) values ('$user_id', '$user_name', '$password')";
+                $query = "INSERT INTO users (user_id, user_name, password) VALUES ('$user_id', '$user_name', '$password')";
 
-                mysqli_query($con, $query);
+               if(mysqli_query($con, $query)){
 
                header("Location: login.php");
                die;
-            }
-            else
-            {
-                echo"Please enter some valid information!";
-            }
+        }else{
+            $error_message = "Database query failed!";
         }
+    }else{
+        $error_message = "Please enter some valid information!"; 
+    }
+}
 
 ?>
 
@@ -92,11 +95,16 @@
         }
 
     </style>
+    <script>
+        function showError(message){
+            alert(message);
+        }
+    </script>
 
     <div id = "box">
         <form method="post">
 
-            <div style=" font-size: 24px;margin: 20px;color: white; text-align: center;">Signup</div>
+            <div style=" font-size: 24px;margin: 20px;color: white; text-align: center;">Sign up</div>
             <label for="user_name" class="form-label">Username:</label>
             <input id="text" type="text" name="user_name"> <br><br>
             <label for="password" class="form-label">Password:</label>
@@ -107,5 +115,11 @@
             <a href="login.php" style="color: white";>Click to Login</a><br><br>
         </form>
     </div>
+
+    <?php
+    if(!empty($error_message)){
+        echo "<script type='text/javascript'>showError('$error_message');</script>";
+    }
+    ?>
 </body>
 </html>

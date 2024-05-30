@@ -4,6 +4,8 @@ session_start();
 include("connection.php");
 include("functions.php");
 
+$error_message = "";
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // Something was posted
     $user_name = $_POST['user_name'];
@@ -23,12 +25,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     header("Location: index.php");
                     die;
                 }
+                else{
+                    $error_message = "Wrong username or password!";
+                }
+            }else{
+                $error_message = "Wrong username or password!";
             }
+        }else{
+            $error_message = "Database query failed!";
         }
-        
-        echo "Wrong username or password!";
-    } else {
-        echo "Please enter some valid information!";
+    }else{
+        $error_message = "Please enter some valid information!"; 
     }
 }
 ?>
@@ -91,6 +98,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             display: block;
         }
     </style>
+    <script>
+        function showError(message){
+            alert(message);
+        }
+    </script>
 </head>
 <body>
     <div id="box">
@@ -101,8 +113,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <label for="password" class="form-label">Password:</label>
             <input id="text" type="password" name="password"><br><br>
             <input id="button" type="submit" value="Login"><br><br>
-            <a href="signup.php" style="color: white;">Click to Signup</a><br><br>
+            <a href="signup.php" style="color: white;">Click to Sign up</a><br><br>
         </form>
     </div>
+
+    <?php
+    if(!empty($error_message)){
+        echo "<script type='text/javascript'>showError('$error_message');</script>";
+    }
+    ?>
 </body>
 </html>
