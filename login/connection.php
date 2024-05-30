@@ -3,7 +3,7 @@
 $dbhost = "localhost"; 
 $dbuser = "root"; 
 $dbpass = ""; 
-$dbname = "login_sample_db"; 
+$dbname = "social_media"; 
 
 if(!$con = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname)){
 
