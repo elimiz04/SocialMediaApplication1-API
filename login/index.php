@@ -88,15 +88,15 @@ $posts_result = mysqli_query($con, $posts_query);
         <br>
         Hello, <?php echo $user_data['username']; ?>
 
-        <form method="post" action="create_post.php">
+        <form method="post" action="../post/create_post.php">
             <textarea name="content" placeholder="What's on your mind?" style="width: 100%; height: 100px; border-radius: 5px; padding: 10px; margin: 10px 0;"></textarea>
             <input id="button" type="submit" value="Post">
         </form>
         <h2>Posts</h2>
         <?php
-        if(mysqli_num_rows($posts_result) > 0){
-            while ($post = mysqli_fetch_assoc($posts_result)){
-                echo "<div class='post'><b>". $post['user_name']. ":</b><br>". $post['content']. "<br><small>".$post['created_at']. "</small></div>";
+        if (mysqli_num_rows($posts_result) > 0) {
+            while ($post = mysqli_fetch_assoc($posts_result)) {
+                echo "<div class='post'><b>" . $post['username'] . ":</b><br>" . $post['content'] . "<br><small>" . $post['created_at'] . "</small></div>";
             }
         } else {
             echo "<div class='post'>No posts available</div>";
