@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <?php include "header.php"; ?>
+    <?php include ("../includes/header.php"); ?>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -43,11 +43,11 @@
     <div id="box">
         <?php 
             session_start();
-            include("connection.php");
-            include("functions.php");
+            include('../includes/connection.php');
+            include("../includes/functions.php");
 
             if(!isset($_SESSION['user_id'])){
-                header("Location: login.php");
+                header("Location: ../login/login.php");
                 die;
             }
 
