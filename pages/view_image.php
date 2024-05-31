@@ -73,7 +73,106 @@ if(isset($_POST['content'])) {
     <meta charset="UTF-8">
     <title>View Image</title>
     <style>
-    /* Your CSS styles */
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        #box {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .image-container a {
+            width: calc(33.33% - 20px); 
+            margin: 10px;
+            text-align: center;
+            text-decoration: none; 
+            color: inherit; 
+            height: 200px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+        }
+        .image-container img {
+            max-width: 50%; 
+            max-height: 50%; 
+            height: auto; 
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); 
+        }
+                #commentForm {
+            margin-top: 20px;
+        }
+
+        .comment-input {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: solid thin #aaa;
+            resize: none;
+        }
+
+        .comment-submit {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #337ab7;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .comment-submit:hover {
+            background-color: #286090;
+        }   
+        .like-button {
+            width: 50px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #337ab7;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .like-button:hover {
+            background-color: #286090;
+        }
+        
     </style>
 </head>
 <body>
@@ -86,15 +185,15 @@ if(isset($_POST['content'])) {
     <?php endif; ?>
     
     <!-- Like button -->
-    <form method="post">
-        <button type="submit" name="like">Like</button>
-    </form>
+    <form method="post" id="likeForm">
+    <button type="submit" name="like" class="like-button">Like</button>
+</form>
     
     <!-- Comment form -->
-    <form method="post">
-        <textarea name="content" placeholder="Leave a comment..."></textarea>
-        <button type="submit">Submit</button>
-    </form>
+    <form method="post" id="commentForm">
+    <textarea name="content" placeholder="Leave a comment..." class="comment-input"></textarea>
+    <button type="submit" class="comment-submit">Submit</button>
+</form>
     
     <!-- Display comments -->
     <div class="comments">
