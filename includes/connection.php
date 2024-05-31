@@ -4,7 +4,6 @@ $dbhost = "localhost";
 $dbuser = "root"; 
 $dbpass = ""; 
 $username = "username";
-$password = "password";
 $dbname = "social_media"; 
 
 $con = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
