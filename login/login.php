@@ -2,22 +2,21 @@
 session_start();
 
 include("connection.php");
-include("functions.php");
 
 $error_message = "";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // Something was posted
-    $user_name = $_POST['user_name'];
+    $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if (!empty($user_name) && !empty($password) && !is_numeric($user_name)) {
+    if (!empty($username) && !empty($password)) {
         // Read from database
-        $query = "SELECT * FROM users WHERE user_name = '$user_name' LIMIT 1";
+        $query = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
         $result = mysqli_query($con, $query);
 
         if ($result) {
-            if ($result && mysqli_num_rows($result) > 0) {
+            if (mysqli_num_rows($result) > 0) {
                 $user_data = mysqli_fetch_assoc($result);
 
                 if ($user_data['password'] === $password) {
@@ -25,18 +24,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     header("Location: index.php");
                     die;
                 }
+            }
+        }
                 else{
                     $error_message = "Wrong username or password!";
                 }
-            }else{
-                $error_message = "Wrong username or password!";
-            }
-        }else{
-            $error_message = "Database query failed!";
-        }
-    }else{
-        $error_message = "Please enter some valid information!"; 
-    }
+                }else{
+                    $error_message = "Please enter some valid information!"; 
+                }
 }
 ?>
 
@@ -108,8 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <div id="box">
         <form method="post">
             <div style="font-size: 24px; margin: 20px; color: white;text-align: center;">Login</div>
-            <label for="user_name" class="form-label">Username:</label>
-            <input id="text" type="text" name="user_name"> <br><br>
+            <label for="username" class="form-label">Username:</label>
+            <input id="text" type="text" name="username"> <br><br>
             <label for="password" class="form-label">Password:</label>
             <input id="text" type="password" name="password"><br><br>
             <input id="button" type="submit" value="Login"><br><br>

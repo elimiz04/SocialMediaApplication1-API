@@ -2,22 +2,22 @@
     session_start();
 
         include("connection.php");
-        include("functions.php");
 
         $error_message ="";
 
         if($_SERVER['REQUEST_METHOD'] == "POST")
         {
             //something was posted
-            $user_name = $_POST['user_name'];
+            $username = $_POST['username'];
+            $email = $_POST['email'];
             $password = $_POST['password'];
 
-            if(!empty($user_name) && !empty($password) && !is_numeric($user_name))
+            if(!empty($username) && !empty($email) && !empty($password))
             {
 
                 //save to database
                 $user_id = random_num(20);
-                $query = "INSERT INTO users (user_id, user_name, password) VALUES ('$user_id', '$user_name', '$password')";
+                $query = "INSERT INTO users (user_id, username, email, password) VALUES ('$user_id', '$username','$email', '$password')";
 
                if(mysqli_query($con, $query)){
 
@@ -31,14 +31,28 @@
     }
 }
 
+function random_num($length){
+    $text = "";
+    if($length <5){
+        $length = 5;
+    }
+
+    $len = rand(4, $length);
+
+    for($i = 0; $i< $le; $i++){
+        $text .= rand (0,9);
+    }
+
+    return $text; 
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
+    <title>Sign up</title>
 </head>
 <body>
     <style type= "text/css"> 
@@ -105,8 +119,10 @@
         <form method="post">
 
             <div style=" font-size: 24px;margin: 20px;color: white; text-align: center;">Sign up</div>
-            <label for="user_name" class="form-label">Username:</label>
-            <input id="text" type="text" name="user_name"> <br><br>
+            <label for="username" class="form-label">Username:</label>
+            <input id="text" type="text" name="username"> <br><br>
+            <label for="email" class="form-label">Email:</label>
+            <input id="text" type="email" name="email"> <br><br>
             <label for="password" class="form-label">Password:</label>
             <input id="text" type="password" name="password"><br><br>
 

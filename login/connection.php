@@ -5,7 +5,9 @@ $dbuser = "root";
 $dbpass = ""; 
 $dbname = "social_media"; 
 
-if(!$con = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname)){
+$con = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
-    die("failed to connect!");
+if(!$con){
+    die("failed to connect: " . mysqli_connect_error());
 }
+?>
