@@ -1,68 +1,71 @@
-<?php
-session_start();
-
-include("connection.php");
-include("functions.php");
-
-include "header.php";
-
-
-if(!isset($_SESSION['user_id'])){
-    header("Location: login.php");
-    die;
-}
-
-$user_id = $_SESSION['user_id'];
-$query = "SELECT * FROM users WHERE user_id = '$user_id' LIMIT 1";
-$result = mysqli_query($con, $query);
-$user_data = mysqli_fetch_assoc($result);
-
-// Fetch posts
-$query = "SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.user_id ORDER BY posts.created_at DESC";
-$posts_result = mysqli_query($con, $query); 
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <?php include "header.php"; ?>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        #box {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+    </style>
 </head>
 <body>
     <div id="box">
-        <a href="logout.php">Logout</a>
-        <h1>Home</h1>
-        <br>
-        Hello, <?php echo $user_data['username']; ?>
+        <?php 
+            session_start();
+            include("connection.php");
+            include("functions.php");
 
-        <form method="post" action="../post/create_post.php">
-            <textarea name="content" placeholder="What's on your mind?" style="width: 100%; height: 100px; border-radius: 5px; padding: 10px; margin: 10px 0;"></textarea>
-            <input id="button" type="submit" value="Post">
-        </form>
-        <h2>Posts</h2>
-        <?php
-            while ($post = mysqli_fetch_assoc($posts_result)) {
-                echo "<div class='post'><b>" . $post['username'] . ":</b><br>" . $post['content'] . "<br><small>" . $post['created_at'] . "</small></div>";
-                //comment form
-                echo"
-                <form method ='post' action= 'create_comment.php'>
-                    <textarea name 'content' placeholder= 'Add a comment...' style= 'width:100%; height: 50px; border-radius:5px; padding:10px; margin: 10px 0 ; ' ></textarea>
-                    <input type='hidden' name ='post_id' value='" . $post['post_id']."'>
-                    <input id ='button' type= 'submit' value='Comment'>
-                </form>";
-
-                //Display comments
-                $comments_query = "SELECT comments.*, users.username FROM comments JOIN users ON comments.user_id = users.user_id WHERE comments.post_id = '".$post['post_id']."' ORDER BY comments.created_at ASC";
-                $comments_result = mysqli_query($con, $comments_query);
-                if(mysqli_num_rows($comments_result) > 0){
-                    while ($comment = mysqli_fetch_assoc($comment_result)){
-                        echo "<div class = 'comment'><b>". $comment['username'] . ":</b><br>" . $comment['content']. "<br> <small>". $comment['created_at']. "</small></div>";
-                    }
-                }
+            if(!isset($_SESSION['user_id'])){
+                header("Location: login.php");
+                die;
             }
-      
-        ?>
+
+            $user_id = $_SESSION['user_id'];
+            $user_data = array(); // Initialize an empty array
+
+            // Retrieve the username from the session and store it in $user_data
+            if(isset($_SESSION['username'])){
+                $user_data['username'] = $_SESSION['username'];
+            }
+
+            if(isset($user_data['username'])): ?>
+                <h2>Hello, <?php echo $user_data['username']; ?></h2>
+            <?php endif; ?>
+            <br>
+            <h1>Welcome to SocialHive</h1>
+            <p>This is a social media platform where you can connect with friends, share your thoughts, and stay updated with what's happening in your community.</p>
+            <br>
     </div>
 </body>
 </html>
