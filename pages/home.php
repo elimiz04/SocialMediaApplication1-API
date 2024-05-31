@@ -82,23 +82,32 @@
                 <h2>Hello, <?php echo $user_data['username']; ?></h2>
             <?php endif; ?>
             <div class="image-container">
-                <a href="post.php?image=image1.jpg">
+                <a href="view_image.php?image_id=1">
                     <img src="../assets/image1.jpg" alt="Image 1">
                 </a>
-                <a href="post.php?image=image2.jpg">
+                <a href="view_image.php?image_id=2">
                     <img src="../assets/image2.jpg" alt="Image 2">
                 </a>
-                <a href="post.php?image=image3.jpg">
+                <a href="view_image.php?image_id=3">
                     <img src="../assets/image3.jpg" alt="Image 3">
                 </a>
-                <a href="post.php?image=image4.jpg">
+                <a href="view_image.php?image_id=4">
                     <img src="../assets/image4.jpg" alt="Image 4">
                 </a>
-                <a href="post.php?image=image5.jpg">
+                <a href="view_image.php?image_id=5">
                     <img src="../assets/image5.jpg" alt="Image 5">
                 </a>
-                <a href="post.php?image=image6.jpg">
+                <a href="view_image.php?image_id=6">
                     <img src="../assets/image6.jpg" alt="Image 6">
+                </a>
+                <a href="view_image.php?image_id=7">
+                    <img src="../assets/image7.jpg" alt="Image 7">
+                </a>
+                <a href="view_image.php?image_id=8">
+                    <img src="../assets/image8.jpg" alt="Image 8">
+                </a>
+                <a href="view_image.php?image_id=9">
+                    <img src="../assets/image9.jpg" alt="Image 9">
                 </a>
             </div>
     </div>
