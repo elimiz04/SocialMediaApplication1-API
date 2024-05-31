@@ -2,6 +2,10 @@
 session_start();
 
 include("connection.php");
+include("functions.php");
+
+include "header.php";
+
 
 if(!isset($_SESSION['user_id'])){
     header("Location: login.php");
@@ -14,8 +18,9 @@ $result = mysqli_query($con, $query);
 $user_data = mysqli_fetch_assoc($result);
 
 // Fetch posts
-$posts_query = "SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.user_id ORDER BY posts.created_at DESC";
-$posts_result = mysqli_query($con, $posts_query);
+$query = "SELECT posts.*, users.username FROM posts JOIN users ON posts.user_id = users.user_id ORDER BY posts.created_at DESC";
+$posts_result = mysqli_query($con, $query); 
+
 ?>
 
 <!DOCTYPE html>
@@ -23,63 +28,6 @@ $posts_result = mysqli_query($con, $posts_query);
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
-    <style type="text/css">
-        body, html {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f0f0f0;
-        }
-        #text {
-            height: 25px;
-            border-radius: 5px;
-            padding: 4px;
-            border: solid thin #aaa;
-            width: 100%;
-        }
-        #button {
-            padding: 12px;
-            width: 120px;
-            font-size: 16px;
-            color: white;
-            background-color: #337ab7;
-            border: none;
-            transition: background-color 0.3s ease;
-        }
-        #button:hover {
-            background-color: #286090;
-        }
-        #box {
-            background-color: grey;
-            width: 400px;
-            padding: 40px;
-            text-align: center;
-        }
-        #signup-link {
-            font-size: 16px;
-            color: white;
-            text-align: center;
-            display: block;
-            margin-top: 20px;
-        }
-        .form-label {
-            font-size: 16px;
-            text-align: left;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: white;
-            display: block;
-        }
-        .post {
-            background-color: white;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 <body>
     <div id="box">
