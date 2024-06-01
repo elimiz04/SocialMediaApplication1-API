@@ -47,7 +47,7 @@
             include("../includes/functions.php");
 
             if(!isset($_SESSION['user_id'])){
-                header("Location: ../login/login.php");
+                header("Location: ../pages/login.php");
                 die;
             }
 

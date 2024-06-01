@@ -16,7 +16,7 @@ if(isset($_GET['image_id'])) {
 
     // Retrieve image data from the database
     $query = "SELECT * FROM images WHERE id = ?";
-    $stmt = $con->prepare($query); // Use $con to prepare the statement
+    $stmt = $conn->prepare($query); // Use $con to prepare the statement
     $stmt->bind_param("i", $image_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -53,7 +53,7 @@ if(isset($_POST['content']) && !isset($_POST['comment_id'])) {
     // Insert the comment into the database
     $user_id = $_SESSION['user_id'];
     $query = "INSERT INTO comments (user_id, post_id, content) VALUES (?, ?, ?)";
-    $stmt = $con->prepare($query);
+    $stmt = $conn->prepare($query);
     $stmt->bind_param("iis", $user_id, $image_id, $content);
     
     if(!$stmt->execute()) {
@@ -69,7 +69,7 @@ if(isset($_POST['edit_content']) && isset($_POST['comment_id'])) {
 
     // Update the comment in the database
     $query = "UPDATE comments SET content = ? WHERE comment_id = ?";
-    $stmt = $con->prepare($query);
+    $stmt = $conn->prepare($query);
     $stmt->bind_param("si", $content, $comment_id);
     
     if(!$stmt->execute()) {
@@ -87,7 +87,7 @@ if(isset($_POST['delete_comment_id'])) {
 
     // Delete the comment from the database
     $query = "DELETE FROM comments WHERE comment_id = ?";
-    $stmt = $con->prepare($query);
+    $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $comment_id);
     
     if(!$stmt->execute()) {
@@ -254,7 +254,7 @@ if(isset($_POST['delete_comment_id'])) {
     <?php
     // Fetch comments from the database
     $query = "SELECT * FROM comments WHERE post_id = ?";
-    $stmt = $con->prepare($query);
+    $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $image_id);
     $stmt->execute();
     $comments_result = $stmt->get_result();
@@ -263,7 +263,7 @@ if(isset($_POST['delete_comment_id'])) {
     while ($comment = $comments_result->fetch_assoc()) {
         // Fetch the username of the commenter
         $query = "SELECT username FROM users WHERE user_id = ?";
-        $stmt = $con->prepare($query);
+        $stmt = $conn->prepare($query);
         $stmt->bind_param("i", $comment['user_id']);
         $stmt->execute();
         $username_result = $stmt->get_result();

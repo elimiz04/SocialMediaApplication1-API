@@ -16,7 +16,7 @@ if(isset($_GET['comment_id'])) {
 
     // Retrieve comment data from the database
     $query = "SELECT * FROM comments WHERE comment_id = ?";
-    $stmt = $con->prepare($query);
+    $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $comment_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -32,7 +32,7 @@ if(isset($_GET['comment_id'])) {
 
         // Delete the comment
         $query = "DELETE FROM comments WHERE comment_id = ?";
-        $stmt = $con->prepare($query);
+        $stmt = $conn->prepare($query);
         $stmt->bind_param("i", $comment_id);
         
         if($stmt->execute()) {

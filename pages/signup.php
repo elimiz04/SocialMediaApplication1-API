@@ -19,7 +19,7 @@
                 $user_id = random_num(20);
                 $query = "INSERT INTO users (user_id, username, email, password) VALUES ('$user_id', '$username','$email', '$password')";
 
-               if(mysqli_query($con, $query)){
+               if(mysqli_query($conn, $query)){
 
                header("Location: login.php");
                die;
