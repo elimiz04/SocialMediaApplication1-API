@@ -2,21 +2,63 @@
 session_start();
 include("../includes/connection.php"); 
 include("../includes/functions.php");
-include("../includes/header.php");
 
 // Check if user is logged in, otherwise redirect to login page
 if(!isset($_SESSION['user_id'])){
-    header("Location: ../login/login.php");
+    header("Location: ../pages/login.php");
     die;
 }
 
-// Retrieve user's posts from the database
-$user_id = $_SESSION['user_id'];
-$query = "SELECT * FROM posts WHERE user_id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
+// Check if the form has been submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content'])) {
+    // Process the form data and add the new post to the database
+
+    // Get user ID
+    $user_id = $_SESSION['user_id'];
+
+    // Get post content
+    $content = $_POST['content'];
+
+    // Check if an image was uploaded
+    $image = null;
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+        // Handle file upload
+        $image_name = $_FILES['image']['name'];
+        $image_tmp = $_FILES['image']['tmp_name'];
+        $image_size = $_FILES['image']['size'];
+        $image_type = $_FILES['image']['type'];
+
+        // Get file extension
+        $image_extension = strtolower(pathinfo($image_name, PATHINFO_EXTENSION));
+
+        // Check if the uploaded file is an image
+        if (!in_array($image_extension, array('jpg', 'jpeg', 'png', 'gif'))) {
+            echo "Only JPG, JPEG, PNG, GIF files are allowed.";
+            exit;
+        }
+
+        // Move uploaded file to the uploads directory
+        $upload_dir = "../assets/";
+        $target_file = $upload_dir . uniqid('post_image_') . '.' . $image_extension;
+
+        if (move_uploaded_file($image_tmp, $target_file)) {
+            $image = basename($target_file);
+        } else {
+            echo "Error uploading file.";
+            exit;
+        }
+    }
+
+    // Insert new post into database
+    $query = "INSERT INTO posts (user_id, content, image) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("iss", $user_id, $content, $image);
+    $stmt->execute();
+
+    // Redirect back to profile page
+    header("Location: ../pages/profile.php");
+    exit;
+}
 
 // Display user's posts
 ?>
@@ -24,27 +66,62 @@ $result = $stmt->get_result();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Posts</title>
+    <title>Add Post</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        #box {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .btn-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .minimal-btn {
+            padding: 10px 20px;
+            background-color: transparent;
+            color: #337ab7;
+            border: 1px solid #337ab7;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        .minimal-btn:hover {
+            background-color: #337ab7;
+            color: white;
+            border-color: #337ab7;
+        }
+    </style>
 </head>
 <body>
-    <h1>Your Posts</h1>
-    <?php if ($result && $result->num_rows > 0): ?>
-        <?php while($post = $result->fetch_assoc()): ?>
-            <div>
-                <p><?php echo $post['content']; ?></p>
-                <?php if(!empty($post['image'])): ?>
-                    <img src="../uploads/<?php echo $post['image']; ?>" alt="Post Image">
-                <?php endif; ?>
-            </div>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <p>No posts found.</p>
-    <?php endif; ?>
-    <!-- Add form to allow user to add new posts -->
-    <form method="post" action="add_post.php" enctype="multipart/form-data">
-        <textarea name="content" placeholder="Write a new post..."></textarea>
-        <input type="file" name="image">
-        <button type="submit">Post</button>
-    </form>
+    <div id="box">
+        <h1>Add Post</h1>
+        
+        <br>
+        <br>
+        <!-- Form to allow user to add new posts -->
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
+            <textarea name="content" placeholder="Write a new post..."></textarea>
+            <input type="file" name="image">
+            <button type="submit">Post</button>
+        </form>
+    </div>
 </body>
 </html>
