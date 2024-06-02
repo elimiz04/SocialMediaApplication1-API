@@ -192,6 +192,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content']) && isset($_
         .comment-form-container {
             margin-top: 10px;
         }
+        .button-container {
+            margin-top: 10px;
+        }
+
+        .edit-button, .delete-button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #337ab7;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .edit-button:hover, .delete-button:hover {
+            background-color: #286090;
+        }
+
     </style>
 </head>
 <body>
@@ -243,7 +262,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content']) && isset($_
         <button type="submit" class="comment-submit">Submit</button>
     </form>
     
-    <!-- Display comments -->
     <div class="comments">
     <?php
     // Fetch comments from the database
@@ -264,29 +282,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content']) && isset($_
         $username = $username_result->fetch_assoc()['username'];
 
         // Display the comment and username
+        echo "<div class='comment'>";
         echo "<p><strong>$username</strong>: " . $comment['content'] . "</p>";
-        
+
         // If the user is the owner of the comment, show Edit/Delete options
         if ($comment['user_id'] == $_SESSION['user_id']) {
             echo "<div class='button-container'>";
-            echo "<a href='post_handler.php?post_id=$post_id&edit_comment_id=" . $comment['comment_id'] . "' class='edit-button'>Edit</a>";
             echo "<form method='post' style='display:inline;'>";
             echo "<input type='hidden' name='delete_comment_id' value='" . $comment['comment_id'] . "'>";
             echo "<button type='submit' class='delete-button'>Delete</button>";
             echo "</form>";
+            echo "<button class='edit-button' onclick='showEditForm(" . $comment['comment_id'] . ")'>Edit</button>";
             echo "</div>";
             
             // Display edit form if this comment is being edited
             if (isset($_GET['edit_comment_id']) && $_GET['edit_comment_id'] == $comment['comment_id']) {
-                echo "<div class='comment-form-container'>";
+                echo "<div class='comment-form-container' id='editForm" . $comment['comment_id'] . "' style='display:block;'>";
                 echo "<form method='post'>";
                 echo "<textarea name='content' class='comment-input'>" . htmlspecialchars($comment['content']) . "</textarea>";
                 echo "<input type='hidden' name='comment_id' value='" . $comment['comment_id'] . "'>";
                 echo "<button type='submit' class='comment-submit'>Update Comment</button>";
                 echo "</form>";
                 echo "</div>";
+            } else {
+                echo "<div class='comment-form-container' id='editForm" . $comment['comment_id'] . "' style='display:none;'>";
+                echo "</div>";
             }
         }
+        echo "</div>"; 
     }
     ?>
 </div>
+

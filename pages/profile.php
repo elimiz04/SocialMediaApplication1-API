@@ -30,7 +30,6 @@ if($user_result->num_rows == 1) {
     <title>Profile</title>
     <style>
         
-        /* Global Styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
@@ -85,27 +84,50 @@ if($user_result->num_rows == 1) {
             justify-content: space-around;
             margin-top: 20px;
         }
-        .image-container a {
+
+        .image-container .post {
             width: calc(33.33% - 20px);
             margin: 10px;
-            text-align: center;
-            text-decoration: none;
-            color: inherit;
-            height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        .image-container img {
-            max-width: 100%;
-            max-height: 100%;
-            height: auto;
+            background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative; /* Add position relative for absolute positioning */
+        }
+
+        .image-container .post img {
             width: 100%;
             height: 100%;
+            object-fit: cover; /* Ensure the image covers the entire container */
+            border-radius: 10px;
         }
+
+        .image-container .post-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent background */
+            padding: 10px;
+        }
+
+        .image-container .delete-form {
+            display: inline-block;
+        }
+
+        .image-container .delete-btn {
+            padding: 5px 10px;
+            background-color: #dc3545; /* Change the background color to red */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .image-container .delete-btn:hover {
+            background-color: #c82333; /* Darken the background color on hover */
+        }
+
         /* Post Styles */
         .post-container {
             display: flex;
@@ -151,26 +173,57 @@ if($user_result->num_rows == 1) {
     
 
     <?php
-    // Retrieve user's posts from the database
-    $query_posts = "SELECT * FROM posts WHERE user_id = ?";
-    $stmt_posts = $conn->prepare($query_posts);
-    $stmt_posts->bind_param("i", $user_id);
-    $stmt_posts->execute();
-    $result = $stmt_posts->get_result();
-    ?>
+// Retrieve user's posts from the database
+$query_posts = "SELECT * FROM posts WHERE user_id = ?";
+$stmt_posts = $conn->prepare($query_posts);
+$stmt_posts->bind_param("i", $user_id);
+$stmt_posts->execute();
+$result = $stmt_posts->get_result();
+?>
 
-    <div class="image-container">
-            <?php if ($result && $result->num_rows > 0): ?>
-                <?php while($post = $result->fetch_assoc()): ?>
-                    <a href="post_handler.php?post_id=<?php echo $post['post_id']; ?>">
-                        <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
-                    </a>
-                <?php endwhile; ?>
-                <?php else: ?>
-                <p>No posts found.</p>
-        <?php endif; ?>
-    </div>
+<div class="image-container">
+    <?php if ($result && $result->num_rows > 0): ?>
+        <?php while($post = $result->fetch_assoc()): ?>
+            <div class="post">
+                <a href="post_handler.php?post_id=<?php echo $post['post_id']; ?>">
+                    <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
+                </a>
+                <div class="post-content">
+                    <!-- Add a delete button -->
+                    <form method="post" class="delete-form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                        <button type="submit" class="delete-btn">Delete</button>
+                    </form>
+                </div>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p>No posts found.</p>
+    <?php endif; ?>
 </div>
+
+<?php
+// Handle post deletion
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
+    $post_id = $_POST['post_id'];
+
+    // Delete the post and associated content from the database
+    $query_delete_post = "DELETE FROM posts WHERE post_id = ?";
+    $stmt_delete_post = $conn->prepare($query_delete_post);
+    $stmt_delete_post->bind_param("i", $post_id);
+    $stmt_delete_post->execute();
+
+    // $query_delete_comments = "DELETE FROM comments WHERE post_id = ?";
+    // $stmt_delete_comments = $conn->prepare($query_delete_comments);
+    // $stmt_delete_comments->bind_param("i", $post_id);
+    // $stmt_delete_comments->execute();
+
+    // Redirect back to the profile page after deletion
+    header("Location: ../pages/profile.php");
+    exit;
+}
+?>
+
 
 </body>
 </html>
