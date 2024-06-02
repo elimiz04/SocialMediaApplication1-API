@@ -160,14 +160,14 @@ if($user_result->num_rows == 1) {
     ?>
 
     <div class="image-container">
-        <?php if ($result && $result->num_rows > 0): ?>
-            <?php while($post = $result->fetch_assoc()): ?>
-                <a href="view_post.php?post_id=<?php echo $post['post_id']; ?>">
-                    <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
-                </a>
-            <?php endwhile; ?>
-        <?php else: ?>
-            <p>No posts found.</p>
+            <?php if ($result && $result->num_rows > 0): ?>
+                <?php while($post = $result->fetch_assoc()): ?>
+                    <a href="post_handler.php?post_id=<?php echo $post['post_id']; ?>">
+                        <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
+                    </a>
+                <?php endwhile; ?>
+                <?php else: ?>
+                <p>No posts found.</p>
         <?php endif; ?>
     </div>
 </div>

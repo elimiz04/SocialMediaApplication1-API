@@ -65,13 +65,13 @@
 </head>
 <body>
     <div id="box">
-        <?php 
+    <?php 
             session_start();
             include("../includes/connection.php");
             include("../includes/functions.php");
 
             if(!isset($_SESSION['user_id'])){
-                header("Location: ../login/login.php");
+                header("Location: ../pages/login.php");
                 die;
             }
 
@@ -81,6 +81,7 @@
             if(isset($user_data['username'])): ?>
                 <h2>Hello, <?php echo $user_data['username']; ?></h2>
             <?php endif; ?>
+
             <div class="image-container">
                 <a href="view_image.php?image_id=1">
                     <img src="../assets/image1.jpg" alt="Image 1">

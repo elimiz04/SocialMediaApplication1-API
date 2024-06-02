@@ -113,10 +113,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content'])) {
 <body>
     <div id="box">
         <h1>Add Post</h1>
-        
-        <br>
-        <br>
-        <!-- Form to allow user to add new posts -->
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
             <textarea name="content" placeholder="Write a new post..."></textarea>
             <input type="file" name="image">

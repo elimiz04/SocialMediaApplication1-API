@@ -4,98 +4,63 @@ include("../includes/connection.php");
 include("../includes/functions.php");
 include("../includes/header.php");
 
-// Check if user is logged in, otherwise redirect to login page
-if(!isset($_SESSION['user_id'])){
-    header("Location: ../login/login.php");
-    die;
-}
+// Check if post_id is provided in the URL
+if(isset($_GET['post_id'])) {
+    $post_id = $_GET['post_id'];
 
-// Check if the image ID is provided in the URL
-if(isset($_GET['image_id'])) {
-    $image_id = $_GET['image_id'];
-
-    // Retrieve image data from the database
-    $query = "SELECT * FROM images WHERE id = ?";
-    $stmt = $conn->prepare($query); // Use $con to prepare the statement
-    $stmt->bind_param("i", $image_id);
+    // Retrieve post data from the database based on the post_id
+    $query = "SELECT * FROM posts WHERE post_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $post_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if($result->num_rows == 1) {
-        $image = $result->fetch_assoc();
+        $post = $result->fetch_assoc();
     } else {
-        echo "Image not found.";
+        // Post not found, handle error
+        echo "Post not found.";
         die;
     }
 } else {
-    echo "Image ID not provided.";
+    // Post ID not provided, handle error
+    echo "Post ID not provided.";
     die;
 }
 
-// Handle like submission
-if(isset($_POST['like'])) {
-    // Insert the like into the database
+// Handle adding a post
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content'])) {
     $user_id = $_SESSION['user_id'];
-    $query = "INSERT INTO likes (user_id, post_id) VALUES (?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ii", $user_id, $image_id);
-    
-    if(!$stmt->execute()) {
-        echo "Error: " . $stmt->error;
-    }
-}
-
-// Handle comment submission
-if(isset($_POST['content']) && !isset($_POST['comment_id'])) {
-    // Retrieve comment content from the form
     $content = $_POST['content'];
-    
-    // Insert the comment into the database
-    $user_id = $_SESSION['user_id'];
-    $query = "INSERT INTO comments (user_id, post_id, content) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("iis", $user_id, $image_id, $content);
-    
-    if(!$stmt->execute()) {
-        echo "Error: " . $stmt->error;
+
+    // Check if an image was uploaded
+    $image = null;
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
     }
+
+    // Insert new post into database
+    $query = "INSERT INTO posts (user_id, content, image) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("iss", $user_id, $content, $image);
+    $stmt->execute();
+
+    header("Location: ../pages/profile.php");
+    exit;
 }
 
-// Handle comment update submission
-if(isset($_POST['edit_content']) && isset($_POST['comment_id'])) {
-    // Retrieve updated comment content from the form
-    $content = $_POST['edit_content'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content']) && isset($_POST['comment_id'])) {
+    $content = $_POST['content'];
     $comment_id = $_POST['comment_id'];
 
-    // Update the comment in the database
     $query = "UPDATE comments SET content = ? WHERE comment_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("si", $content, $comment_id);
     
-    if(!$stmt->execute()) {
-        echo "Error: " . $stmt->error;
+    if($stmt->execute()) {
+        header("Location: post_handler.php?comment_id=" . $comment_id);
+        exit;
     } else {
-        // Redirect to avoid form resubmission
-        header("Location: view_image.php?image_id=" . $image_id);
-        die;
-    }
-}
-
-// Handle comment delete submission
-if(isset($_POST['delete_comment_id'])) {
-    $comment_id = $_POST['delete_comment_id'];
-
-    // Delete the comment from the database
-    $query = "DELETE FROM comments WHERE comment_id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $comment_id);
-    
-    if(!$stmt->execute()) {
         echo "Error: " . $stmt->error;
-    } else {
-        // Redirect to avoid form resubmission
-        header("Location: view_image.php?image_id=" . $image_id);
-        die;
     }
 }
 ?>
@@ -104,7 +69,7 @@ if(isset($_POST['delete_comment_id'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>View Image</title>
+    <title>Post Handler</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -231,23 +196,52 @@ if(isset($_POST['delete_comment_id'])) {
 </head>
 <body>
 <div id="box">
-    <!-- Display image -->
-    <?php if(isset($image) && !empty($image)): ?>
-        <img src="../assets/<?php echo $image['filename']; ?>" alt="<?php echo $image['filename']; ?>">
-    <?php else: ?>
-        <p>Image not found or unavailable.</p>
-    <?php endif; ?>
     
+
+    <!-- Edit Comment Form -->
+    <?php if(isset($_GET['comment_id'])): ?>
+    <?php
+    $comment_id = $_GET['comment_id'];
+    $query = "SELECT * FROM comments WHERE comment_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $comment_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if($result->num_rows == 1) {
+        $comment = $result->fetch_assoc();
+        if ($_SESSION['user_id'] == $comment['user_id']) {
+    ?>
+    <h1>Edit Comment</h1>
+    <form method="post">
+        <textarea name="content"><?php echo htmlspecialchars($comment['content']); ?></textarea>
+        <button type="submit">Update Comment</button>
+    </form>
+    <?php
+        }
+    }
+    ?>
+    <?php endif; ?>
+
+    <!-- Display post -->
+    <?php if(isset($post) && !empty($post)): ?>
+        <h2>Post</h2>
+        <p><?php echo $post['content']; ?></p>
+        <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
+    <?php else: ?>
+        <p>Post not found or unavailable.</p>
+    <?php endif; ?>
+
     <!-- Like button -->
     <form method="post" id="likeForm">
-    <button type="submit" name="like" class="like-button">Like</button>
-</form>
+        <button type="submit" name="like" class="like-button">Like</button>
+    </form>
     
     <!-- Comment form -->
     <form method="post" id="commentForm">
-    <textarea name="content" placeholder="Leave a comment..." class="comment-input"></textarea>
-    <button type="submit" class="comment-submit">Submit</button>
-</form>
+        <textarea name="content" placeholder="Leave a comment..." class="comment-input"></textarea>
+        <button type="submit" class="comment-submit">Submit</button>
+    </form>
     
     <!-- Display comments -->
     <div class="comments">
@@ -255,7 +249,7 @@ if(isset($_POST['delete_comment_id'])) {
     // Fetch comments from the database
     $query = "SELECT * FROM comments WHERE post_id = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $image_id);
+    $stmt->bind_param("i", $post_id);
     $stmt->execute();
     $comments_result = $stmt->get_result();
 
@@ -275,7 +269,7 @@ if(isset($_POST['delete_comment_id'])) {
         // If the user is the owner of the comment, show Edit/Delete options
         if ($comment['user_id'] == $_SESSION['user_id']) {
             echo "<div class='button-container'>";
-            echo "<a href='view_image.php?image_id=$image_id&edit_comment_id=" . $comment['comment_id'] . "' class='edit-button'>Edit</a>";
+            echo "<a href='post_handler.php?post_id=$post_id&edit_comment_id=" . $comment['comment_id'] . "' class='edit-button'>Edit</a>";
             echo "<form method='post' style='display:inline;'>";
             echo "<input type='hidden' name='delete_comment_id' value='" . $comment['comment_id'] . "'>";
             echo "<button type='submit' class='delete-button'>Delete</button>";
@@ -286,7 +280,7 @@ if(isset($_POST['delete_comment_id'])) {
             if (isset($_GET['edit_comment_id']) && $_GET['edit_comment_id'] == $comment['comment_id']) {
                 echo "<div class='comment-form-container'>";
                 echo "<form method='post'>";
-                echo "<textarea name='edit_content' class='comment-input'>" . htmlspecialchars($comment['content']) . "</textarea>";
+                echo "<textarea name='content' class='comment-input'>" . htmlspecialchars($comment['content']) . "</textarea>";
                 echo "<input type='hidden' name='comment_id' value='" . $comment['comment_id'] . "'>";
                 echo "<button type='submit' class='comment-submit'>Update Comment</button>";
                 echo "</form>";
@@ -296,6 +290,3 @@ if(isset($_POST['delete_comment_id'])) {
     }
     ?>
 </div>
-</div>
-</body>
-</html>
