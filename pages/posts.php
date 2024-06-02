@@ -28,14 +28,22 @@ $result = $stmt->get_result();
 </head>
 <body>
     <h1>Your Posts</h1>
-    <?php while($post = $result->fetch_assoc()): ?>
-        <div>
-            <p><?php echo $post['content']; ?></p>
-        </div>
-    <?php endwhile; ?>
+    <?php if ($result && $result->num_rows > 0): ?>
+        <?php while($post = $result->fetch_assoc()): ?>
+            <div>
+                <p><?php echo $post['content']; ?></p>
+                <?php if(!empty($post['image'])): ?>
+                    <img src="../uploads/<?php echo $post['image']; ?>" alt="Post Image">
+                <?php endif; ?>
+            </div>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <p>No posts found.</p>
+    <?php endif; ?>
     <!-- Add form to allow user to add new posts -->
-    <form method="post" action="add_post.php">
+    <form method="post" action="add_post.php" enctype="multipart/form-data">
         <textarea name="content" placeholder="Write a new post..."></textarea>
+        <input type="file" name="image">
         <button type="submit">Post</button>
     </form>
 </body>
