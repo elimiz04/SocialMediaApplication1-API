@@ -2,8 +2,8 @@
 session_start();
 include("../includes/connection.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content']) && isset($_POST['action']) && $_POST['action'] == 'send') {
-    $sender_id = $_SESSION['user_id'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content']) && isset($_POST['receiver_id']) && isset($_POST['sender_id']) && $_POST['action'] == 'send') {
+    $sender_id = $_POST['sender_id'];
     $receiver_id = $_POST['receiver_id'];
     $content = $_POST['content'];
     $created_at = date('Y-m-d H:i:s');

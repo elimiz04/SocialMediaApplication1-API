@@ -31,6 +31,7 @@ if($user_result->num_rows == 1) {
 <head>
     <meta charset="UTF-8">
     <title>Profile</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -154,6 +155,21 @@ if($user_result->num_rows == 1) {
         .post-content {
             padding: 10px;
         }
+        .notification-badge {
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 4px 8px;
+            font-size: 12px;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+        }
+
+        .message-button-container {
+            position: relative;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -161,7 +177,28 @@ if($user_result->num_rows == 1) {
         <h1>Welcome, <?php echo isset($user['username']) ? $user['username'] : 'User'; ?></h1>
         <div class="btn-container">
             <a href="posts.php" class="minimal-btn">Add Post</a>
-            <a href="messages.php" class="minimal-btn">Messages</a>
+            <div class="message-button-container">
+    <a href="messages.php" id="message-button" class="minimal-btn">Messages
+        <?php
+            // Fetch unread message count for the logged-in user
+            $unread_count_query = "SELECT COUNT(*) AS unread_count FROM Messages WHERE receiver_id = ? AND is_read = 0";
+            $stmt_unread_count = $conn->prepare($unread_count_query);
+            $stmt_unread_count->bind_param("i", $user_id);
+            $stmt_unread_count->execute();
+            $unread_result = $stmt_unread_count->get_result();
+            $unread_count = 0;
+            if ($unread_result && $unread_row = $unread_result->fetch_assoc()) {
+                $unread_count = $unread_row['unread_count'];
+            }
+            $stmt_unread_count->close();
+            // Display notification badge if there are unread messages
+            if ($unread_count > 0) {
+                echo '<span class="notification-badge">' . $unread_count . '</span>';
+            }
+        ?>
+    </a>
+</div>
+
             <a href="settings.php" class="minimal-btn">Settings</a>
         </div>
         <br>
@@ -197,6 +234,7 @@ if($user_result->num_rows == 1) {
             <?php endif; ?>
         </div>
 
+        </div>
         <?php
         // Handle post deletion
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {

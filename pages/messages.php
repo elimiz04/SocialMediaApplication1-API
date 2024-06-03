@@ -42,6 +42,27 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <title>Messages</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // When the user clicks the "Messages" button
+            $('#message-button').click(function() {
+                // Make an AJAX request to update the notification count
+                $.ajax({
+                    type: 'POST',
+                    url: 'update_notification.php',
+                    success: function(response) {
+                        // Update the notification badge to 0
+                        $('.notification-badge').text('0');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -158,9 +179,11 @@ $result = $stmt->get_result();
         <form method="post" action="send_message.php">
             <textarea name="content" class="chat-input" placeholder="Type your message..." required></textarea>
             <input type="hidden" name="receiver_id" value="<?php echo $receiver_id; ?>">
+            <input type="hidden" name="sender_id" value="<?php echo $user_id; ?>">
             <input type="hidden" name="action" value="send">
             <button type="submit" class="minimal-btn">Send</button>
         </form>
+
     </div>
 
     <!-- Edit Message Modal -->
@@ -209,6 +232,24 @@ $result = $stmt->get_result();
 
         // Open the first tab by default
         document.getElementsByClassName('tab')[0].click();
+        $(document).ready(function() {
+        // When the user clicks the "Messages" button
+        $('#message-button').click(function() {
+            // Make an AJAX request to update the notification count
+            $.ajax({
+                type: 'POST',
+                url: 'update_notification.php',
+                success: function(response) {
+                    // Update the notification badge to 0
+                    $('.notification-badge').text('0');
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
     </script>
 </body>
 </html>
