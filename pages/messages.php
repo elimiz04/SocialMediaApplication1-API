@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Include necessary files and start session if needed
 include("../includes/connection.php");
 include("../includes/functions.php");
 include("../includes/header.php");
@@ -12,58 +11,12 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$mar_id = 2; // User ID for "mar"
+$receiver_id = ($user_id == 1) ? 2 : 1;
 
-function getMessageCount($user_id) {
-    global $conn; // Ensure $conn is in global scope
-
-    // Prepare and execute query to count unread messages for the user
-    $query = "SELECT COUNT(*) AS message_count FROM Messages WHERE receiver_id = ? AND is_read = 0";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Fetch the message count from the result
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $message_count = $row['message_count'];
-    } else {
-        $message_count = 0; 
-    }
-
-    $stmt->close();
-    return $message_count;
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content'])) {
-    $sender_id = $user_id;
-    $receiver_id = $mar_id; // Send messages to "mar"
-    $content = $_POST['content'];
-    $created_at = date('Y-m-d H:i:s');
-
-    $query = "INSERT INTO Messages (sender_id, receiver_id, content, created_at) VALUES (?, ?, ?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("iiss", $sender_id, $receiver_id, $content, $created_at);
-    $stmt->execute();
-
-    // Redirect to a page after sending message, if needed
-    header("Location: messages.php");
-    exit();
-}
-
-// Fetch all messages between the logged-in user and "mar"
-$query = "
-    SELECT m.*, 
-           u1.username AS sender_username, 
-           u2.username AS receiver_username 
-    FROM Messages m
-    JOIN users u1 ON m.sender_id = u1.user_id
-    JOIN users u2 ON m.receiver_id = u2.user_id
-    WHERE (m.sender_id = ? AND m.receiver_id = ?) OR (m.sender_id = ? AND m.receiver_id = ?)
-    ORDER BY m.created_at ASC";
+// Fetch chat history
+$query = "SELECT * FROM Messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) ORDER BY created_at ASC";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("iiii", $user_id, $mar_id, $mar_id, $user_id);
+$stmt->bind_param("iiii", $user_id, $receiver_id, $receiver_id, $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -80,6 +33,16 @@ $result = $stmt->get_result();
             margin: 0;
             padding: 0;
         }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+        }
         #box {
             max-width: 800px;
             margin: 50px auto;
@@ -87,6 +50,7 @@ $result = $stmt->get_result();
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
         .btn-container {
             margin-top: 20px;
@@ -108,77 +72,132 @@ $result = $stmt->get_result();
             color: white;
             border-color: #337ab7;
         }
+        .message-container {
+            margin: 20px 0;
+        }
         .message {
-            border: 1px solid #ddd;
             padding: 10px;
             margin: 10px 0;
-            border-radius: 10px;
-        }
-        .message p {
-            margin: 5px 0;
-        }
-        .message .username {
-            font-weight: bold;
-        }
-        .message .content {
-            margin: 10px 0;
-        }
-        .message .timestamp {
-            font-size: 12px;
-            color: #666;
-        }
-        .message-form {
-            display: flex;
-            flex-direction: column;
-            margin-top: 20px;
-        }
-        .message-form input, .message-form textarea {
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
             border-radius: 5px;
+            position: relative;
         }
-        .message-form button {
+        .message.sent {
+            background-color: #d1e7dd;
+            text-align: right;
+        }
+        .message.received {
+            background-color: #f8d7da;
+            text-align: left;
+        }
+        .chat-input {
+            width: 100%;
             padding: 10px;
-            background-color: #337ab7;
-            color: white;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .message-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .message-actions button {
+            background-color: transparent;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .message-form button:hover {
-            background-color: #285e8e;
+            margin-left: 5px;
         }
     </style>
 </head>
 <body>
     <div id="box">
-        <h1>Conversation with mar</h1>
-        
-        <br>
-        <br>
+        <h1>Messages</h1>
+        <div class="message-container">
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <div class="message <?php echo $row['sender_id'] == $user_id ? 'sent' : 'received'; ?>">
+                    <p><?php echo htmlspecialchars($row['content']); ?></p>
+                    <span><?php echo $row['created_at']; ?></span>
+                    <?php if ($row['sender_id'] == $user_id): ?>
+                        <div class="message-actions">
+                            <!-- Delete button -->
+                            <form id="deleteForm<?php echo $row['message_id']; ?>" method="post" style="display:inline;">
+                                <input type="hidden" name="message_id" value="<?php echo $row['message_id']; ?>">
+                                <input type="hidden" name="action" value="delete">
+                                <button type="button" onclick="deleteMessage(<?php echo $row['message_id']; ?>)">Delete</button>
+                            </form>
 
-        <!-- Display messages -->
-        <?php while ($row = $result->fetch_assoc()): ?>
-            <div class="message">
-                <p class="username"><?php echo $row['sender_id'] == $user_id ? "You" : $row['sender_username']; ?>:</p>
-                <p class="content"><?php echo $row['content']; ?></p>
-                <p class="timestamp">Sent at: <?php echo $row['created_at']; ?></p>
-            </div>
-        <?php endwhile; ?>
-
-        <!-- Message form -->
-        <form class="message-form" method="post" action="messages.php">
-            <label for="content">Message:</label>
-            <textarea id="content" name="content" required></textarea>
-            <br>
-            <button type="submit">Send Message</button>
+                            <!-- Edit button -->
+                            <button onclick="showEditForm(<?php echo $row['message_id']; ?>, '<?php echo htmlspecialchars(addslashes($row['content'])); ?>')">Edit</button>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endwhile; ?>
+        </div>
+        <form method="post" action="send_message.php">
+            <textarea name="content" class="chat-input" placeholder="Type your message..." required></textarea>
+            <input type="hidden" name="action" value="send">
+            <button type="submit" class="minimal-btn">Send</button>
         </form>
     </div>
+
+    <!-- Edit Message Modal -->
+    <div id="editModal" style="display:none;">
+        <form method="post" action="edit_message.php">
+            <textarea name="content" id="editContent" class="chat-input" placeholder="Edit your message..." required></textarea>
+            <input type="hidden" name="message_id" id="editMessageId">
+            <input type="hidden" name="action" value="edit">
+            <button type="submit" class="minimal-btn">Update</button>
+            <button type="button" onclick="hideEditForm()" class="minimal-btn">Cancel</button>
+        </form>
+    </div>
+
+    <script>
+        function showEditForm(messageId, content) {
+            document.getElementById('editMessageId').value = messageId;
+            document.getElementById('editContent').value = content;
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function hideEditForm() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+    </script>
+    
+
+    <script>
+    function deleteMessage(messageId) {
+        if (confirm("Are you sure you want to delete this message?")) {
+            // Get the form by ID
+            var form = document.getElementById('deleteForm' + messageId);
+            // Submit the form asynchronously
+            submitFormAsync(form);
+        }
+    }
+
+    function submitFormAsync(form) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(form.method, form.action, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // Reload the page after successful deletion
+                location.reload();
+            } else {
+                alert('Error: ' + xhr.responseText);
+            }
+        };
+        xhr.onerror = function () {
+            alert('Error: Request failed.');
+        };
+        xhr.send(new URLSearchParams(new FormData(form)).toString());
+    }
+</script>
+
+
 </body>
 </html>
 
 <?php
-ob_end_flush();
+$stmt->close();
+$conn->close();
 ?>
