@@ -19,6 +19,8 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user_result = $stmt->get_result();
 
+
+
 if($user_result->num_rows == 1) {
     $user = $user_result->fetch_assoc();
 }
@@ -159,10 +161,7 @@ if($user_result->num_rows == 1) {
         <h1>Welcome, <?php echo isset($user['username']) ? $user['username'] : 'User'; ?></h1>
         <div class="btn-container">
             <a href="posts.php" class="minimal-btn">Add Post</a>
-            <a href="followers.php" class="minimal-btn">Followers</a>
-            <a href="following.php" class="minimal-btn">Following</a>
             <a href="messages.php" class="minimal-btn">Messages</a>
-            <a href="groups.php" class="minimal-btn">Groups</a>
             <a href="settings.php" class="minimal-btn">Settings</a>
         </div>
         <br>

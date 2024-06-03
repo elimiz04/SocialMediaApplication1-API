@@ -41,3 +41,8 @@ if (!function_exists('random_num')) {
         return $text;
     }
 }
+// Function to establish database connection
+function getConnection() {
+    // Implement database connection logic
+}
+?>

@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (!empty($username) && !empty($password)) {
         // Read from database
         $query = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
-        $result = mysqli_query($con, $query);
+        $result = mysqli_query($conn, $query);
 
         if ($result) {
             if (mysqli_num_rows($result) > 0) {
