@@ -11,9 +11,18 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$receiver_id = ($user_id == 1) ? 2 : 1;
 
-// Fetch chat history
+// Fetch all users except the logged-in user
+$user_query = "SELECT user_id, username FROM users WHERE user_id != ?";
+$stmt_users = $conn->prepare($user_query);
+$stmt_users->bind_param("i", $user_id);
+$stmt_users->execute();
+$users_result = $stmt_users->get_result();
+
+// Set default receiver_id
+$receiver_id = isset($_POST['receiver_id']) ? $_POST['receiver_id'] : ($user_id == 1 ? 2 : 1);
+
+// Fetch chat history for the selected receiver
 $query = "
     SELECT 
         m.*, 
@@ -119,6 +128,19 @@ $result = $stmt->get_result();
 <body>
     <div id="box">
         <h1>Messages</h1>
+
+        <!-- List of users -->
+        <h2>Select User to Message</h2>
+        <form method="post" action="">
+            <select name="receiver_id" onchange="this.form.submit()">
+                <?php while ($user_row = $users_result->fetch_assoc()): ?>
+                    <option value="<?php echo $user_row['user_id']; ?>" <?php echo $receiver_id == $user_row['user_id'] ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($user_row['username']); ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
+        </form>
+
         <div class="message-container">
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="message <?php echo $row['sender_id'] == $user_id ? 'sent' : 'received'; ?>">
@@ -126,7 +148,6 @@ $result = $stmt->get_result();
                     <span><?php echo $row['created_at']; ?></span>
                     <?php if ($row['sender_id'] == $user_id): ?>
                         <div class="message-actions">
-                            
                             <!-- Edit button -->
                             <button onclick="showEditForm(<?php echo $row['message_id']; ?>, '<?php echo htmlspecialchars(addslashes($row['content'])); ?>')">Edit</button>
                         </div>
@@ -136,6 +157,7 @@ $result = $stmt->get_result();
         </div>
         <form method="post" action="send_message.php">
             <textarea name="content" class="chat-input" placeholder="Type your message..." required></textarea>
+            <input type="hidden" name="receiver_id" value="<?php echo $receiver_id; ?>">
             <input type="hidden" name="action" value="send">
             <button type="submit" class="minimal-btn">Send</button>
         </form>
@@ -152,6 +174,8 @@ $result = $stmt->get_result();
         </form>
     </div>
 
+
+
     <script>
         function showEditForm(messageId, content) {
             document.getElementById('editMessageId').value = messageId;
@@ -162,43 +186,35 @@ $result = $stmt->get_result();
         function hideEditForm() {
             document.getElementById('editModal').style.display = 'none';
         }
-    </script>
-    
 
-    <script>
-    function deleteMessage(messageId) {
-        if (confirm("Are you sure you want to delete this message?")) {
-            // Get the form by ID
-            var form = document.getElementById('deleteForm' + messageId);
-            // Submit the form asynchronously
-            submitFormAsync(form);
-        }
-    }
+        function openTab(evt, tabId) {
+            var i, tabcontent, tablinks;
 
-    function submitFormAsync(form) {
-        var xhr = new XMLHttpRequest();
-        xhr.open(form.method, form.action, true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                // Reload the page after successful deletion
-                location.reload();
-            } else {
-                alert('Error: ' + xhr.responseText);
+            // Hide all tab contents
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
             }
-        };
-        xhr.onerror = function () {
-            alert('Error: Request failed.');
-        };
-        xhr.send(new URLSearchParams(new FormData(form)).toString());
-    }
-</script>
 
+            // Remove active class from all tabs
+            tablinks = document.getElementsByClassName("tab");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
 
+            // Show the selected tab and add an "active" class to the tab
+            document.getElementById(tabId).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        // Open the first tab by default
+        document.getElementsByClassName('tab')[0].click();
+    </script>
 </body>
 </html>
 
 <?php
 $stmt->close();
+$stmt_users->close();
 $conn->close();
 ?>

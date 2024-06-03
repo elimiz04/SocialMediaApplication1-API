@@ -4,7 +4,7 @@ include("../includes/connection.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content']) && isset($_POST['action']) && $_POST['action'] == 'send') {
     $sender_id = $_SESSION['user_id'];
-    $receiver_id = ($_SESSION['user_id'] == 1) ? 2 : 1; // Determine receiver based on logged-in user
+    $receiver_id = $_POST['receiver_id'];
     $content = $_POST['content'];
     $created_at = date('Y-m-d H:i:s');
 
