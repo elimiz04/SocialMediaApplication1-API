@@ -1,4 +1,5 @@
 <?php
+ob_start(); // Start output buffering
 session_start();
 include("../includes/connection.php"); 
 include("../includes/functions.php");
@@ -20,7 +21,7 @@ $user_result = $stmt->get_result();
 
 if($user_result->num_rows == 1) {
     $user = $user_result->fetch_assoc();
-} 
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +30,6 @@ if($user_result->num_rows == 1) {
     <meta charset="UTF-8">
     <title>Profile</title>
     <style>
-        
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
@@ -155,75 +155,69 @@ if($user_result->num_rows == 1) {
     </style>
 </head>
 <body>
-    <?php include("../includes/functions.php");?>
-    <?php include("../includes/connection.php");?>
-
     <div id="box">
-    <h1>Welcome, <?php echo isset($user['username']) ? $user['username'] : 'User'; ?></h1>
-    <div class="btn-container">
-        <a href="posts.php" class="minimal-btn"> Add Post</a>
-        <a href="followers.php" class="minimal-btn">Followers</a>
-        <a href="following.php" class="minimal-btn">Following</a>
-        <a href="messages.php" class="minimal-btn">Messages</a>
-        <a href="groups.php" class="minimal-btn">Groups</a>
-        <a href="settings.php" class="minimal-btn">Settings</a>
+        <h1>Welcome, <?php echo isset($user['username']) ? $user['username'] : 'User'; ?></h1>
+        <div class="btn-container">
+            <a href="posts.php" class="minimal-btn">Add Post</a>
+            <a href="followers.php" class="minimal-btn">Followers</a>
+            <a href="following.php" class="minimal-btn">Following</a>
+            <a href="messages.php" class="minimal-btn">Messages</a>
+            <a href="groups.php" class="minimal-btn">Groups</a>
+            <a href="settings.php" class="minimal-btn">Settings</a>
+        </div>
+        <br>
+        <br>
+
+        <?php
+        // Retrieve user's posts from the database
+        $query_posts = "SELECT * FROM posts WHERE user_id = ?";
+        $stmt_posts = $conn->prepare($query_posts);
+        $stmt_posts->bind_param("i", $user_id);
+        $stmt_posts->execute();
+        $result = $stmt_posts->get_result();
+        ?>
+
+        <div class="image-container">
+            <?php if ($result && $result->num_rows > 0): ?>
+                <?php while($post = $result->fetch_assoc()): ?>
+                    <div class="post">
+                        <a href="post_handler.php?post_id=<?php echo $post['post_id']; ?>">
+                            <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
+                        </a>
+                        <div class="post-content">
+                            <!-- Add a delete button -->
+                            <form method="post" class="delete-form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <p>No posts found.</p>
+            <?php endif; ?>
+        </div>
+
+        <?php
+        // Handle post deletion
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
+            $post_id = $_POST['post_id'];
+
+            // Delete the post and associated content from the database
+            $query_delete_post = "DELETE FROM posts WHERE post_id = ?";
+            $stmt_delete_post = $conn->prepare($query_delete_post);
+            $stmt_delete_post->bind_param("i", $post_id);
+            $stmt_delete_post->execute();
+
+            // Redirect back to the profile page after deletion
+            header("Location: ../pages/profile.php");
+            exit;
+        }
+        ?>
     </div>
-    <br>
-    <br>
-    
-
-    <?php
-// Retrieve user's posts from the database
-$query_posts = "SELECT * FROM posts WHERE user_id = ?";
-$stmt_posts = $conn->prepare($query_posts);
-$stmt_posts->bind_param("i", $user_id);
-$stmt_posts->execute();
-$result = $stmt_posts->get_result();
-?>
-
-<div class="image-container">
-    <?php if ($result && $result->num_rows > 0): ?>
-        <?php while($post = $result->fetch_assoc()): ?>
-            <div class="post">
-                <a href="post_handler.php?post_id=<?php echo $post['post_id']; ?>">
-                    <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
-                </a>
-                <div class="post-content">
-                    <!-- Add a delete button -->
-                    <form method="post" class="delete-form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                        <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
-                        <button type="submit" class="delete-btn">Delete</button>
-                    </form>
-                </div>
-            </div>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <p>No posts found.</p>
-    <?php endif; ?>
-</div>
-
-<?php
-// Handle post deletion
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
-    $post_id = $_POST['post_id'];
-
-    // Delete the post and associated content from the database
-    $query_delete_post = "DELETE FROM posts WHERE post_id = ?";
-    $stmt_delete_post = $conn->prepare($query_delete_post);
-    $stmt_delete_post->bind_param("i", $post_id);
-    $stmt_delete_post->execute();
-
-    // $query_delete_comments = "DELETE FROM comments WHERE post_id = ?";
-    // $stmt_delete_comments = $conn->prepare($query_delete_comments);
-    // $stmt_delete_comments->bind_param("i", $post_id);
-    // $stmt_delete_comments->execute();
-
-    // Redirect back to the profile page after deletion
-    header("Location: ../pages/profile.php");
-    exit;
-}
-?>
-
-
 </body>
 </html>
+
+<?php
+ob_end_flush(); // End output buffering and flush buffer contents
+?>
