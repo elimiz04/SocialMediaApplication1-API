@@ -14,7 +14,14 @@ $user_id = $_SESSION['user_id'];
 $receiver_id = ($user_id == 1) ? 2 : 1;
 
 // Fetch chat history
-$query = "SELECT * FROM Messages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) ORDER BY created_at ASC";
+$query = "
+    SELECT 
+        m.*, 
+        u.username AS sender_username 
+    FROM Messages AS m 
+    INNER JOIN users AS u ON m.sender_id = u.user_id 
+    WHERE (m.sender_id = ? AND m.receiver_id = ?) OR (m.sender_id = ? AND m.receiver_id = ?) 
+    ORDER BY m.created_at ASC";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("iiii", $user_id, $receiver_id, $receiver_id, $user_id);
 $stmt->execute();
@@ -115,17 +122,11 @@ $result = $stmt->get_result();
         <div class="message-container">
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="message <?php echo $row['sender_id'] == $user_id ? 'sent' : 'received'; ?>">
-                    <p><?php echo htmlspecialchars($row['content']); ?></p>
+                    <p><strong><?php echo htmlspecialchars($row['sender_username']); ?>:</strong> <?php echo htmlspecialchars($row['content']); ?></p>
                     <span><?php echo $row['created_at']; ?></span>
                     <?php if ($row['sender_id'] == $user_id): ?>
                         <div class="message-actions">
-                            <!-- Delete button -->
-                            <form id="deleteForm<?php echo $row['message_id']; ?>" method="post" style="display:inline;">
-                                <input type="hidden" name="message_id" value="<?php echo $row['message_id']; ?>">
-                                <input type="hidden" name="action" value="delete">
-                                <button type="button" onclick="deleteMessage(<?php echo $row['message_id']; ?>)">Delete</button>
-                            </form>
-
+                            
                             <!-- Edit button -->
                             <button onclick="showEditForm(<?php echo $row['message_id']; ?>, '<?php echo htmlspecialchars(addslashes($row['content'])); ?>')">Edit</button>
                         </div>
