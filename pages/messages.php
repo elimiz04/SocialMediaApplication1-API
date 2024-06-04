@@ -53,6 +53,7 @@ $stmt_notifications->close();
 ?>
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -205,12 +206,11 @@ $stmt_notifications->close();
     <div id="editModal" style="display:none;">
         <form method="post" action="edit_message.php">
             <textarea name="content" id="editContent" class="chat-input" placeholder="Edit your message..." required></textarea>
-            <input type="hidden" name="message_id" id="editMessageId">
-            <button type="submit" class="minimal-btn">Update</button>
-            <button type="button" onclick="hideEditForm()" class="minimal-btn">Cancel</button>
-        </form>
+    <input type="hidden" name="message_id" id="editMessageId">
+    <button type="submit" class="minimal-btn">Update</button>
+    <button type="button" onclick="hideEditForm()" class="minimal-btn">Cancel</button>
+    </form>
     </div>
-
     <script>
         function showEditForm(messageId, content) {
             document.getElementById('editMessageId').value = messageId;
@@ -222,12 +222,11 @@ $stmt_notifications->close();
             document.getElementById('editModal').style.display = 'none';
         }
     </script>
-</body>
-</html>
-
-<?php
-$stmt->close();
-$stmt_users->close();
-$stmt_update_read->close();
-$conn->close();
-?>
+    </body>
+    </html>
+    <?php
+    $stmt->close();
+    $stmt_users->close();
+    $stmt_update_read->close();
+    $conn->close();
+    ?>
