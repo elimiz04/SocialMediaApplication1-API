@@ -2,6 +2,7 @@
 session_start();
 include("../includes/connection.php"); 
 include("../includes/functions.php");
+include("../includes/header.php");
 
 // Check if user is logged in, otherwise redirect to login page
 if(!isset($_SESSION['user_id'])){
