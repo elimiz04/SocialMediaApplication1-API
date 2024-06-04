@@ -1,19 +1,21 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../includes/functions.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content']) && isset($_POST['receiver_id']) && isset($_POST['sender_id']) && $_POST['action'] == 'send') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sender_id = $_POST['sender_id'];
     $receiver_id = $_POST['receiver_id'];
     $content = $_POST['content'];
-    $created_at = date('Y-m-d H:i:s');
 
-    $query = "INSERT INTO Messages (sender_id, receiver_id, content, created_at) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO Messages (sender_id, receiver_id, content, created_at) VALUES (?, ?, ?, NOW())";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("iiss", $sender_id, $receiver_id, $content, $created_at);
+    $stmt->bind_param("iis", $sender_id, $receiver_id, $content);
     $stmt->execute();
+    $stmt->close();
 
-    header("Location: ../pages/messages.php");
-    exit;
+    // Redirect back to messages page
+    header("Location: messages.php");
+    exit();
 }
 ?>

@@ -19,11 +19,21 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $user_result = $stmt->get_result();
 
-
-
 if($user_result->num_rows == 1) {
     $user = $user_result->fetch_assoc();
 }
+
+// Fetch unread message count for the logged-in user
+$unread_count_query = "SELECT COUNT(*) AS unread_count FROM Messages WHERE receiver_id = ? AND is_read = 0";
+$stmt_unread_count = $conn->prepare($unread_count_query);
+$stmt_unread_count->bind_param("i", $user_id);
+$stmt_unread_count->execute();
+$unread_result = $stmt_unread_count->get_result();
+$unread_count = 0;
+if ($unread_result && $unread_row = $unread_result->fetch_assoc()) {
+    $unread_count = $unread_row['unread_count'];
+}
+$stmt_unread_count->close();
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +74,7 @@ if($user_result->num_rows == 1) {
             margin-top: 20px;
             text-align: center;
         }
-        .minimal-btn {
+        .minimal-btn, .message-btn {
             padding: 10px 20px;
             background-color: transparent;
             color: #337ab7;
@@ -75,7 +85,7 @@ if($user_result->num_rows == 1) {
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
-        .minimal-btn:hover {
+        .minimal-btn:hover, .message-btn:hover {
             background-color: #337ab7;
             color: white;
             border-color: #337ab7;
@@ -173,36 +183,16 @@ if($user_result->num_rows == 1) {
     </style>
 </head>
 <body>
-    <div id="box">
+<div id="box">
         <h1>Welcome, <?php echo isset($user['username']) ? $user['username'] : 'User'; ?></h1>
         <div class="btn-container">
             <a href="posts.php" class="minimal-btn">Add Post</a>
             <div class="message-button-container">
-    <a href="messages.php" id="message-button" class="minimal-btn">Messages
-        <?php
-            // Fetch unread message count for the logged-in user
-            $unread_count_query = "SELECT COUNT(*) AS unread_count FROM Messages WHERE receiver_id = ? AND is_read = 0";
-            $stmt_unread_count = $conn->prepare($unread_count_query);
-            $stmt_unread_count->bind_param("i", $user_id);
-            $stmt_unread_count->execute();
-            $unread_result = $stmt_unread_count->get_result();
-            $unread_count = 0;
-            if ($unread_result && $unread_row = $unread_result->fetch_assoc()) {
-                $unread_count = $unread_row['unread_count'];
-            }
-            $stmt_unread_count->close();
-            // Display notification badge if there are unread messages
-            if ($unread_count > 0) {
-                echo '<span class="notification-badge">' . $unread_count . '</span>';
-            }
-        ?>
-    </a>
-</div>
-
+                <a href="messages.php" class="message-btn">Messages <?php if ($unread_count > 0) { echo '<span class="notification-badge">' . $unread_count . '</span>'; } ?></a>
+            </div>
             <a href="settings.php" class="minimal-btn">Settings</a>
         </div>
-        <br>
-        <br>
+        <br><br>
 
         <?php
         // Retrieve user's posts from the database
@@ -234,7 +224,6 @@ if($user_result->num_rows == 1) {
             <?php endif; ?>
         </div>
 
-        </div>
         <?php
         // Handle post deletion
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {

@@ -35,7 +35,23 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param("iiii", $user_id, $receiver_id, $receiver_id, $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
+
+// Mark all unread messages as read
+$update_read_query = "UPDATE Messages SET is_read = 1 WHERE receiver_id = ? AND sender_id = ?";
+$stmt_update_read = $conn->prepare($update_read_query);
+$stmt_update_read->bind_param("ii", $user_id, $receiver_id);
+$stmt_update_read->execute();
+
+// Fetch unread notifications count for the logged-in user
+$notification_count_query = "SELECT COUNT(*) as unread_count FROM Notifications WHERE user_id = ? AND is_read = 0";
+$stmt_notifications = $conn->prepare($notification_count_query);
+$stmt_notifications->bind_param("i", $user_id);
+$stmt_notifications->execute();
+$notification_result = $stmt_notifications->get_result();
+$notification_count = $notification_result->fetch_assoc()['unread_count'];
+$stmt_notifications->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -147,7 +163,7 @@ $result = $stmt->get_result();
     </style>
 </head>
 <body>
-    <div id="box">
+<div id="box">
         <h1>Messages</h1>
 
         <!-- List of users -->
@@ -180,7 +196,6 @@ $result = $stmt->get_result();
             <textarea name="content" class="chat-input" placeholder="Type your message..." required></textarea>
             <input type="hidden" name="receiver_id" value="<?php echo $receiver_id; ?>">
             <input type="hidden" name="sender_id" value="<?php echo $user_id; ?>">
-            <input type="hidden" name="action" value="send">
             <button type="submit" class="minimal-btn">Send</button>
         </form>
 
@@ -191,13 +206,10 @@ $result = $stmt->get_result();
         <form method="post" action="edit_message.php">
             <textarea name="content" id="editContent" class="chat-input" placeholder="Edit your message..." required></textarea>
             <input type="hidden" name="message_id" id="editMessageId">
-            <input type="hidden" name="action" value="edit">
             <button type="submit" class="minimal-btn">Update</button>
             <button type="button" onclick="hideEditForm()" class="minimal-btn">Cancel</button>
         </form>
     </div>
-
-
 
     <script>
         function showEditForm(messageId, content) {
@@ -209,47 +221,6 @@ $result = $stmt->get_result();
         function hideEditForm() {
             document.getElementById('editModal').style.display = 'none';
         }
-
-        function openTab(evt, tabId) {
-            var i, tabcontent, tablinks;
-
-            // Hide all tab contents
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-
-            // Remove active class from all tabs
-            tablinks = document.getElementsByClassName("tab");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-
-            // Show the selected tab and add an "active" class to the tab
-            document.getElementById(tabId).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-
-        // Open the first tab by default
-        document.getElementsByClassName('tab')[0].click();
-        $(document).ready(function() {
-        // When the user clicks the "Messages" button
-        $('#message-button').click(function() {
-            // Make an AJAX request to update the notification count
-            $.ajax({
-                type: 'POST',
-                url: 'update_notification.php',
-                success: function(response) {
-                    // Update the notification badge to 0
-                    $('.notification-badge').text('0');
-                },
-                error: function(xhr, status, error) {
-                    // Handle errors
-                    console.error(xhr.responseText);
-                }
-            });
-        });
-    });
     </script>
 </body>
 </html>
@@ -257,5 +228,6 @@ $result = $stmt->get_result();
 <?php
 $stmt->close();
 $stmt_users->close();
+$stmt_update_read->close();
 $conn->close();
 ?>

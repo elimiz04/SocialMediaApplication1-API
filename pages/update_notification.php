@@ -1,19 +1,18 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../includes/functions.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['user_id'];
 
-    // Update the notification count to 0 for the logged-in user
-    $update_query = "UPDATE Messages SET is_read = 1 WHERE receiver_id = ?";
-    $stmt_update = $conn->prepare($update_query);
-    $stmt_update->bind_param("i", $user_id);
-    $stmt_update->execute();
-    
-    // Close the statement and connection
-    $stmt_update->close();
-    $conn->close();
-}
+    // Mark all unread notifications as read
+    $query = "UPDATE Notifications SET is_read = 1 WHERE user_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->close();
 
+    echo "Notifications updated";
+}
 ?>
