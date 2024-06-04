@@ -180,18 +180,29 @@ $stmt_notifications->close();
         </form>
 
         <div class="message-container">
+            
+
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="message <?php echo $row['sender_id'] == $user_id ? 'sent' : 'received'; ?>">
                     <p><strong><?php echo htmlspecialchars($row['sender_username']); ?>:</strong> <?php echo htmlspecialchars($row['content']); ?></p>
                     <span><?php echo $row['created_at']; ?></span>
-                    <?php if ($row['sender_id'] == $user_id): ?>
-                        <div class="message-actions">
+                    <div class="message-actions">
+                        <?php if ($row['sender_id'] == $user_id): ?>
                             <!-- Edit button -->
                             <button onclick="showEditForm(<?php echo $row['message_id']; ?>, '<?php echo htmlspecialchars(addslashes($row['content'])); ?>')">Edit</button>
-                        </div>
-                    <?php endif; ?>
+                            <!-- Delete button -->
+                            <form method="post" action="delete_message.php" style="display: inline;">
+                                <input type="hidden" name="message_id" value="<?php echo $row['message_id']; ?>">
+                                <button type="submit">Delete</button>
+                            </form>
+                        <?php endif; ?>
+                    </div>
                 </div>
             <?php endwhile; ?>
+
+
+
+
         </div>
         <form method="post" action="send_message.php">
             <textarea name="content" class="chat-input" placeholder="Type your message..." required></textarea>
