@@ -114,38 +114,23 @@ include("../includes/header.php");
 
     
 
-    <main>
+<main>
+    <form id="settings-form" action="update_settings.php" method="POST">
         <h2>Color Scheme</h2>
         <label for="light-mode">Light Mode</label>
-        <input type="radio" name="color-scheme" id="light-mode" checked>
+        <input type="radio" name="color_scheme" value="light" id="light-mode" checked>
         <label for="dark-mode">Dark Mode</label>
-        <input type="radio" name="color-scheme" id="dark-mode">
-    </main>
-
-    <script>
-        const lightModeRadio = document.getElementById('light-mode');
-        const darkModeRadio = document.getElementById('dark-mode');
-        const body = document.body;
-
-        lightModeRadio.addEventListener('change', () => {
-            body.classList.remove('dark-mode');
-            body.classList.add('light-mode');
-        });
-
-        darkModeRadio.addEventListener('change', () => {
-            body.classList.remove('light-mode');
-            body.classList.add('dark-mode');
-        });
-    </script>
-
-
+        <input type="radio" name="color_scheme" value="dark" id="dark-mode">
+        
         <div class="form-group">
             <input type="checkbox" name="receive_notifications" id="receive_notifications">
             <label for="receive_notifications">Receive Notifications</label>
         </div>
 
-                <button type="submit" class="minimal-btn">Save Settings</button>
-            
+        <button type="submit" class="minimal-btn">Save Settings</button>
+    </form>
+</main>
+
 
     <script src="script.js"></script>
 </body>
