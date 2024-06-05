@@ -13,8 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $conn->prepare($query);
     if ($stmt === false) {
         die('Prepare failed: ' . htmlspecialchars($conn->error));
-    }
-    $stmt->bind_param("iis", $sender_id, $receiver_id, $content);
+    } $stmt->bind_param("iis", $sender_id, $receiver_id, $content);
 
     if ($stmt->execute()) {
         // Get the last inserted message ID
@@ -42,13 +41,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $stmt->close();
 }
-
 // Check if the user has set a color mode preference
 if (!isset($_SESSION['color_mode'])) {
     // If not, set a default color mode (e.g., light mode)
     $_SESSION['color_mode'] = 'light';
 }
-
 // Function to apply the appropriate CSS class based on the color mode
 function getColorModeClass() {
     return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';

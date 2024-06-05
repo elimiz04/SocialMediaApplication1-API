@@ -67,8 +67,7 @@ echo '<p>Group members added successfully. <a href="add_members_form.php?group_i
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Group Chat: <?php echo htmlspecialchars($group_name); ?></title>
-    <link rel="stylesheet" href="../styles/profile_style.css">
+    <title>Group Chat</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -101,7 +100,7 @@ echo '<p>Group members added successfully. <a href="add_members_form.php?group_i
             font-weight: bold;
         }
         .input-message {
-            width: 100%;
+            width: calc(100% - 85px); /* Adjust based on button width */
             padding: 10px;
             box-sizing: border-box; /* Include padding and border in element's total width and height */
             border: 1px solid #ccc;
@@ -114,16 +113,27 @@ echo '<p>Group members added successfully. <a href="add_members_form.php?group_i
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            width: 75px; /* Adjust width as needed */
         }
     </style>
 </head>
 <body>
     <div class="chat-container">
-        <h1>Group Chat: <?php echo htmlspecialchars($group_name); ?></h1>
-        <form action="send_message.php" method="post">
-            <input type="hidden" name="group_id" value="<?php echo $group_id; ?>">
+        <h1>Group Chat</h1>
+        <div class="chat">
+            <!-- Display chat messages here -->
+            <!-- Example message -->
+            <div class="chat-message">
+                <span>User1:</span> Hello!
+            </div>
+            <!-- Example message -->
+            <div class="chat-message">
+                <span>User2:</span> Hi there!
+            </div>
+            <!-- Add more messages dynamically using PHP -->
+        </div>
+        <form id="message-form" action="send_message.php" method="post">
             <textarea class="input-message" name="message" placeholder="Type your message..." required></textarea>
-            <br>
             <button type="submit" class="send-button">Send</button>
         </form>
         <div class="btn-container">
