@@ -43,7 +43,7 @@ $groups_result = $stmt_get_groups->get_result();
                 $group_description = $group['description'];
                 ?>
                 <li>
-                    <a href="group.php?group_id=<?php echo $group_id; ?>"><?php echo htmlspecialchars($group_name); ?></a> - <?php echo htmlspecialchars($group_description); ?>
+                <a href="add_members_form.php?group_id=<?php echo $group_id; ?>"><?php echo htmlspecialchars($group_name); ?></a>
                 </li>
                 <?php
             }
