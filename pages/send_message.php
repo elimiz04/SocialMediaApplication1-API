@@ -1,64 +1,58 @@
 <?php
-// Include database connection
-include("../includes/connection.php");
-
-// Start session
 session_start();
+include("../includes/connection.php");
+include("../includes/functions.php");
 
-// Check if group_id and message are provided in the POST data
-if (isset($_POST['group_id'], $_POST['message'])) {
-    $group_id = $_POST['group_id'];
-    $message = $_POST['message'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $sender_id = $_POST['sender_id'];
+    $receiver_id = $_POST['receiver_id'];
+    $content = $_POST['content'];
 
-    // Retrieve sender's username from the session
-    $sender_id = $_SESSION['user_id'];
-    $get_sender_query = "SELECT username FROM users WHERE user_id = ?";
-    $stmt_get_sender = $conn->prepare($get_sender_query);
-
-    if ($stmt_get_sender === false) {
-        echo "Failed to prepare statement: " . $conn->error;
-        exit;
+    // Insert message into Messages table
+    $query = "INSERT INTO Messages (sender_id, receiver_id, content, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())";
+    $stmt = $conn->prepare($query);
+    if ($stmt === false) {
+        die('Prepare failed: ' . htmlspecialchars($conn->error));
     }
+    $stmt->bind_param("iis", $sender_id, $receiver_id, $content);
 
-    $stmt_get_sender->bind_param("i", $sender_id);
+    if ($stmt->execute()) {
+        // Get the last inserted message ID
+        $message_id = $stmt->insert_id;
 
-    if (!$stmt_get_sender->execute()) {
-        echo "Error executing query: " . $stmt_get_sender->error;
-        exit;
-    }
+        // Insert notification into Notifications table
+        $notification_message = "You have received a new message.";
+        $notification_query = "INSERT INTO Notifications (user_id, message, is_read, created_at) VALUES (?, ?, 0, NOW())";
+        $stmt_notification = $conn->prepare($notification_query);
+        if ($stmt_notification === false) {
+            die('Prepare failed: ' . htmlspecialchars($conn->error));
+        }
+        $stmt_notification->bind_param("is", $receiver_id, $notification_message);
 
-    $sender_result = $stmt_get_sender->get_result();
-
-    if ($sender_result->num_rows > 0) {
-        $sender = $sender_result->fetch_assoc();
-        $sender_username = $sender['username'];
+        if ($stmt_notification->execute()) {
+            // Redirect to messages.php after successful message send
+            header("Location: messages.php");
+            exit();
+        } else {
+            die('Execute failed: ' . htmlspecialchars($stmt_notification->error));
+        }
+        $stmt_notification->close();
     } else {
-        echo "Sender not found.";
-        exit;
+        die('Execute failed: ' . htmlspecialchars($stmt->error));
     }
-
-    // Insert the message into the messages table
-    $insert_query = "INSERT INTO messages (group_id, sender_id, content, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())";
-    $stmt_insert_message = $conn->prepare($insert_query);
-
-    if ($stmt_insert_message === false) {
-        echo "Failed to prepare statement: " . $conn->error;
-        exit;
-    }
-
-    $stmt_insert_message->bind_param("iis", $group_id, $sender_id, $message);
-
-    if (!$stmt_insert_message->execute()) {
-        echo "Error inserting message: " . $stmt_insert_message->error;
-        exit;
-    }
-
-    // Redirect back to the group.php page after sending the message
-    header("Location: group.php?group_id=$group_id");
-    exit;
-} else {
-    // Redirect back to the group.php page with an error message if group_id or message are not provided
-    header("Location: group.php?group_id=$group_id&error=1");
-    exit;
+    $stmt->close();
 }
+
+// Check if the user has set a color mode preference
+if (!isset($_SESSION['color_mode'])) {
+    // If not, set a default color mode (e.g., light mode)
+    $_SESSION['color_mode'] = 'light';
+}
+
+// Function to apply the appropriate CSS class based on the color mode
+function getColorModeClass() {
+    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
+}
+
+$conn->close();
 ?>
