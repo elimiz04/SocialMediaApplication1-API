@@ -64,26 +64,37 @@ function getColorModeClass() {
     return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $action = $_POST['action'];
-    $target_user_id = $_POST['target_user_id'];
+// Handle post deletion
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
+    $post_id = $_POST['post_id'];
+    $image = $_POST['image'];
 
-    if ($action == 'follow') {
-        $follow_query = "INSERT INTO Follows (follower_id, followed_id) VALUES (?, ?)";
-        $stmt_follow = $conn->prepare($follow_query);
-        $stmt_follow->bind_param("ii", $user_id, $target_user_id);
-        $stmt_follow->execute();
-    } elseif ($action == 'unfollow') {
-        $unfollow_query = "DELETE FROM Follows WHERE follower_id = ? AND followed_id = ?";
-        $stmt_unfollow = $conn->prepare($unfollow_query);
-        $stmt_unfollow->bind_param("ii", $user_id, $target_user_id);
-        $stmt_unfollow->
-        execute();
-        }
+    // Delete the post from the database
+    $query_delete_post = "DELETE FROM posts WHERE post_id = ?";
+    $stmt_delete_post = $conn->prepare($query_delete_post);
+    $stmt_delete_post->bind_param("i", $post_id);
+    $stmt_delete_post->execute();
 
-        header("Location: profile.php");
-        exit;
+    // Check for errors
+    if ($stmt_delete_post->error) {
+        echo "Error deleting post: " . $stmt_delete_post->error;
+        // You might want to handle this error gracefully, depending on your application's requirements
     }
+
+    // Delete the image file from the server
+    $imagePath = "../assets/" . $image;
+    if (file_exists($imagePath)) {
+        if (!unlink($imagePath)) {
+            echo "Error deleting image file: " . $imagePath;
+            // You might want to handle this error gracefully, depending on your application's requirements
+        }
+    }
+
+    // Redirect back to the profile page after deletion
+    header("Location: ../pages/profile.php");
+    exit;
+}
+
 
     $query_posts = "SELECT * FROM posts WHERE user_id = ? ORDER BY post_id DESC";
     $stmt_posts = $conn->prepare($query_posts);
@@ -99,6 +110,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $imageDirectory = "../assets";
     $imageFiles = getImageFiles($imageDirectory);
+
+    // Handle post deletion
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
+    $post_id = $_POST['post_id'];
+    $image = $_POST['image'];
+
+    // Delete the post from the database
+    $query_delete_post = "DELETE FROM posts WHERE post_id = ?";
+    $stmt_delete_post = $conn->prepare($query_delete_post);
+    $stmt_delete_post->bind_param("i", $post_id);
+    $stmt_delete_post->execute();
+
+    // Delete the image file from the server
+    $imagePath = "../assets/" . $image;
+    if (file_exists($imagePath)) {
+        unlink($imagePath); 
+    }
+
+    // Redirect back to the profile page after deletion
+    header("Location: ../pages/profile.php");
+    exit;
+}
 ?>
 
 
@@ -330,13 +363,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <a href="post_handler.php?post_id=<?php echo $post['post_id']; ?>">
                             <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
                         </a>
-                        <div class="post-content">
-                            <!-- Add a delete button with the same style as other buttons -->
-                            <form method="post" class="delete-form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
-                                <button type="submit" class="minimal-btn delete-btn">Delete</button>
-                            </form>
-                        </div>
+                        <form method="post" class="delete-form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                            <input type="hidden" name="image" value="<?php echo $post['image']; ?>">
+                            <button type="submit" class="minimal-btn delete-btn">Delete</button>
+                        </form>
+
                     </div>
                     <?php $count++; ?>
                     <?php if ($count % 3 == 0 || $count == $result->num_rows): ?>
