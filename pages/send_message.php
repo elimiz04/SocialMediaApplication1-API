@@ -1,6 +1,9 @@
 <?php
-session_start();
+// Include database connection
 include("../includes/connection.php");
+
+// Start session
+session_start();
 
 // Check if group_id and message are provided in the POST data
 if (isset($_POST['group_id'], $_POST['message'])) {
