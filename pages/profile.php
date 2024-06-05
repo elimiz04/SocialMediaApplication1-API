@@ -1,5 +1,5 @@
 <?php
-ob_start(); // Start output buffering
+ob_start();
 session_start();
 include("../includes/connection.php"); 
 include("../includes/functions.php");
@@ -96,6 +96,18 @@ $stmt_posts->bind_param("i", $user_id);
 $stmt_posts->execute();
 $posts_result = $stmt_posts->get_result();
 
+// Function to get all image files from a directory
+function getImageFiles($directory) {
+    $files = glob($directory . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+    return $files;
+}
+
+// Directory where your images are stored
+$imageDirectory = "../assets";
+
+// Get all image files from the directory
+$imageFiles = getImageFiles($imageDirectory);
+
 ?>
 
 <!DOCTYPE html>
@@ -156,12 +168,6 @@ $posts_result = $stmt_posts->get_result();
         }
 
         /* Post Styles */
-        .post-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
         .post {
             width: calc(33.33% - 20px);
             margin: 10px;
@@ -169,29 +175,34 @@ $posts_result = $stmt_posts->get_result();
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            position: relative; 
         }
-        .post-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            margin-top: 20px;
+
+        .delete-form {
+            position: absolute;
+            bottom: 0PX; 
+            left: 50%; 
+            transform: translateX(-50%);
         }
-        .post {
-            width: calc(33.33% - 20px);
-            margin: 10px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+
         .post img {
             width: 100%;
             height: auto;
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
         }
+
         .post-content {
             padding: 10px;
+        }
+
+
+        .delete-form {
+            display: flex;
+            justify-content: center;
+        }
+        .delete-btn {
+            margin-top: 10px;
         }
         .notification-badge {
             background-color: red;
@@ -283,24 +294,61 @@ $posts_result = $stmt_posts->get_result();
         <?php endwhile; ?>
     <?php endif; ?>
 </div>
-
+        <?php
+        // Retrieve user's posts from the database
+        $query_posts = "SELECT * FROM posts WHERE user_id = ?";
+        $stmt_posts = $conn->prepare($query_posts);
+        $stmt_posts->bind_param("i", $user_id);
+        $stmt_posts->execute();
+        $result = $stmt_posts->get_result();
+        ?>
         <div class="post-container">
-            <?php if ($posts_result && $posts_result->num_rows > 0): ?>
-                <?php while ($post = $posts_result->fetch_assoc()): ?>
+            <?php if ($result && $result->num_rows > 0): ?>
+                <?php $count = 0; ?>
+                <?php while($post = $result->fetch_assoc()): ?>
+                    <?php if ($count % 3 == 0): ?>
+                        <div class="row">
+                    <?php endif; ?>
                     <div class="post">
-                        <!-- Display post image -->
-                        <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
-                        <!-- Display post content -->
+                        <a href="post_handler.php?post_id=<?php echo $post['post_id']; ?>">
+                            <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
+                        </a>
                         <div class="post-content">
-                            <p><?php echo htmlspecialchars($post['content']); ?></p>
+                            <!-- Add a delete button with the same style as other buttons -->
+                            <form method="post" class="delete-form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                <input type="hidden" name="post_id" value="<?php echo $post['post_id']; ?>">
+                                <button type="submit" class="minimal-btn delete-btn">Delete</button>
+                            </form>
                         </div>
                     </div>
+                    <?php $count++; ?>
+                    <?php if ($count % 3 == 0 || $count == $result->num_rows): ?>
+                        </div> <!-- Close row -->
+                    <?php endif; ?>
                 <?php endwhile; ?>
             <?php else: ?>
-                <p>No posts yet.</p>
+                <p>No posts found.</p>
             <?php endif; ?>
         </div>
 
+        
+
+            <?php
+            // Handle post deletion
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
+                $post_id = $_POST['post_id'];
+
+                // Delete the post and associated content from the database
+                $query_delete_post = "DELETE FROM posts WHERE post_id = ?";
+                $stmt_delete_post = $conn->prepare($query_delete_post);
+                $stmt_delete_post->bind_param("i", $post_id);
+                $stmt_delete_post->execute();
+
+                // Redirect back to the profile page after deletion
+                header("Location: ../pages/profile.php");
+                exit;
+            }
+            ?>
     </div>
 </body>
 </html>

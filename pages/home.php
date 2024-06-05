@@ -91,13 +91,13 @@ if (isset($_SESSION['user_id'])) {
             width: calc(33.33% - 20px); /* 20px padding between images */
             margin: 10px;
             text-align: center;
-            text-decoration: none; /* Remove default link styles */
-            color: inherit; /* Inherit text color from parent */
-            height: 200px; /* Set a fixed height for the image containers */
-            display: flex; /* Use flexbox to vertically center images */
-            justify-content: center; /* Center images horizontally */
-            align-items: center; /* Center images vertically */
-            overflow: hidden; /* Hide overflowing parts of images */
+            text-decoration: none; 
+            color: inherit; 
+            height: 200px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
         }
         .image-container img {
             max-width: 100%; /* Make images fill their containers */

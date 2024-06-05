@@ -5,10 +5,11 @@ include("../includes/functions.php");
 include("../includes/header.php");
 
 // Check if user is logged in, otherwise redirect to login page
-if (!isset($_SESSION['user_id'])) {
+if(!isset($_SESSION['user_id'])){
     header("Location: ../pages/login.php");
     die;
 }
+
 
 // Check if post ID is provided in the URL
 if (!isset($_GET['post_id'])) {
@@ -37,7 +38,6 @@ $post = $post_result->fetch_assoc();
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['comment_content'])) {
     $user_id = $_SESSION['user_id'];
     $comment_content = $_POST['comment_content'];
-
     $query_comment = "INSERT INTO comments (post_id, user_id, content) VALUES (?, ?, ?)";
     $stmt_comment = $conn->prepare($query_comment);
     $stmt_comment->bind_param("iis", $post_id, $user_id, $comment_content);
@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['comment_content'])) {
     header("Location: post_handler.php?post_id=" . $post_id);
     exit;
 }
-
 // Handle delete comment request
 if (isset($_POST['delete_comment_id'])) {
     $comment_id = $_POST['delete_comment_id'];
@@ -54,7 +53,6 @@ if (isset($_POST['delete_comment_id'])) {
     $stmt_delete = $conn->prepare($query_delete);
     $stmt_delete->bind_param("ii", $comment_id, $_SESSION['user_id']);
     $stmt_delete->execute();
-
     header("Location: post_handler.php?post_id=" . $post_id);
     exit;
 }
@@ -67,11 +65,13 @@ if (isset($_POST['edit_comment_id']) && isset($_POST['edit_comment_content'])) {
     $stmt_edit = $conn->prepare($query_edit);
     $stmt_edit->bind_param("sii", $comment_content, $comment_id, $_SESSION['user_id']);
     $stmt_edit->execute();
-
     header("Location: post_handler.php?post_id=" . $post_id);
     exit;
 }
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,6 +112,7 @@ if (isset($_POST['edit_comment_id']) && isset($_POST['edit_comment_content'])) {
             margin: 0 5px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3
+        }
             .minimal-btn:hover {
             background-color: #337ab7;
             color: white;
@@ -167,6 +168,8 @@ if (isset($_POST['edit_comment_id']) && isset($_POST['edit_comment_content'])) {
             margin-left: 5px;
         }
         .comment-buttons button:hover {
+            background-color: #c823
+            <div class="comment-buttons button">
             background-color: #c82333;
         }
         .edit-form {
@@ -174,8 +177,7 @@ if (isset($_POST['edit_comment_id']) && isset($_POST['edit_comment_content'])) {
         }
     </style>
 </head>
-<body class="<?php echo getColorModeClass(); ?>">
-    <div id="box">
+<div id="box">
         <h1>View Post</h1>
         <div>
             <p><?php echo htmlspecialchars($post['content']); ?></p>
@@ -198,7 +200,6 @@ if (isset($_POST['edit_comment_id']) && isset($_POST['edit_comment_content'])) {
             $stmt_comments->bind_param("i", $post_id);
             $stmt_comments->execute();
             $comments_result = $stmt_comments->get_result();
-            
             if ($comments_result->num_rows > 0) {
                 while ($comment = $comments_result->fetch_assoc()) {
                     echo "<div class='comment' id='comment-".$comment['comment_id']."'>
@@ -233,3 +234,4 @@ if (isset($_POST['edit_comment_id']) && isset($_POST['edit_comment_content'])) {
     </script>
 </body>
 </html>
+
