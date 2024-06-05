@@ -68,13 +68,6 @@ function getColorModeClass() {
     return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
 }
 
-// Fetch the user's followers
-$follower_query = "SELECT u.user_id, u.username FROM Follows f JOIN users u ON f.follower_id = u.user_id WHERE f.followed_id = ?";
-$stmt_follower = $conn->prepare($follower_query);
-$stmt_follower->bind_param("i", $user_id);
-$stmt_follower->execute();
-$follower_result = $stmt_follower->get_result();
-
 // Handle follow/unfollow actions
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'];
@@ -96,6 +89,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: profile.php");
     exit;
 }
+// Retrieve posts made by the current user
+$query_posts = "SELECT * FROM posts WHERE user_id = ? ORDER BY post_id DESC";
+$stmt_posts = $conn->prepare($query_posts);
+$stmt_posts->bind_param("i", $user_id);
+$stmt_posts->execute();
+$posts_result = $stmt_posts->get_result();
+
 ?>
 
 <!DOCTYPE html>
@@ -154,58 +154,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: white;
             border-color: #337ab7;
         }
-        /* Image Styles */
-        .image-container {
+
+        /* Post Styles */
+        .post-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
             margin-top: 20px;
         }
-
-        .image-container .post {
+        .post {
             width: calc(33.33% - 20px);
             margin: 10px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            position: relative; /* Add position relative for absolute positioning */
         }
-
-        .image-container .post img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensure the image covers the entire container */
-            border-radius: 10px;
-        }
-
-        .image-container .post-content {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent background */
-            padding: 10px;
-        }
-
-        .image-container .delete-form {
-            display: inline-block;
-        }
-
-        .image-container .delete-btn {
-            padding: 5px 10px;
-            background-color: #dc3545; /* Change the background color to red */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .image-container .delete-btn:hover {
-            background-color: #c82333; /* Darken the background color on hover */
-        }
-
-        /* Post Styles */
         .post-container {
             display: flex;
             flex-wrap: wrap;
@@ -234,6 +198,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: white;
             border-radius: 50%;
             padding: 4px 8px;
+            font-size: 12
+        }
+            .notification-badge {
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 4px 8px;
             font-size: 12px;
             position: absolute;
             top: -10px;
@@ -250,16 +221,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-top: 20px;
         }
         .follower {
-            display: flex;
-            align-items: center;
             margin-bottom: 10px;
         }
-        .follower img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
+
         .count-container {
             display: flex;
             justify-content: space-around;
@@ -284,44 +248,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <a href="../pages/follow_users.php" class="minimal-btn">Follow</a>
         </div>
         <br><br>
-        <!-- Display follow/unfollow buttons -->
-        <div class="follower-container">
-            <?php if ($follower_result && $follower_result->num_rows > 0): ?>
-                <h2>Your Followers:</h2>
-                <?php while($follower = $follower_result->fetch_assoc()): ?>
-                    <div class="follower">
-                        <img src="../assets/<?php echo $follower['profile_pic']; ?>" alt="Follower Profile Pic">
-                        <p><?php echo $follower['username']; ?></p>
-                        <?php
-                        // Check if the user is already following this follower
-                        $follow_check_query = "SELECT * FROM Follows WHERE follower_id = ? AND followed_id = ?";
-                        $stmt_follow_check = $conn->prepare($follow_check_query);
-                        $stmt_follow_check->bind_param("ii", $user_id, $follower['user_id']);
-                        $stmt_follow_check->execute();
-                        $follow_check_result = $stmt_follow_check->get_result();
-                        $is_following = $follow_check_result->num_rows > 0;
-                        ?>
-                        <?php if ($is_following): ?>
-                            <!-- Display unfollow button -->
-                            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                <input type="hidden" name="action" value="unfollow">
-                                <input type="hidden" name="target_user_id" value="<?php echo $follower['user_id']; ?>">
-                                <button type="submit" class="minimal-btn">Unfollow</button>
-                            </form>
-                        <?php else: ?>
-                            <!-- Display follow button -->
-                            <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                <input type="hidden" name="action" value="follow">
-                                <input type="hidden" name="target_user_id" value="<?php echo $follower['user_id']; ?>">
-                                <button type="submit" class="minimal-btn">Follow</button>
-                            </form>
-                        <?php endif; ?>
+       <!-- Display follow/unfollow buttons -->
+<div class="follower-container">
+    <?php if (isset($follower_result) && $follower_result && $follower_result->num_rows > 0): ?>
+        <h2>Your Followers:</h2>
+        <?php while($follower = $follower_result->fetch_assoc()): ?>
+            <div class="follower">
+                <p><?php echo $follower['username']; ?></p>
+                <?php
+                // Check if the user is already following this follower
+                $follow_check_query = "SELECT * FROM Follows WHERE follower_id = ? AND followed_id = ?";
+                $stmt_follow_check = $conn->prepare($follow_check_query);
+                $stmt_follow_check->bind_param("ii", $user_id, $follower['user_id']);
+                $stmt_follow_check->execute();
+                $follow_check_result = $stmt_follow_check->get_result();
+                $is_following = $follow_check_result->num_rows > 0;
+                ?>
+                <?php if ($is_following): ?>
+                    <!-- Display unfollow button -->
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <input type="hidden" name="action" value="unfollow">
+                        <input type="hidden" name="target_user_id" value="<?php echo $follower['user_id']; ?>">
+                        <button type="submit" class="minimal-btn">Unfollow</button>
+                    </form>
+                <?php else: ?>
+                    <!-- Display follow button -->
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <input type="hidden" name="action" value="follow">
+                        <input type="hidden" name="target_user_id" value="<?php echo $follower['user_id']; ?>">
+                        <button type="submit" class="minimal-btn">Follow</button>
+                    </form>
+                <?php endif; ?>
+            </div>
+        <?php endwhile; ?>
+    <?php endif; ?>
+</div>
+
+        <div class="post-container">
+            <?php if ($posts_result && $posts_result->num_rows > 0): ?>
+                <?php while ($post = $posts_result->fetch_assoc()): ?>
+                    <div class="post">
+                        <!-- Display post image -->
+                        <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
+                        <!-- Display post content -->
+                        <div class="post-content">
+                            <p><?php echo htmlspecialchars($post['content']); ?></p>
+                        </div>
                     </div>
                 <?php endwhile; ?>
             <?php else: ?>
                 <p>No posts yet.</p>
             <?php endif; ?>
         </div>
+
     </div>
 </body>
 </html>
@@ -329,4 +308,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php
 ob_end_flush(); // End output buffering and flush buffer contents
 ?>
-

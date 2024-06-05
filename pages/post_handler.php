@@ -1,11 +1,11 @@
 <?php
 session_start();
-include("../includes/connection.php"); 
+include("../includes/connection.php");
 include("../includes/functions.php");
 include("../includes/header.php");
 
 // Check if user is logged in, otherwise redirect to login page
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
     header("Location: ../pages/login.php");
     die;
 }
@@ -71,17 +71,7 @@ if (isset($_POST['edit_comment_id']) && isset($_POST['edit_comment_content'])) {
     header("Location: post_handler.php?post_id=" . $post_id);
     exit;
 }
-if (!isset($_SESSION['color_mode'])) {
-    // If not, set a default color mode (e.g., light mode)
-    $_SESSION['color_mode'] = 'light';
-}
-
-// Function to apply the appropriate CSS class based on the color mode
-function getColorModeClass() {
-    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,9 +111,8 @@ function getColorModeClass() {
             text-decoration: none;
             margin: 0 5px;
             cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        }
-        .minimal-btn:hover {
+            transition: background-color 0.3s, color 0.3
+            .minimal-btn:hover {
             background-color: #337ab7;
             color: white;
             border-color: #337ab7;
