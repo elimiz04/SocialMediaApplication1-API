@@ -56,9 +56,6 @@ if ($following_count_result && $following_count_row = $following_count_result->f
     $following_count = $following_count_row['following_count'];
 }
 
-// Display follower and following counts
-echo "<p>Followers: $followers_count</p>";
-echo "<p>Following: $following_count</p>";
 
 // Check if the user has set a color mode preference
 if (!isset($_SESSION['color_mode'])) {
@@ -134,6 +131,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+
+        
         /* Button Styles */
         .btn-container {
             margin-top: 20px;
@@ -261,71 +260,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-radius: 50%;
             margin-right: 10px;
         }
+        .count-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body class="<?php echo getColorModeClass(); ?>">
 
-<div id="box">
+        <div id="box">
         <h1>Welcome, <?php echo isset($user['username']) ? $user['username'] : 'User'; ?></h1>
+        <!--Display follower and following counts regardless of whether there are followers or not-->
+            <!-- Container for follower and following counts -->
+            <div class="count-container">
+                <p>Followers: <?php echo $followers_count; ?></p>
+                <p>Following: <?php echo $following_count; ?></p>
+            </div>
         <div class="btn-container">
             <a href="posts.php" class="minimal-btn">Add Post</a>
-            <div class="message-button-container">
-                <a href="messages.php" class="message-btn">Messages <?php if ($unread_count > 0) { echo '<span class="notification-badge">' . $unread_count . '</span>'; } ?></a>
-            </div>
+            <a href="messages.php" class="message-btn">Messages <?php if ($unread_count > 0) { echo '<span class="notification-badge">' . $unread_count . '</span>'; } ?></a>
             <a href="settings.php" class="minimal-btn">Settings</a>
-
             <a href="../pages/follow_users.php" class="minimal-btn">Follow</a>
-            <?php
-           
-            // Check if the displayed user is not the logged-in user
-            if ($follower_result && $follower_result->num_rows > 0) {
-                while ($follower = $follower_result->fetch_assoc()) {
-                    // Check if the logged-in user is following the displayed profile
-                    $is_following_query = "SELECT * FROM Follows WHERE follower_id = ? AND followed_id = ?";
-                    $stmt_is_following = $conn->prepare($is_following_query);
-                    $stmt_is_following->bind_param("ii", $user_id, $follower['user_id']);
-                    $stmt_is_following->execute();
-                    $is_following_result = $stmt_is_following->get_result();
-                    $is_following = $is_following_result->num_rows > 0;
-            
-                    // Display follow/unfollow button based on the follow status
-                    if ($is_following) {
-                        echo '<a href="../pages/follow_handler.php?action=unfollow&target_user_id=' . $follower['user_id'] . '" class="minimal-btn">Unfollow</a>';
-                    } else {
-                        echo '<a href="../pages/follow_handler.php?action=follow&target_user_id=' . $follower['user_id'] . '" class="minimal-btn">Follow</a>';
-                    }
-                }
-            } else {
-                echo "<p>No followers yet.</p>";
-            }
-            
-           
-
-            if ($follower_result && $follower_result->num_rows > 0) {
-                while ($follower = $follower_result->fetch_assoc()) {
-                    // Check if the logged-in user is following the displayed profile
-                    $is_following_query = "SELECT * FROM Follows WHERE follower_id = ? AND followed_id = ?";
-                    $stmt_is_following = $conn->prepare($is_following_query);
-                    $stmt_is_following->bind_param("ii", $user_id, $follower['user_id']);
-                    $stmt_is_following->execute();
-                    $is_following_result = $stmt_is_following->get_result();
-                    $is_following = $is_following_result->num_rows > 0;
-            
-                    // Display follow/unfollow button based on the follow status
-                    if ($is_following) {
-                        echo '<a href="../pages/follow_handler.php?action=unfollow&target_user_id=' . $follower['user_id'] . '" class="minimal-btn">Unfollow</a>';
-                    } else {
-                        echo '<a href="../pages/follow_handler.php?action=follow&target_user_id=' . $follower['user_id'] . '" class="minimal-btn">Follow</a>';
-                    }
-                }
-            }
-            
-            ?>
-
-
         </div>
         <br><br>
-
         <!-- Display follow/unfollow buttons -->
         <div class="follower-container">
             <?php if ($follower_result && $follower_result->num_rows > 0): ?>
@@ -359,92 +317,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </form>
                         <?php endif; ?>
                     </div>
-
-                    <!-- Display follow/unfollow buttons -->
-<div class="follower-container">
-    <?php if ($follower_result && $follower_result->num_rows > 0): ?>
-        <h2>Your Followers:</h2>
-        <?php while($follower = $follower_result->fetch_assoc()): ?>
-            <div class="follower">
-                <img src="../assets/<?php echo $follower['profile_pic']; ?>" alt="Follower Profile Pic">
-                <p><?php echo $follower['username']; ?></p>
-                
-                <?php
-                // Check if the user is already following this follower
-                $follow_check_query = "SELECT * FROM Follows WHERE follower_id = ? AND followed_id = ?";
-                $stmt_follow_check = $conn->prepare($follow_check_query);
-                $stmt_follow_check->bind_param("ii", $user_id, $follower['user_id']);
-                $stmt_follow_check->execute();
-                $follow_check_result = $stmt_follow_check->get_result();
-                $is_following = $follow_check_result->num_rows > 0;
-                ?>
-                
-                <!-- Display appropriate follow/unfollow button based on the follow status -->
-                <?php if ($is_following): ?>
-                    <!-- Display unfollow button -->
-                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                        <input type="hidden" name="action" value="unfollow">
-                        <input type="hidden" name="target_user_id" value="<?php echo $follower['user_id']; ?>">
-                        <button type="submit" class="minimal-btn">Unfollow</button>
-                    </form>
-                <?php else: ?>
-                    <!-- Display follow button -->
-                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                        <input type="hidden" name="action" value="follow">
-                        <input type="hidden" name="target_user_id" value="<?php echo $follower['user_id']; ?>">
-                        <button type="submit" class="minimal-btn">Follow</button>
-                    </form>
-                <?php endif; ?>
-                
-                </div>
-                    <?php endwhile; ?>
-                <?php endif; ?>
-            </div>
-
-            <?php
-            // Handle follow/unfollow actions
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $action = $_POST['action'];
-                $target_user_id = $_POST['target_user_id'];
-
-                if ($action == 'follow') {
-                    $follow_query = "INSERT INTO Follows (follower_id, followed_id) VALUES (?, ?)";
-                    $stmt_follow = $conn->prepare($follow_query);
-                    $stmt_follow->bind_param("ii", $user_id, $target_user_id);
-                    $stmt_follow->execute();
-                } elseif ($action == 'unfollow') {
-                    $unfollow_query = "DELETE FROM Follows WHERE follower_id = ? AND followed_id = ?";
-                    $stmt_unfollow = $conn->prepare($unfollow_query);
-                    $stmt_unfollow->bind_param("ii", $user_id, $target_user_id);
-                    $stmt_unfollow->execute();
-                }
-
-                // Redirect to avoid form resubmission
-                header("Location: profile.php");
-                exit;
-            }
-            ?>
-
                 <?php endwhile; ?>
+            <?php else: ?>
+                <p>No posts yet.</p>
             <?php endif; ?>
         </div>
-
-        <?php
-        // Handle post deletion
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
-            $post_id = $_POST['post_id'];
-
-            // Delete the post and associated content from the database
-            $query_delete_post = "DELETE FROM posts WHERE post_id = ?";
-            $stmt_delete_post = $conn->prepare($query_delete_post);
-            $stmt_delete_post->bind_param("i", $post_id);
-            $stmt_delete_post->execute();
-
-            // Redirect back to the profile page after deletion
-            header("Location: ../pages/profile.php");
-            exit;
-        }
-        ?>
     </div>
 </body>
 </html>
