@@ -25,8 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['action']) && isset($_GET
         $stmt_unfollow->bind_param("ii", $follower_id, $target_user_id);
         $stmt_unfollow->execute();
     }
-}
 
-header("Location: ../pages/profile.php");
-exit;
+    // Redirect back to the previous page (referrer)
+    header("Location: {$_SERVER['HTTP_REFERER']}");
+    exit;
+}
 ?>
