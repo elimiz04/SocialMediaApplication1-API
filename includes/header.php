@@ -1,3 +1,12 @@
+<?php
+
+// Retrieve user settings from the session
+$color_scheme = isset($_SESSION['color_scheme']) ? $_SESSION['color_scheme'] : 'light'; // Default to light mode if not set
+
+// Apply color scheme to the body element
+echo '<body class="' . $color_scheme . '-mode">';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

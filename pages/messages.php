@@ -50,6 +50,18 @@ $stmt_notifications->execute();
 $notification_result = $stmt_notifications->get_result();
 $notification_count = $notification_result->fetch_assoc()['unread_count'];
 $stmt_notifications->close();
+
+
+// Check if the user has set a color mode preference
+if (!isset($_SESSION['color_mode'])) {
+    // If not, set a default color mode (e.g., light mode)
+    $_SESSION['color_mode'] = 'light';
+}
+
+// Function to apply the appropriate CSS class based on the color mode
+function getColorModeClass() {
+    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
+}
 ?>
 
 
@@ -163,7 +175,7 @@ $stmt_notifications->close();
         }
     </style>
 </head>
-<body>
+<body class="<?php echo getColorModeClass(); ?>">
 <div id="box">
         <h1>Messages</h1>
 

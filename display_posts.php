@@ -10,6 +10,16 @@ $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
+// Check if the user has set a color mode preference
+if (!isset($_SESSION['color_mode'])) {
+    // If not, set a default color mode (e.g., light mode)
+    $_SESSION['color_mode'] = 'light';
+}
+
+// Function to apply the appropriate CSS class based on the color mode
+function getColorModeClass() {
+    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +44,7 @@ $result = $stmt->get_result();
         }
     </style>
 </head>
-<body>
+<body class="<?php echo getColorModeClass(); ?>">
     <h1>Your Posts</h1>
     <table>
         <thead>

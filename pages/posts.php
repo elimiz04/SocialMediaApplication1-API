@@ -60,9 +60,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content'])) {
     header("Location: ../pages/profile.php");
     exit;
 }
+// Check if the user has set a color mode preference
+if (!isset($_SESSION['color_mode'])) {
+    // If not, set a default color mode (e.g., light mode)
+    $_SESSION['color_mode'] = 'light';
+}
 
-// Display user's posts
+// Function to apply the appropriate CSS class based on the color mode
+function getColorModeClass() {
+    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
+} 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -111,7 +120,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['content'])) {
         }
     </style>
 </head>
-<body>
+<body class="<?php echo getColorModeClass(); ?>">
+
     <div id="box">
         <h1>Add Post</h1>
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">

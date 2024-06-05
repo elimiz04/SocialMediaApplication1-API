@@ -1,3 +1,42 @@
+<?php
+session_start();
+include("../includes/connection.php");
+
+// Check if the user has set a color mode preference
+if (!isset($_SESSION['color_mode'])) {
+    // If not, set a default color mode (e.g., light mode)
+    $_SESSION['color_mode'] = 'light';
+}
+
+// Function to apply the appropriate CSS class based on the color mode
+function getColorModeClass() {
+    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
+}
+
+// Retrieve the user's color scheme setting from the database
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $query = "SELECT color_scheme FROM user_settings WHERE user_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($color_scheme);
+        $stmt->fetch();
+    } else {
+        // Default color scheme if not found in the database
+        $color_scheme = 'light';
+    }
+
+    $stmt->close();
+} else {
+    // Default color scheme if user is not logged in
+    $color_scheme = 'light';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +46,13 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            <?php if ($color_scheme === 'dark'): ?>
+                background-color: #333;
+                color: #f8f9fa;
+            <?php else: ?>
+                background-color: #f8f9fa;
+                color: #333;
+            <?php endif; ?>
             margin: 0;
             padding: 0;
         }
@@ -61,13 +106,30 @@
             border-radius: 10px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
         }
+        /* Light Mode Styles */
+        .light-mode {
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+        }
+
+        /* Dark Mode Styles */
+        .dark-mode {
+            --text-color: #f8f9fa;
+            --bg-color: #333;
+        }
+
+        /* Apply color variables to body */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
     </style>
 </head>
 <body>
+<body class="<?php echo $_SESSION['color_scheme']; ?>">
     <div id="box">
     <?php 
-            session_start();
-            include("../includes/connection.php");
             include("../includes/functions.php");
 
             if(!isset($_SESSION['user_id'])){

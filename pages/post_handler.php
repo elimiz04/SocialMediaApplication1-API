@@ -71,6 +71,15 @@ if (isset($_POST['edit_comment_id']) && isset($_POST['edit_comment_content'])) {
     header("Location: post_handler.php?post_id=" . $post_id);
     exit;
 }
+if (!isset($_SESSION['color_mode'])) {
+    // If not, set a default color mode (e.g., light mode)
+    $_SESSION['color_mode'] = 'light';
+}
+
+// Function to apply the appropriate CSS class based on the color mode
+function getColorModeClass() {
+    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
+}
 ?>
 
 <!DOCTYPE html>
@@ -176,7 +185,7 @@ if (isset($_POST['edit_comment_id']) && isset($_POST['edit_comment_content'])) {
         }
     </style>
 </head>
-<body>
+<body class="<?php echo getColorModeClass(); ?>">
     <div id="box">
         <h1>View Post</h1>
         <div>

@@ -1,7 +1,3 @@
-
-### Step 3: Update `update_notification.php` to Mark Notifications as Read
-
-```php
 <?php
 session_start();
 include("../includes/connection.php");
@@ -18,5 +14,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->close();
 
     echo "Notifications updated";
+}
+
+// Check if the user has set a color mode preference
+if (!isset($_SESSION['color_mode'])) {
+    // If not, set a default color mode (e.g., light mode)
+    $_SESSION['color_mode'] = 'light';
+}
+
+// Function to apply the appropriate CSS class based on the color mode
+function getColorModeClass() {
+    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
 }
 ?>

@@ -33,6 +33,18 @@ $unread_count = 0;
 if ($unread_result && $unread_row = $unread_result->fetch_assoc()) {
     $unread_count = $unread_row['unread_count'];
 }
+
+// Check if the user has set a color mode preference
+if (!isset($_SESSION['color_mode'])) {
+    // If not, set a default color mode (e.g., light mode)
+    $_SESSION['color_mode'] = 'light';
+}
+
+// Function to apply the appropriate CSS class based on the color mode
+function getColorModeClass() {
+    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
+}
+
 $stmt_unread_count->close();
 ?>
 
@@ -182,7 +194,8 @@ $stmt_unread_count->close();
         }
     </style>
 </head>
-<body>
+<body class="<?php echo getColorModeClass(); ?>">
+
 <div id="box">
         <h1>Welcome, <?php echo isset($user['username']) ? $user['username'] : 'User'; ?></h1>
         <div class="btn-container">

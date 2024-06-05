@@ -59,6 +59,16 @@ if(isset($_POST['content'])) {
         echo "Error: " . $stmt->error;
     }
 }
+// Check if the user has set a color mode preference
+if (!isset($_SESSION['color_mode'])) {
+    // If not, set a default color mode (e.g., light mode)
+    $_SESSION['color_mode'] = 'light';
+}
+
+// Function to apply the appropriate CSS class based on the color mode
+function getColorModeClass() {
+    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
+}
 ?>
 
 <!DOCTYPE html>
@@ -67,7 +77,7 @@ if(isset($_POST['content'])) {
     <meta charset="UTF-8">
     <title>Edit Comment</title>
 </head>
-<body>
+<body class="<?php echo getColorModeClass(); ?>">
     <form method="post">
         <textarea name="content"><?php echo htmlspecialchars($comment['content']); ?></textarea>
         <button type="submit">Update Comment</button>
