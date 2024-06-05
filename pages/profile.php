@@ -5,13 +5,16 @@ include("../includes/connection.php");
 include("../includes/functions.php");
 include("../includes/header.php");
 
-// Check if user is logged in, otherwise redirect to login page
+// Enable error reporting
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if(!isset($_SESSION['user_id'])){
     header("Location: ../pages/login.php");
     die;
 }
 
-// Retrieve user's profile information from the database
 $user_id = $_SESSION['user_id'];
 $query = "SELECT * FROM users WHERE user_id = ?";
 $stmt = $conn->prepare($query);
@@ -23,7 +26,6 @@ if($user_result->num_rows == 1) {
     $user = $user_result->fetch_assoc();
 }
 
-// Fetch unread message count for the logged-in user
 $unread_count_query = "SELECT COUNT(*) AS unread_count FROM Messages WHERE receiver_id = ? AND is_read = 0";
 $stmt_unread_count = $conn->prepare($unread_count_query);
 $stmt_unread_count->bind_param("i", $user_id);
@@ -34,7 +36,6 @@ if ($unread_result && $unread_row = $unread_result->fetch_assoc()) {
     $unread_count = $unread_row['unread_count'];
 }
 
-// Count the number of followers
 $count_followers_query = "SELECT COUNT(*) AS follower_count FROM Follows WHERE followed_id = ?";
 $stmt_followers_count = $conn->prepare($count_followers_query);
 $stmt_followers_count->bind_param("i", $user_id);
@@ -45,7 +46,6 @@ if ($followers_count_result && $followers_count_row = $followers_count_result->f
     $followers_count = $followers_count_row['follower_count'];
 }
 
-// Count the number of users the user is following
 $count_following_query = "SELECT COUNT(*) AS following_count FROM Follows WHERE follower_id = ?";
 $stmt_following_count = $conn->prepare($count_following_query);
 $stmt_following_count->bind_param("i", $user_id);
@@ -56,19 +56,14 @@ if ($following_count_result && $following_count_row = $following_count_result->f
     $following_count = $following_count_row['following_count'];
 }
 
-
-// Check if the user has set a color mode preference
 if (!isset($_SESSION['color_mode'])) {
-    // If not, set a default color mode (e.g., light mode)
     $_SESSION['color_mode'] = 'light';
 }
 
-// Function to apply the appropriate CSS class based on the color mode
 function getColorModeClass() {
     return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
 }
 
-// Handle follow/unfollow actions
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $action = $_POST['action'];
     $target_user_id = $_POST['target_user_id'];
@@ -82,33 +77,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $unfollow_query = "DELETE FROM Follows WHERE follower_id = ? AND followed_id = ?";
         $stmt_unfollow = $conn->prepare($unfollow_query);
         $stmt_unfollow->bind_param("ii", $user_id, $target_user_id);
-        $stmt_unfollow->execute();
-    }
+        $stmt_unfollow->
+            execute();
+            }
 
-    // Redirect to avoid form resubmission
-    header("Location: profile.php");
-    exit;
-}
-// Retrieve posts made by the current user
-$query_posts = "SELECT * FROM posts WHERE user_id = ? ORDER BY post_id DESC";
-$stmt_posts = $conn->prepare($query_posts);
-$stmt_posts->bind_param("i", $user_id);
-$stmt_posts->execute();
-$posts_result = $stmt_posts->get_result();
+            header("Location: profile.php");
+            exit;
+        }
 
-// Function to get all image files from a directory
-function getImageFiles($directory) {
-    $files = glob($directory . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
-    return $files;
-}
+        $query_posts = "SELECT * FROM posts WHERE user_id = ? ORDER BY post_id DESC";
+        $stmt_posts = $conn->prepare($query_posts);
+        $stmt_posts->bind_param("i", $user_id);
+        $stmt_posts->execute();
+        $posts_result = $stmt_posts->get_result();
 
-// Directory where your images are stored
-$imageDirectory = "../assets";
+        // Function to get all image files from a directory
+        function getImageFiles($directory) {
+            $files = glob($directory . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+            return $files;
+        }
 
-// Get all image files from the directory
-$imageFiles = getImageFiles($imageDirectory);
-
+        $imageDirectory = "../assets";
+        $imageFiles = getImageFiles($imageDirectory);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -242,7 +234,6 @@ $imageFiles = getImageFiles($imageDirectory);
         }
     </style>
 </head>
-<body class="<?php echo getColorModeClass(); ?>">
 
         <div id="box">
         <h1>Welcome, <?php echo isset($user['username']) ? $user['username'] : 'User'; ?></h1>
@@ -294,6 +285,32 @@ $imageFiles = getImageFiles($imageDirectory);
         <?php endwhile; ?>
     <?php endif; ?>
 </div>
+
+<div class="group-container">
+    <h2>Your Groups:</h2>
+    <?php
+    // Retrieve groups the user is a member of
+    $user_groups_query = "SELECT g.name, g.description FROM Groups g JOIN Group_Members gm ON g.group_id = gm.group_id WHERE gm.user_id = ?";
+    $stmt_user_groups = $conn->prepare($user_groups_query);
+    $stmt_user_groups->bind_param("i", $user_id);
+    $stmt_user_groups->execute();
+    $user_groups_result = $stmt_user_groups->get_result();
+
+    // Display the group names and descriptions
+    if ($user_groups_result && $user_groups_result->num_rows > 0) {
+        while ($group = $user_groups_result->fetch_assoc()) {
+            echo "<div class='group'>";
+            echo "<h3>{$group['name']}</h3>";
+            echo "<p>{$group['description']}</p>";
+            echo "</div>";
+        }
+    } else {
+        echo "<p>No groups found.</p>";
+    }
+    ?>
+</div>
+
+
         <?php
         // Retrieve user's posts from the database
         $query_posts = "SELECT * FROM posts WHERE user_id = ?";
