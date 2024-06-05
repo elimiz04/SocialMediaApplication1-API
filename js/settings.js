@@ -25,3 +25,4 @@ fetch('update_settings.php', {
 function updatePageColorScheme(colorScheme) {
     // Add logic here to update specific elements or styles on the page based on the color scheme
 }
+

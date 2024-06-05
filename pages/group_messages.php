@@ -2,7 +2,6 @@
 session_start();
 include("../includes/connection.php");
 include("../includes/functions.php");
-include("../includes/header.php");
 
 if (!isset($_SESSION['user_id'])) {
     die('User not logged in.');
@@ -10,28 +9,11 @@ if (!isset($_SESSION['user_id'])) {
 
 $group_id = isset($_GET['group_id']) ? intval($_GET['group_id']) : 0;
 
-// Verify that the column names and table names are correct
-$query = "
-    SELECT Messages.*, Users.username 
-    FROM Messages 
-    JOIN Users ON Messages.sender_id = Users.id 
-    WHERE Messages.receiver_id = ? 
-    ORDER BY Messages.created_at ASC
-";
-
-// If `Users.id` is incorrect, replace it with the correct column name, for example `Users.user_id`
-$query = "
-    SELECT Messages.*, Users.username 
-    FROM Messages 
-    JOIN Users ON Messages.sender_id = Users.user_id 
-    WHERE Messages.receiver_id = ? 
-    ORDER BY Messages.created_at ASC
-";
-
+$query = "SELECT Messages.*, Users.username FROM Messages 
+          JOIN Users ON Messages.sender_id = Users.id 
+          WHERE Messages.receiver_id = ? 
+          ORDER BY Messages.created_at ASC";
 $stmt = $conn->prepare($query);
-if ($stmt === false) {
-    die('Prepare failed: ' . htmlspecialchars($conn->error));
-}
 $stmt->bind_param("i", $group_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -81,15 +63,14 @@ $conn->close();
         .chat-message span {
             font-weight: bold;
         }
-        textarea {
+        .input-message {
             width: calc(100% - 85px);
             padding: 10px;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 5px;
-            resize: none;
         }
-        button {
+        .send-button {
             padding: 10px 20px;
             background-color: #337ab7;
             color: white;
@@ -103,46 +84,23 @@ $conn->close();
 <body>
     <div class="chat-container">
         <h1>Group Chat</h1>
-        <div class="chat"></div>
-        <form id="messageForm">
+        <div class="chat">
+            <!-- Display chat messages here -->
+            <?php foreach ($messages as $message): ?>
+                <div class="chat-message">
+                    <span><?php echo htmlspecialchars($message['username']); ?>:</span> 
+                    <?php echo htmlspecialchars($message['content']); ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <form id="messageForm" action="send_group_message.php" method="post">
             <input type="hidden" name="receiver_id" value="<?php echo $group_id; ?>">
             <textarea name="content" placeholder="Type your message..." required></textarea>
             <button type="submit">Send</button>
         </form>
+        <div class="btn-container">
+            <a href="group.php?group_id=<?php echo $group_id; ?>">View Group</a>
+        </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-    $(document).ready(function() {
-        function loadMessages() {
-            $.ajax({
-                url: 'load_messages.php?group_id=<?php echo $group_id; ?>',
-                method: 'GET',
-                success: function(data) {
-                    $('.chat').html(data);
-                }
-            });
-        }
+  
 
-        setInterval(loadMessages, 5000); // Reload messages every 5 seconds
-
-        $('#messageForm').submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                url: 'send_group_message.php',
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function() {
-                    loadMessages();
-                    $('textarea[name="content"]').val('');
-                },
-                error: function(xhr, status, error) {
-                    console.log('Error:', xhr.responseText);
-                }
-            });
-        });
-
-        loadMessages(); // Initial load of messages
-    });
-    </script>
-</body>
-</html>
