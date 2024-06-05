@@ -78,27 +78,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_unfollow = $conn->prepare($unfollow_query);
         $stmt_unfollow->bind_param("ii", $user_id, $target_user_id);
         $stmt_unfollow->
-            execute();
-            }
-
-            header("Location: profile.php");
-            exit;
+        execute();
         }
 
-        $query_posts = "SELECT * FROM posts WHERE user_id = ? ORDER BY post_id DESC";
-        $stmt_posts = $conn->prepare($query_posts);
-        $stmt_posts->bind_param("i", $user_id);
-        $stmt_posts->execute();
-        $posts_result = $stmt_posts->get_result();
+        header("Location: profile.php");
+        exit;
+    }
 
-        // Function to get all image files from a directory
-        function getImageFiles($directory) {
-            $files = glob($directory . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
-            return $files;
-        }
+    $query_posts = "SELECT * FROM posts WHERE user_id = ? ORDER BY post_id DESC";
+    $stmt_posts = $conn->prepare($query_posts);
+    $stmt_posts->bind_param("i", $user_id);
+    $stmt_posts->execute();
+    $posts_result = $stmt_posts->get_result();
 
-        $imageDirectory = "../assets";
-        $imageFiles = getImageFiles($imageDirectory);
+    // Function to get all image files from a directory
+    function getImageFiles($directory) {
+        $files = glob($directory . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+        return $files;
+    }
+
+    $imageDirectory = "../assets";
+    $imageFiles = getImageFiles($imageDirectory);
 ?>
 
 

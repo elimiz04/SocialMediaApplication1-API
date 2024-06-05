@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../includes/header.php");
 
 // Enable error reporting
 ini_set('display_errors', 1);
@@ -49,12 +50,72 @@ if (isset($_GET['group_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Group: <?php echo htmlspecialchars($group_name); ?></title>
+    <link rel="stylesheet" href="../styles/profile_style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding-top: 50px; /* Add padding to the top of the body */
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        /* Apply the same group styling */
+        .group {
+            width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Center align content */
+        }
+
+        .group p {
+            margin-bottom: 10px;
+        }
+
+        .btn-container {
+            margin-top: 20px;
+            text-align: center;
+            align-items: center; 
+        }
+        .minimal-btn {
+            padding: 10px 20px;
+            background-color: transparent;
+            color: #337ab7;
+            border: 1px solid #337ab7;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+        .minimal-btn:hover {
+            background-color: #337ab7;
+            color: white;
+            border-color: #337ab7;
+        }
+    </style>
 </head>
 <body>
-    <h1><?php echo htmlspecialchars($group_name); ?></h1>
-    <p><?php echo htmlspecialchars($group_description); ?></p>
+    <div class="group">
+        <h1><?php echo htmlspecialchars($group_name); ?></h1>
+        <p><?php echo htmlspecialchars($group_description); ?></p>
 
-    <h2>Add Members</h2>
-    <p><a href="add_members.php?group_id=<?php echo $group_id; ?>">Add Members to Group</a></p>
+        <h2>Add Members</h2>
+        <p><a href="add_members.php?group_id=<?php echo $group_id; ?>" class="minimal-btn">Add Members to Group</a></p>
+    </div>
 </body>
 </html>
