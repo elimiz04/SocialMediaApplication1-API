@@ -23,17 +23,22 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $_SESSION['user_id'] = $user_data['user_id'];
                     header("Location: index.php");
                     die;
-                }
-            }
-        }
-                else{
+                } else {
                     $error_message = "Wrong username or password!";
                 }
-                }else{
-                    $error_message = "Please enter some valid information!"; 
-                }
+            } else {
+                $error_message = "Wrong username or password!";
+            }
+        } else {
+            $error_message = "Database error!";
+        }
+    } else {
+        $error_message = "Please enter some valid information!";
+    }
 }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <script src="js/error.js"></script>
     <style type="text/css"> 
         /* CSS styling for form elements */
         body, html {
@@ -93,11 +99,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             display: block;
         }
     </style>
-    <script>
-        function showError(message){
-            alert(message);
-        }
-    </script>
+  <script>
+    <?php if(!empty($error_message)): ?>
+    alert("<?php echo addslashes($error_message); ?>");
+    <?php endif; ?>
+</script>
+
 </head>
 <body>
     <div id="box">
@@ -111,11 +118,5 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             <a href="signup.php" style="color: white;">Click to Sign up</a><br><br>
         </form>
     </div>
-
-    <?php
-    if(!empty($error_message)){
-        echo "<script type='text/javascript'>showError('$error_message');</script>";
-    }
-    ?>
 </body>
 </html>
