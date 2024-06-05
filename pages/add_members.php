@@ -134,6 +134,9 @@ $users_result = $stmt_get_users->get_result();
             </select>
             <input type="submit" value="Add Selected Members" class="minimal-btn">
         </form>
+        <form action="add_members_process.php?group_id=<?php echo $group_id; ?>" method="post">
+
     </div>
+
 </body>
 </html>

@@ -3,33 +3,71 @@ session_start();
 include("../includes/connection.php");
 include("../includes/header.php");
 
-// Enable error reporting
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// Check if group_id is provided in the URL
+if (isset($_GET['group_id'])) {
+    $group_id = $_GET['group_id'];
+} else {
+    // Redirect back to the "Add Members to Group" page with an error message if group_id is not provided
+    header("Location: add_members.php?error=1");
+    exit;
+}
 
-// Retrieve groups information from the database
-$get_groups_query = "SELECT group_id, name, description FROM groups";
-$stmt_get_groups = $conn->prepare($get_groups_query);
+// Retrieve group information from the database
+$get_group_query = "SELECT name, description FROM groups WHERE group_id = ?";
+$stmt_get_group = $conn->prepare($get_group_query);
 
-if ($stmt_get_groups === false) {
+if ($stmt_get_group === false) {
     echo "Failed to prepare statement: " . $conn->error;
     exit;
 }
 
-if (!$stmt_get_groups->execute()) {
-    echo "Error executing query: " . $stmt_get_groups->error;
+$stmt_get_group->bind_param("i", $group_id);
+
+if (!$stmt_get_group->execute()) {
+    echo "Error executing query: " . $stmt_get_group->error;
     exit;
 }
 
-$groups_result = $stmt_get_groups->get_result();
+$group_result = $stmt_get_group->get_result();
+
+// Check if group exists
+if ($group_result->num_rows > 0) {
+    $group = $group_result->fetch_assoc();
+    $group_name = $group['name'];
+    $group_description = $group['description'];
+} else {
+    echo "Group not found.";
+    exit;
+}
+
+// Retrieve messages associated with the group from the database
+$get_messages_query = "SELECT users.username AS sender_username, messages.content, messages.created_at
+                       FROM messages
+                       JOIN users ON messages.sender_id = users.user_id
+                       WHERE messages.group_id = ?
+                       ORDER BY messages.created_at ASC";
+$stmt_get_messages = $conn->prepare($get_messages_query);
+
+if ($stmt_get_messages === false) {
+    echo "Failed to prepare statement: " . $conn->error;
+    exit;
+}
+
+$stmt_get_messages->bind_param("i", $group_id);
+
+if (!$stmt_get_messages->execute()) {
+    echo "Error executing query: " . $stmt_get_messages->error;
+    exit;
+}
+
+$messages_result = $stmt_get_messages->get_result();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Groups</title>
+    <title>Group Chat: <?php echo htmlspecialchars($group_name); ?></title>
     <link rel="stylesheet" href="../styles/profile_style.css">
     <style>
         body {
@@ -38,18 +76,7 @@ $groups_result = $stmt_get_groups->get_result();
             margin: 0;
             padding: 0;
         }
-        h1, h2 {
-            color: #333;
-            text-align: center;
-        }
-        p {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
-            text-align: justify;
-        }
-        /* Box Styles */
-        #box {
+        .chat-container {
             max-width: 800px;
             margin: 50px auto;
             padding: 20px;
@@ -58,109 +85,62 @@ $groups_result = $stmt_get_groups->get_result();
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-
-        
-        /* Button Styles */
-        .btn-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .minimal-btn, .message-btn {
-            padding: 10px 20px;
-            background-color: transparent;
-            color: #337ab7;
-            border: 1px solid #337ab7;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        }
-        .minimal-btn:hover, .message-btn:hover {
-            background-color: #337ab7;
-            color: white;
-            border-color: #337ab7;
-        }
-
-        .group-container {
-            list-style: none; /* Remove bullet points */
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap; /* Allow groups to wrap to the next line */
-            justify-content: center; /* Center align groups */
-        }
-
-        .group {
-            width: 300px;
-            margin: 20px;
-            padding: 20px;
-            background-color: #f8f9fa;
+        .chat {
+            width: 100%;
+            height: 400px;
+            background-color: #f2f2f2;
+            overflow-y: scroll; /* Enable vertical scrollbar */
+            padding: 10px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: left; /* Align text to the left */
+            margin-bottom: 20px;
         }
-
-        .group h3 {
-            margin-top: 0;
+        .chat-message {
+            margin-bottom: 10px;
         }
-
-        .group p {
-            margin-bottom: 10px; /* Increase margin bottom for spacing */
+        .chat-message span {
+            font-weight: bold;
         }
-
-        .btn-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .minimal-btn {
-            padding: 10px 20px;
-            background-color: transparent;
-            color: #337ab7;
-            border: 1px solid #337ab7;
+        .input-message {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+            border: 1px solid #ccc;
             border-radius: 5px;
-            text-decoration: none;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
         }
-        .minimal-btn:hover {
+        .send-button {
+            padding: 10px 20px;
             background-color: #337ab7;
             color: white;
-            border-color: #337ab7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-
-
-
     </style>
 </head>
 <body>
-    <div id="box">
-        <h1>Welcome to Groups</h1>
-        <div class="btn-container">
-            <a href="create_group_form.php" class="minimal-btn">Create New Group</a>
-        </div>
-        <ul class="group-container">
+    <div class="chat-container">
+        <h1>Group Chat: <?php echo htmlspecialchars($group_name); ?></h1>
+        <div class="chat">
             <?php
-            // Check if groups exist
-            if ($groups_result->num_rows > 0) {
-                // Fetch each group and display its information
-                while ($group = $groups_result->fetch_assoc()) {
-                    $group_id = $group['group_id'];
-                    $group_name = $group['name'];
-                    $group_description = $group['description'];
-                    ?>
-                    <li class="group">
-                        <h3><?php echo htmlspecialchars($group_name); ?></h3>
-                        <p><?php echo htmlspecialchars($group_description); ?></p>
-                        <a href="add_members_form.php?group_id=<?php echo $group_id; ?>" class="minimal-btn">Join Group</a>
-                    </li>
-                    <?php
-                }
-            } else {
-                echo "<p>No groups found.</p>";
+            // Display messages associated with the group
+            while ($message = $messages_result->fetch_assoc()) {
+                echo "<div class='chat-message'>";
+                echo "<span>" . htmlspecialchars($message['sender_username']) . "</span>: " . htmlspecialchars($message['content']);
+                echo "<br>";
+                echo "<span>" . htmlspecialchars($message['created_at']) . "</span>";
+                echo "</div>";
             }
             ?>
-        </ul>
+        </div>
+        <form action="send_message.php" method="post">
+            <input type="hidden" name="group_id" value="<?php echo $group_id; ?>">
+            <textarea class="input-message" name="message" placeholder="Type your message..." required></textarea>
+            <br>
+            <button type="submit" class="send-button">Send</button>
+        </form>
+        <div class="btn-container">
+            <a href="add_members_form.php?group_id=<?php echo $group_id; ?>">Add more members</a>
+        </div>
     </div>
 </body>
 </html>

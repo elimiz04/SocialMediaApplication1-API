@@ -319,30 +319,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
     <?php endif; ?>
 </div>
 
-<div class="group-container">
-    <h2>Your Groups:</h2>
-    <?php
-    // Retrieve groups the user is a member of
-    $user_groups_query = "SELECT g.name, g.description FROM Groups g JOIN Group_Members gm ON g.group_id = gm.group_id WHERE gm.user_id = ?";
-    $stmt_user_groups = $conn->prepare($user_groups_query);
-    $stmt_user_groups->bind_param("i", $user_id);
-    $stmt_user_groups->execute();
-    $user_groups_result = $stmt_user_groups->get_result();
-
-    // Display the group names and descriptions
-    if ($user_groups_result && $user_groups_result->num_rows > 0) {
-        while ($group = $user_groups_result->fetch_assoc()) {
-            echo "<div class='group'>";
-            echo "<h3>{$group['name']}</h3>";
-            echo "<p>{$group['description']}</p>";
-            echo "</div>";
-        }
-    } else {
-        echo "<p>No groups found.</p>";
-    }
-    ?>
-</div>
-
 
         <?php
         // Retrieve user's posts from the database
