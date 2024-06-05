@@ -136,6 +136,9 @@ $groups_result = $stmt_get_groups->get_result();
 <body>
     <div id="box">
         <h1>Welcome to Groups</h1>
+        <div class="btn-container">
+            <a href="create_group_form.php" class="minimal-btn">Create New Group</a>
+        </div>
         <ul class="group-container">
             <?php
             // Check if groups exist
