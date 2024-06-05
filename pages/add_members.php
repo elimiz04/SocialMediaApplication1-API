@@ -44,47 +44,21 @@ if (isset($_GET['group_id'])) {
     exit;
 }
 
-$get_followers_query = "SELECT users.user_id, users.username
-                        FROM users
-                        JOIN follows ON users.user_id = follows.follower_id
-                        WHERE follows.followed_id = ?";
+// Retrieve all users from the database
+$get_users_query = "SELECT user_id, username FROM users";
+$stmt_get_users = $conn->prepare($get_users_query);
 
-$stmt_get_followers = $conn->prepare($get_followers_query);
-if ($stmt_get_followers === false) {
+if ($stmt_get_users === false) {
     echo "Failed to prepare statement: " . $conn->error;
     exit;
 }
 
-$user_id = $_SESSION['user_id']; 
-$stmt_get_followers->bind_param("i", $user_id);
-
-if (!$stmt_get_followers->execute()) {
-    echo "Error executing query: " . $stmt_get_followers->error;
+if (!$stmt_get_users->execute()) {
+    echo "Error executing query: " . $stmt_get_users->error;
     exit;
 }
 
-$followers_result = $stmt_get_followers->get_result();
-
-$stmt_get_followers->close();
-
-
-$user_id = $_SESSION['user_id']; 
-$get_followers_query = "SELECT user_id, username FROM users WHERE user_id IN (SELECT followed_id FROM follows WHERE follower_id = ?)";
-$stmt_get_followers = $conn->prepare($get_followers_query);
-
-if ($stmt_get_followers === false) {
-    echo "Failed to prepare statement: " . $conn->error;
-    exit;
-}
-
-$stmt_get_followers->bind_param("i", $user_id);
-
-if (!$stmt_get_followers->execute()) {
-    echo "Error executing query: " . $stmt_get_followers->error;
-    exit;
-}
-
-$followers_result = $stmt_get_followers->get_result();
+$users_result = $stmt_get_users->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -150,11 +124,11 @@ $followers_result = $stmt_get_followers->get_result();
             <label for="user_ids">Select Followers to Add to Group (hold Ctrl/Cmd to select multiple):</label>
             <select id="user_ids" name="user_ids[]" multiple required>
                 <?php
-                // Display followers as options in the multi-select dropdown
-                while ($follower = $followers_result->fetch_assoc()) {
-                    $follower_id = $follower['user_id'];
-                    $follower_username = $follower['username'];
-                    echo "<option value='$follower_id'>$follower_username</option>";
+                // Display all users as options in the multi-select dropdown
+                while ($user = $users_result->fetch_assoc()) {
+                    $user_id = $user['user_id'];
+                    $username = $user['username'];
+                    echo "<option value='$user_id'>$username</option>";
                 }
                 ?>
             </select>
@@ -163,5 +137,3 @@ $followers_result = $stmt_get_followers->get_result();
     </div>
 </body>
 </html>
-
-
