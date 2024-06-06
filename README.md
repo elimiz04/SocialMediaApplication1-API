@@ -74,6 +74,15 @@ SocialHive is designed for individuals who enjoy social networking and want to c
 - The `script.js` file contains general-purpose JavaScript functions used throughout the platform.
 - The `settings.js` file contains JavaScript functions for managing user settings and preferences.
 
+## Features
+
+- **User Authentication**: Sign up, log in, and log out securely.
+- **Profile Management**: Edit profile information and update account settings.
+- **Content Posting**: Create posts and upload images to share thoughts and experiences.
+- **Group Creation**: Create groups based on specific topics or interests and add members.
+- **Messaging System**: Send private messages to other users and participate in group chats.
+- **Follow System**: Follow other users and receive notifications for their activities.
+
 
 ## Documentation Process
 
