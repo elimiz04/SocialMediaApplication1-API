@@ -33,47 +33,56 @@ SocialHive is designed for individuals who enjoy social networking and want to c
 - Receive notifications: Users receive notifications when someone follows them, likes their posts, comments on their posts, or mentions them in a post.
 
 ## File Structure
-- The `add_members.php` file handles the addition of new members to groups.
-- The `add_members_process.php` file processes the addition of members to groups.
-- The `create_group.php` file handles the creation of new groups.
-- The `create_group_form.php` file displays the form for creating new groups.
-- The `delete_message.php` file handles the deletion of messages.
-- The `edit_message.php` file handles the editing of messages.
-- The `follow_handler.php` file handles follow requests between users.
-- The `follow_users.php` file allows users to follow other users.
-- The `group.php` file displays information about specific groups and their members.
-- The `group_members.php` file manages the members of groups.
-- The `group_messages.php` file manages the messages exchanged within groups.
-- The `home.php` file is the home page of the platform, displaying recent posts and activities.
-- The `image_buttons.php` file handles image-related actions, such as uploading and displaying images.
-- The `index.php` file is the application's entry point.
-- The `load_messages.php` file loads messages for display in chat interfaces.
-- The `login.php` file displays the login form and handles user authentication.
-- The `logout.php` file logs users out of their accounts.
-- The `messages.php` file manages private messages between users.
-- The `post_handler.php` file handles actions related to posting content, such as creating, editing, and deleting posts.
-- The `posts.php` file manages posts and displays them on user profiles and feeds.
-- The `profile.php` file displays user profiles, including profile information, posts, and followers.
-- The `save_group_info.php` file saves information about groups, such as their name, description, and settings.
-- The `send_group_message.php` file sends messages to groups and updates group message logs.
-- The `send_group_messages.php` file manages the sending and receiving of messages within groups.
-- The `send_message.php` file sends private messages between users.
-- The `settings.php` file allows users to manage their account settings and preferences.
-- The `signup.php` file displays the signup form and handles user registration.
-- The `update_notification.php` file updates user notifications based on their preferences and activities.
-- The `update_settings.php` file updates user settings and preferences.
-- The `view_image.php` file displays images uploaded by users.
-- The `view_post.php` file displays individual posts and their details.
-- The `delete_comment.php` file deletes comments on posts.
-- The `display_posts.php` file displays posts on user profiles and feed pages.
-- The `edit_comment.php` file allows users to edit their comments on posts.
-- The `get_preference.php` file retrieves user preferences and settings.
-- The `save_preference.php` file saves user preferences and settings.
-- The `user_id.php` file retrieves the user ID based on their username or email.
-- The `error.js` file contains JavaScript functions for error handling.
-- The `script.js` file contains general-purpose JavaScript functions used throughout the platform.
-- The `settings.js` file contains JavaScript functions for managing user settings and preferences.
+- **includes/**
+  - `header.php`: Contains the header HTML and navigation menu.
+  - `dbfunctions.php`: Contains database-related functions.
+  - `connection.php`: Manages the connection to the MySQL database.
 
+- **pages/**: Contains most of the main code files.
+  - `add_members.php`: Handles the addition of new members to groups.
+  - `add_members_process.php`: Processes the addition of members to groups.
+  - `create_group.php`: Handles the creation of new groups.
+  - `create_group_form.php`: Displays the form for creating new groups.
+  - `delete_message.php`: Handles the deletion of messages.
+  - `edit_message.php`: Handles the editing of messages.
+  - `follow_handler.php`: Handles follow requests between users.
+  - `follow_users.php`: Allows users to follow other users.
+  - `group.php`: Displays information about specific groups and their members.
+  - `group_members.php`: Manages the members of groups.
+  - `group_messages.php`: Manages the messages exchanged within groups.
+  - `home.php`: The home page of the platform, displaying recent posts and activities.
+  - `image_buttons.php`: Handles image-related actions, such as uploading and displaying images.
+  - `index.php`: The application's entry point.
+  - `load_messages.php`: Loads messages for display in chat interfaces.
+  - `login.php`: Displays the login form and handles user authentication.
+  - `logout.php`: Logs users out of their accounts.
+  - `messages.php`: Manages private messages between users.
+  - `post_handler.php`: Handles actions related to posting content, such as creating, editing, and deleting posts.
+  - `posts.php`: Manages posts and displays them on user profiles and feeds.
+  - `profile.php`: Displays user profiles, including profile information, posts, and followers.
+  - `save_group_info.php`: Saves information about groups, such as their name, description, and settings.
+  - `send_group_message.php`: Sends messages to groups and updates group message logs.
+  - `send_group_messages.php`: Manages the sending and receiving of messages within groups.
+  - `send_message.php`: Sends private messages between users.
+  - `settings.php`: Allows users to manage their account settings and preferences.
+  - `signup.php`: Displays the signup form and handles user registration.
+  - `update_notification.php`: Updates user notifications based on their preferences and activities.
+  - `update_settings.php`: Updates user settings and preferences.
+  - `view_image.php`: Displays images uploaded by users.
+  - `view_post.php`: Displays individual posts and their details.
+  - `delete_comment.php`: Deletes comments on posts.
+  - `display_posts.php`: Displays posts on user profiles and feed pages.
+  - `edit_comment.php`: Allows users to edit their comments on posts.
+  - `get_preference.php`: Retrieves user preferences and settings.
+  - `save_preference.php`: Saves user preferences and settings.
+  - `user_id.php`: Retrieves the user ID based on their username or email.
+
+- **js**: Contains files placed here for better detection.
+  - `error.js`: Contains JavaScript functions for error handling.
+  - `script.js`: Contains general-purpose JavaScript functions used throughout the platform.
+  - `settings.js`: Contains JavaScript functions for managing user settings and preferences.
+
+## Documentation Process
 ## Features
 
 - **User Authentication**: Sign up, log in, and log out securely.
