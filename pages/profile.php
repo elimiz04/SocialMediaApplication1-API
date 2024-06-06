@@ -147,6 +147,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
+            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
+            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
         h1, h2 {
             color: #333;
@@ -167,6 +169,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '000' : '#d7d9db'; ?>;
+            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
 
         
@@ -288,6 +292,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
     <?php if (isset($follower_result) && $follower_result && $follower_result->num_rows > 0): ?>
         <h2>Your Followers:</h2>
         <?php while($follower = $follower_result->fetch_assoc()): ?>
+            <style>
+                body{
+                    background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
+                    color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
+                }
+            </style>
             <div class="follower">
                 <p><?php echo $follower['username']; ?></p>
                 <?php

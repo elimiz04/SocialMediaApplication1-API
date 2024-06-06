@@ -42,9 +42,6 @@ if($post_result->num_rows == 1) {
 <head>
     <meta charset="UTF-8">
     <title>View Post</title>
-    <style>
-        /* Add your CSS styles here */
-    </style>
 </head>
 <body>
     <!-- Add your HTML content here -->

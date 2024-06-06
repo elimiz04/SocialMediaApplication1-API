@@ -56,7 +56,9 @@ if (isset($_GET['group_id'])) {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             margin: 0;
-            padding-top: 50px; /* Add padding to the top of the body */
+            padding-top: 50px; 
+            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
+            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
 
         h1, h2 {

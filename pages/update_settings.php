@@ -22,8 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($stmt->execute()) {
         // Settings updated successfully in user_settings table
 
-        // Now update or insert user-specific settings in the settings table
-        $privacy = ''; // You may set the default privacy value here
+        $privacy = ''; 
 
         $query = "INSERT INTO settings (user_id, color_scheme, notifications_enabled) 
                   VALUES (?, ?, ?) 

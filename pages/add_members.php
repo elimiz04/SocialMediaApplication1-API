@@ -75,7 +75,9 @@ $users_result = $stmt_get_users->get_result();
             padding: 0;
             display: flex;
             justify-content: center; /* Center align everything horizontally */
-            align-items: center; /* Center align everything vertically */
+            align-items: center; 
+            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
+            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
 
         /* Container for group content */

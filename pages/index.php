@@ -25,6 +25,8 @@ function getColorModeClass() {
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
+            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
+            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
         #box {
             max-width: 800px;

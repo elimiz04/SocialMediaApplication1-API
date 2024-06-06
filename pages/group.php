@@ -37,6 +37,8 @@ $groups_result = $stmt_get_groups->get_result();
             background-color: #f8f9fa;
             margin: 0;
             padding: 0;
+            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
+            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
         h1, h2 {
             color: #333;
@@ -57,6 +59,8 @@ $groups_result = $stmt_get_groups->get_result();
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '000' : '#d7d9db'; ?>;
+            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
 
         

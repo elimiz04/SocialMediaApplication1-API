@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../includes/header.php");
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -70,6 +71,8 @@ $conn->close();
             <?php endif; ?>
             margin: 0;
             padding: 0;
+            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
+            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
         #box {
             max-width: 800px;
@@ -78,6 +81,8 @@ $conn->close();
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '000' : '#d7d9db'; ?>;
+            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
         h1, h2 {
             color: #333;
