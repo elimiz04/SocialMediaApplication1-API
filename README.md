@@ -77,7 +77,7 @@ SocialHive is designed for individuals who enjoy social networking and want to c
   - `save_preference.php`: Saves user preferences and settings.
   - `user_id.php`: Retrieves the user ID based on their username or email.
 
-- **js**: Contains files placed here for better detection.
+- **js/**: Contains files placed here for better detection.
   - `error.js`: Contains JavaScript functions for error handling.
   - `script.js`: Contains general-purpose JavaScript functions used throughout the platform.
   - `settings.js`: Contains JavaScript functions for managing user settings and preferences.
