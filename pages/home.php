@@ -79,6 +79,7 @@ if (isset($_SESSION['user_id'])) {
             background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
             color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
+        /* Box Styles */
         #box {
             max-width: 800px;
             margin: 50px auto;
@@ -86,6 +87,7 @@ if (isset($_SESSION['user_id'])) {
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
             background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '000' : '#d7d9db'; ?>;
             color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
@@ -160,7 +162,7 @@ if (isset($_SESSION['user_id'])) {
 <body>
 <body class="<?php echo $_SESSION['color_scheme']; ?>">
 
-    <div id="box">
+    <div id="box"  style="background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#000' : '#d7d9db'; ?>; color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>">
     <?php 
             include("../includes/functions.php");
 
