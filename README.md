@@ -87,10 +87,6 @@ SocialHive project documentation plays a crucial role in ensuring clarity, maint
 
 4. **Version Control Commits**: Each commit made to the GitHub repository includes a descriptive message summarizing the changes made in that commit. These messages follow a consistent format and provide context for the modifications, making it easier to track changes over time.
 
-5. **Wiki**: In addition to the README, the project's GitHub repository may include a wiki section for more extensive documentation. This wiki can cover topics such as architecture decisions, coding conventions, troubleshooting guides, and developer workflows.
-
-6. **Contributor Guidelines**: If other developers contribute to the project, clear guidelines are provided for contributing code, reporting issues, and submitting pull requests. These guidelines ensure consistency, quality, and adherence to project standards.
-
 
 
 ## Usage
