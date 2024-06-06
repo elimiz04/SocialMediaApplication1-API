@@ -112,37 +112,44 @@ $conn->close();
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-    $(document).ready(function() {
-        function loadMessages() {
-            $.ajax({
-                url: 'load_messages.php?group_id=<?php echo $group_id; ?>',
-                method: 'GET',
-                success: function(data) {
-                    $('.chat').html(data);
-                }
-            });
-        }
-
-        setInterval(loadMessages, 5000); // Reload messages every 5 seconds
-
-        $('#messageForm').submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                url: 'send_group_message.php',
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function() {
-                    loadMessages();
-                    $('textarea[name="content"]').val('');
-                },
-                error: function(xhr, status, error) {
-                    console.log('Error:', xhr.responseText);
-                }
-            });
+$(document).ready(function() {
+    function loadMessages() {
+        $.ajax({
+            url: 'load_messages.php?group_id=<?php echo $group_id; ?>',
+            method: 'GET',
+            success: function(data) {
+                $('.chat').html(data);
+            }
         });
+    }
 
-        loadMessages(); // Initial load of messages
+    $('#messageForm').submit(function(e) {
+        e.preventDefault();
+        
+        // Disable submit button to prevent multiple submissions
+        $('#messageForm button[type="submit"]').prop('disabled', true);
+
+        $.ajax({
+            url: 'send_group_message.php',
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function() {
+                loadMessages(); // Reload messages after sending a message
+                $('textarea[name="content"]').val('');
+            },
+            error: function(xhr, status, error) {
+                console.log('Error:', xhr.responseText);
+            },
+            complete: function() {
+                // Re-enable submit button after completion
+                $('#messageForm button[type="submit"]').prop('disabled', false);
+            }
+        });
     });
-    </script>
+
+    loadMessages(); // Initial load of messages
+});
+</script>
+
 </body>
 </html>
