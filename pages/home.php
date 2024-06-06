@@ -35,6 +35,27 @@ if (isset($_SESSION['user_id'])) {
     // Default color scheme if user is not logged in
     $color_scheme = 'light';
 }
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $query = "SELECT color_scheme FROM user_settings WHERE user_id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $stmt->store_result();
+
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($color_scheme);
+        $stmt->fetch();
+    } else {
+        // Default color scheme if not found in the database
+        $color_scheme = 'light';
+    }
+
+    $stmt->close();
+} else {
+    // Default color scheme if user is not logged in
+    $color_scheme = 'light';
+}
 ?>
 
 <!DOCTYPE html>
@@ -123,11 +144,18 @@ if (isset($_SESSION['user_id'])) {
             background-color: var(--bg-color);
             color: var(--text-color);
         }
-
+        <?php if ($color_scheme === 'dark'): ?>
+                background-color: #333;
+                color: #f8f9fa;
+            <?php else: ?>
+                background-color: #f8f9fa;
+                color: #333;
+            <?php endif; ?>
     </style>
 </head>
 <body>
 <body class="<?php echo $_SESSION['color_scheme']; ?>">
+
     <div id="box">
     <?php 
             include("../includes/functions.php");

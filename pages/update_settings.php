@@ -1,6 +1,5 @@
 <?php
-session_start(); // Start or resume the session
-
+session_start();
 include("../includes/connection.php");
 
 // Check if the user is logged in
@@ -12,35 +11,38 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user_id = $_SESSION['user_id'];
     $color_scheme = isset($_POST['color_scheme']) ? $_POST['color_scheme'] : 'light'; // Default to light mode if not set
+    $notifications_enabled = isset($_POST['receive_notifications']) ? 1 : 0; // 1 if checked, 0 if not checked
 
-    // Update user's color scheme preference in the database
-    $query = "UPDATE user_settings SET color_scheme = ? WHERE user_id = ?";
+    // Update user's settings in the user_settings table
+    $query = "INSERT INTO user_settings (user_id, color_scheme, receive_notifications) VALUES (?, ?, ?) 
+              ON DUPLICATE KEY UPDATE color_scheme = VALUES(color_scheme), receive_notifications = VALUES(receive_notifications)";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("si", $color_scheme, $user_id);
+    $stmt->bind_param("iss", $user_id, $color_scheme, $notifications_enabled);
 
     if ($stmt->execute()) {
-        // Color scheme preference updated successfully
+        // Settings updated successfully in user_settings table
+
+        // Now update or insert user-specific settings in the settings table
+        $privacy = ''; // You may set the default privacy value here
+
+        $query = "INSERT INTO settings (user_id, color_scheme, notifications_enabled) 
+                  VALUES (?, ?, ?) 
+                  ON DUPLICATE KEY UPDATE color_scheme = VALUES(color_scheme), notifications_enabled = VALUES(notifications_enabled)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("iss", $user_id, $color_scheme, $notifications_enabled);
+        $stmt->execute();
+
         $_SESSION['color_scheme'] = $color_scheme; // Update color scheme in session
-        echo $color_scheme; // Return the updated color scheme
+        $_SESSION['receive_notifications'] = $notifications_enabled; // Update notification preference in session
+        echo json_encode(array('success' => true));
     } else {
         // Log the error
-        error_log('Error updating color scheme: ' . $stmt->error);
+        error_log('Error updating settings: ' . $stmt->error);
         // Return error response
-        echo json_encode(array('success' => false, 'error' => 'Error updating color scheme'));
+        echo json_encode(array('success' => false, 'error' => 'Error updating settings'));
     }
 
     $stmt->close();
-}
-
-// Check if the user has set a color mode preference
-if (!isset($_SESSION['color_mode'])) {
-    // If not, set a default color mode (e.g., light mode)
-    $_SESSION['color_mode'] = 'light';
-}
-
-// Function to apply the appropriate CSS class based on the color mode
-function getColorModeClass() {
-    return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
 }
 
 $conn->close();

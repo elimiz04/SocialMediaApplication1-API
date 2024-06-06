@@ -1,36 +1,54 @@
 <?php
 session_start();
-include("../includes/connection.php"); 
-include("../includes/header.php");
+include("../includes/connection.php");
 
 // Check if the user is logged in
-if(!isset($_SESSION['user_id'])){
-    header("Location: ../pages/login.php");
-    exit; // Stop further execution
+if (!isset($_SESSION['user_id'])) {
+    echo json_encode(array('success' => false, 'error' => 'User not logged in.'));
+    exit;
 }
 
-// Retrieve user settings from the database
-$user_id = $_SESSION['user_id'];
-$query = "SELECT color_scheme, receive_notifications FROM user_settings WHERE user_id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$stmt->store_result();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $user_id = $_SESSION['user_id'];
+    $color_scheme = isset($_POST['color_scheme']) ? $_POST['color_scheme'] : 'light'; // Default to light mode if not set
+    $notifications_enabled = isset($_POST['receive_notifications']) ? 1 : 0; // 1 if checked, 0 if not checked
 
-// Check if user settings exist
-if ($stmt->num_rows > 0) {
-    $stmt->bind_result($color_scheme, $receive_notifications);
-    $stmt->fetch();
-    // Store user settings in session for easy access
-    $_SESSION['color_scheme'] = $color_scheme;
-    $_SESSION['receive_notifications'] = $receive_notifications;
-} else {
-    // Default settings if not found in the database
-    $_SESSION['color_scheme'] = 'light';
-    $_SESSION['receive_notifications'] = 0; // Assuming default is not receiving notifications
+    // Update user's settings in the user_settings table
+    $query = "INSERT INTO user_settings (user_id, color_scheme, receive_notifications) VALUES (?, ?, ?) 
+              ON DUPLICATE KEY UPDATE color_scheme = VALUES(color_scheme), receive_notifications = VALUES(receive_notifications)";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("iss", $user_id, $color_scheme, $notifications_enabled);
+
+    if ($stmt->execute()) {
+        // Settings updated successfully in user_settings table
+
+        // Now update or insert user-specific settings in the settings table
+        $privacy = ''; // You may set the default privacy value here
+
+        $query = "INSERT INTO settings (user_id, color_scheme, notifications_enabled) 
+                  VALUES (?, ?, ?) 
+                  ON DUPLICATE KEY UPDATE color_scheme = VALUES(color_scheme), notifications_enabled = VALUES(notifications_enabled)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("iss", $user_id, $color_scheme, $notifications_enabled);
+        $stmt->execute();
+
+        $_SESSION['color_scheme'] = $color_scheme; // Update color scheme in session
+        $_SESSION['receive_notifications'] = $notifications_enabled; // Update notification preference in session
+        echo json_encode(array('success' => true));
+    } else {
+        // Log the error
+        error_log('Error updating settings: ' . $stmt->error);
+        // Return error response
+        echo json_encode(array('success' => false, 'error' => 'Error updating settings'));
+    }
+
+    $stmt->close();
 }
-$stmt->close();
+
+$conn->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,13 +57,70 @@ $stmt->close();
     <title>User Settings</title>
     <link rel="stylesheet" href="styles.css">
     
+    <!-- Add your CSS styles here -->
     <style>
         body {
             font-family: Arial, sans-serif;
+            <?php if ($color_scheme === 'dark'): ?>
+                background-color: #333;
+                color: #f8f9fa;
+            <?php else: ?>
+                background-color: #f8f9fa;
+                color: #333;
+            <?php endif; ?>
             margin: 0;
             padding: 0;
         }
-
+        #box {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .image-container a {
+            width: calc(33.33% - 20px); /* 20px padding between images */
+            margin: 10px;
+            text-align: center;
+            text-decoration: none; 
+            color: inherit; 
+            height: 200px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            overflow: hidden; 
+        }
+        .image-container img {
+            max-width: 100%; /* Make images fill their containers */
+            max-height: 100%; /* Make images fill their containers */
+            height: auto; /* Ensure images maintain their aspect ratio */
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
+        }
         /* Light Mode Styles */
         .light-mode {
             --text-color: #333;
@@ -64,152 +139,62 @@ $stmt->close();
             color: var(--text-color);
         }
 
-        #box {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        h1, h2 {
-            text-align: center;
-        }
-
-        .btn-container {
+        /* Form styles */
+        #settings-form {
             margin-top: 20px;
-            text-align: center;
-        }
-
-        .minimal-btn, .message-btn {
-            padding: 10px 20px;
-            background-color: transparent;
-            color: #337ab7;
-            border: 1px solid #337ab7;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        }
-
-        .minimal-btn:hover, .message-btn:hover {
-            background-color: #337ab7;
-            color: white;
-            border-color: #337ab7;
-        }
-
-        .settings-form {
-            margin-top: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: var(--text-color);
-        }
-
-        input[type="checkbox"] {
-            margin-right: 5px;
-        }
-
-        .settings-container {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .form-group {
+        label {
             margin-bottom: 10px;
+            font-size: 18px;
         }
 
-        .form-group label {
-            margin-left: 8px;
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        button[type="submit"] {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
-<body class="light-mode"> 
+<body class="<?php echo $_SESSION['color_scheme']; ?>">
+
     <div id="box">
         <h1>User Settings</h1>
-        <main>
-            <form id="settings-form" action="update_settings.php" method="POST">
-                <h2>Color Scheme</h2>
-                <label for="light-mode">Light Mode</label>
-                <input type="radio" name="color_scheme" value="light" id="light-mode" checked>
-                <label for="dark-mode">Dark Mode</label>
-                <input type="radio" name="color_scheme" value="dark" id="dark-mode">
-                <script>
-                    const darkModeRadio = document.getElementById('dark-mode');
-                    const body = document.body;
+        <form id="settings-form" action="update_settings.php" method="POST">
+            <!-- Color Scheme Section -->
+            <h2>Color Scheme</h2>
+            <label for="light-mode">Light Mode</label>
+            <input type="radio" name="color_scheme" value="light" id="light-mode" <?php if ($_SESSION['color_scheme'] === 'light') echo 'checked'; ?>>
+            <label for="dark-mode">Dark Mode</label>
+            <input type="radio" name="color_scheme" value="dark" id="dark-mode" <?php if ($_SESSION['color_scheme'] === 'dark') echo 'checked'; ?>>
 
-                    // Event listener for dark mode radio button
-                    darkModeRadio.addEventListener('change', () => {
-                        if (darkModeRadio.checked) {
-                            body.classList.add('dark-mode');
-                        } else {
-                            body.classList.remove('dark-mode');
-                        }
-                    });
-                </script>
+            <!-- Notification Preferences Section -->
+            <h2>Notification Preferences</h2>
+            <input type="checkbox" name="receive_notifications" id="receive_notifications" 
+            <?php if ($_SESSION['receive_notifications'] == 1) echo 'checked'; ?>
+            <label for="receive_notifications">Receive Notifications</label>
 
-                <div class="form-group">
-                    <input type="checkbox" name="receive_notifications" id="receive_notifications">
-                    <label for="receive_notifications">Receive Notifications</label>
-                </div>
-
-                <button type="submit" class="minimal-btn">Save Settings</button>
-            </form>
-        </main>
+            <!-- Submit Button -->
+            <button type="submit">Save Settings</button>
+        
+        </form>
     </div>
-
-    <script>
-        const form = document.getElementById('settings-form');
-        const darkModeRadio = document.getElementById('dark-mode');
-        const lightModeRadio = document.getElementById('light-mode');
-        const body = document.body;
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(form);
-            
-            fetch('update_settings.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Redirect to profile.php
-                    window.location.href = 'profile.php';
-                } else {
-                    console.error('Error saving settings:', data.error);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-
-           // Event listener for dark mode radio button
-            darkModeRadio.addEventListener('change', () => {
-                if (darkModeRadio.checked) {
-                    body.classList.add('dark-mode');
-                    body.classList.remove('light-mode');
-                }
-            });
-
-            // Event listener for light mode radio button
-            lightModeRadio.addEventListener('change', () => {
-                if (lightModeRadio.checked) {
-                    body.classList.add('light-mode');
-                    body.classList.remove('dark-mode');
-                }
-            });
-                });
-    </script>
 </body>
 </html>
