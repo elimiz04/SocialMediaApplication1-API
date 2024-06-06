@@ -269,6 +269,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
             justify-content: space-around;
             margin-bottom: 20px;
         }
+        .notification {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -282,7 +290,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
             </div>
         <div class="btn-container">
             <a href="posts.php" class="minimal-btn">Add Post</a>
-            <a href="messages.php" class="message-btn">Messages <?php if ($unread_count > 0) { echo '<span class="notification-badge">' . $unread_count . '</span>'; } ?></a>
+            <a href="messages.php"id="messageButton" class="message-btn">Messages<span id="notificationIndicator"></span> <?php if ($unread_count > 0) { echo '<span class="notification-badge">' . $unread_count . '</span>'; } ?></a>
             <a href="settings.php" class="minimal-btn">Settings</a>
             <a href="../pages/follow_users.php" class="minimal-btn">Follow</a>
         </div>
@@ -328,7 +336,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
         <?php endwhile; ?>
     <?php endif; ?>
 </div>
+        <script>
+                $(document).ready(function() {
+                    function updateNotificationIndicator() {
+                        $.ajax({
+                            url: 'get_unread_messages_count.php',
+                            type: 'GET',
+                            success: function(count) {
+                                if (parseInt(count) > 0) {
+                                    $('#notificationPopup').show();
+                                } else {
+                                    $('#notificationPopup').hide();
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error fetching unread messages count: ' + error);
+                            }
+                        });
+                    }
 
+                    // Initial call to update notification indicator
+                    updateNotificationIndicator();
+
+                    // Periodically update notification indicator
+                    setInterval(updateNotificationIndicator, 5000); // Update every 5 seconds (adjust as needed)
+                });
+        </script>
 
         <?php
         // Retrieve user's posts from the database
@@ -382,6 +415,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
                 // Redirect back to the profile page after deletion
                 header("Location: ../pages/profile.php");
                 exit;
+            }
+            ?>
+            <?php
+            include("../pages/get_unread_messages_count.php");?>
+            <?php
+            // Check if there are unread posts
+            if ($unread_count > 0) {
+                echo '<div class="notification">There are ' . $unread_count . ' unread posts.</div>';
+            } else {
+                echo '<div>No unread posts.</div>';
             }
             ?>
     </div>
