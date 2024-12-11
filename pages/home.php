@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../includes/functions.php"); // Ensure this is included
 
 // Ensure color_scheme is set in the session
 if (!isset($_SESSION['color_scheme'])) {
@@ -84,15 +85,13 @@ $box_bg_color = $color_scheme === 'dark' ? '#000' : '#d7d9db';
 <body>
     <div id="box">
         <?php 
-        include("../includes/functions.php");
-
         if (!isset($_SESSION['user_id'])) {
             header("Location: ../pages/login.php");
             die;
         }
 
         $user_id = $_SESSION['user_id'];
-        $user_data = get_user_data($conn, $user_id); // Assuming a helper function for user data
+        $user_data = get_user_data($conn, $user_id); // Fetch user data using the function
 
         if (isset($user_data['username'])): ?>
             <h2>Hello, <?php echo htmlspecialchars($user_data['username']); ?></h2>
