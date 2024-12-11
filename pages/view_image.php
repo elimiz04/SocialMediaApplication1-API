@@ -110,6 +110,27 @@ function getColorModeClass() {
     return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
 }
 
+// Fetch comments with user data
+$query = "SELECT comments.content, users.username, users.profile_image 
+        FROM comments 
+        JOIN users ON comments.user_id = users.user_id 
+        WHERE comments.post_id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $image_id);
+$stmt->execute();
+$comments_result = $stmt->get_result();
+
+while ($comment = $comments_result->fetch_assoc()) {
+    $profileImage = !empty($comment['profile_image']) 
+        ? '../' . htmlspecialchars($comment['profile_image']) 
+        : '../assets/default-profile.png';
+
+    echo "<div class='comment'>";
+    echo "<img src='$profileImage' alt='Profile Picture' style='width:50px; height:50px; border-radius:50%; object-fit:cover;'>";
+    echo "<p><strong>" . htmlspecialchars($comment['username']) . "</strong>: " . htmlspecialchars($comment['content']) . "</p>";
+    echo "</div>";
+}
+
 ?>
 
 <!DOCTYPE html>
