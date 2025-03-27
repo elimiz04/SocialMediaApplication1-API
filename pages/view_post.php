@@ -47,9 +47,10 @@ if($post_result->num_rows == 1) {
     <!-- Add your HTML content here -->
     <div class="post-container">
         <div class="post">
-            <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
+            <!-- Ensure the image path is correct for assets folder -->
+            <img src="../assets/<?php echo htmlspecialchars($post['image_filename']); ?>" alt="Post Image">
             <div class="post-content">
-                <p><?php echo $post['caption']; ?></p>
+                <p><?php echo htmlspecialchars($post['content']); ?></p>
             </div>
         </div>
     </div>
