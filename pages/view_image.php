@@ -161,11 +161,21 @@ $like_count = $result->fetch_assoc()['like_count'];
         .like-button:hover, .comment-submit:hover {
             background-color: #0056b3;
         }
-        .like-count {
-            font-size: 18px;
-            margin-left: 15px;
-            color: #555;
-        }
+        /* Ensure the like count text is visible in both modes */
+    .like-count {
+        color: inherit; /* Inherit color from the body text color */
+        font-weight: bold; /* Optional: Makes the like count more prominent */
+    }
+
+    /* In case the like count is still not showing well, we can adjust the color for both modes explicitly */
+    body.light .like-count {
+        color: #333; /* Dark text for light mode */
+    }
+
+    body.dark .like-count {
+        color: #fff; /* White text for dark mode */
+    }
+
         .comment-input {
             width: 100%;
             padding: 12px;
@@ -234,7 +244,6 @@ $like_count = $result->fetch_assoc()['like_count'];
             $comments_result = $stmt->get_result();
 
             while ($comment = $comments_result->fetch_assoc()):
-                // Removed profile image display as requested
             ?>
                 <div class="comment">
                     <p><strong><?php echo htmlspecialchars($comment['username']); ?>:</strong> 

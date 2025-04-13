@@ -173,6 +173,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
             color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
         }
 
+        /* Style for follower and following counts */
+        .count-container p {
+            color: inherit; /* Make it inherit the body text color */
+            font-weight: bold;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        /* Specifically for dark mode */
+        body.dark-mode .count-container p {
+            color: #fff; /* Ensure it's white in dark mode */
+        }
+
+        /* Specifically for light mode */
+        body.light-mode .count-container p {
+            color: #333; /* Ensure it's dark in light mode */
+        }
+        /* Style for Welcome Message */
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Dark Mode Styles for Welcome Message */
+        body.dark-mode h1 {
+            color: #fff;  /* White color in dark mode */
+        }
+
+        /* Light Mode Styles for Welcome Message */
+        body.light-mode h1 {
+            color: #333;  /* Dark color in light mode */
+        }
+
+
         
         /* Button Styles */
         .btn-container {

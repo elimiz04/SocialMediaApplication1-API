@@ -14,26 +14,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $notifications_enabled = isset($_POST['receive_notifications']) ? 1 : 0; // 1 if checked, 0 if not checked
 
     // Update user's settings in the user_settings table
-    $query = "INSERT INTO user_settings (user_id, color_scheme, receive_notifications) VALUES (?, ?, ?) 
-              ON DUPLICATE KEY UPDATE color_scheme = VALUES(color_scheme), receive_notifications = VALUES(receive_notifications)";
+    $query = "INSERT INTO user_settings (user_id, color_scheme, receive_notifications) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE color_scheme = VALUES(color_scheme), receive_notifications = VALUES(receive_notifications)";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("iss", $user_id, $color_scheme, $notifications_enabled);
 
     if ($stmt->execute()) {
-        // Settings updated successfully in user_settings table
-
-        $privacy = ''; 
-
-        $query = "INSERT INTO settings (user_id, color_scheme, notifications_enabled) 
-                  VALUES (?, ?, ?) 
-                  ON DUPLICATE KEY UPDATE color_scheme = VALUES(color_scheme), notifications_enabled = VALUES(notifications_enabled)";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("iss", $user_id, $color_scheme, $notifications_enabled);
-        $stmt->execute();
-
+        // Update session values
         $_SESSION['color_scheme'] = $color_scheme; // Update color scheme in session
         $_SESSION['receive_notifications'] = $notifications_enabled; // Update notification preference in session
-        echo json_encode(array('success' => true));
+
+        echo json_encode(array('success' => true, 'color_scheme' => $color_scheme));
     } else {
         // Log the error
         error_log('Error updating settings: ' . $stmt->error);

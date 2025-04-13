@@ -3,53 +3,11 @@ session_start();
 include("../includes/connection.php");
 include("../includes/header.php");
 
-// Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(array('success' => false, 'error' => 'User not logged in.'));
-    exit;
+// Ensure color scheme is set from session
+if (!isset($_SESSION['color_scheme'])) {
+    $_SESSION['color_scheme'] = 'light'; // Default to light mode
 }
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user_id = $_SESSION['user_id'];
-    $color_scheme = isset($_POST['color_scheme']) ? $_POST['color_scheme'] : 'light'; // Default to light mode if not set
-    $notifications_enabled = isset($_POST['receive_notifications']) ? 1 : 0; // 1 if checked, 0 if not checked
-
-    // Update user's settings in the user_settings table
-    $query = "INSERT INTO user_settings (user_id, color_scheme, receive_notifications) VALUES (?, ?, ?) 
-              ON DUPLICATE KEY UPDATE color_scheme = VALUES(color_scheme), receive_notifications = VALUES(receive_notifications)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("iss", $user_id, $color_scheme, $notifications_enabled);
-
-    if ($stmt->execute()) {
-        // Settings updated successfully in user_settings table
-
-        // Now update or insert user-specific settings in the settings table
-        $privacy = ''; // You may set the default privacy value here
-
-        $query = "INSERT INTO settings (user_id, color_scheme, notifications_enabled) 
-                  VALUES (?, ?, ?) 
-                  ON DUPLICATE KEY UPDATE color_scheme = VALUES(color_scheme), notifications_enabled = VALUES(notifications_enabled)";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("iss", $user_id, $color_scheme, $notifications_enabled);
-        $stmt->execute();
-
-        $_SESSION['color_scheme'] = $color_scheme; // Update color scheme in session
-        $_SESSION['receive_notifications'] = $notifications_enabled; // Update notification preference in session
-        echo json_encode(array('success' => true));
-    } else {
-        // Log the error
-        error_log('Error updating settings: ' . $stmt->error);
-        // Return error response
-        echo json_encode(array('success' => false, 'error' => 'Error updating settings'));
-    }
-
-    $stmt->close();
-}
-
-$conn->close();
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,96 +15,80 @@ $conn->close();
     <meta charset="UTF-8">
     <title>User Settings</title>
     <link rel="stylesheet" href="styles.css">
-    
-    <!-- Add your CSS styles here -->
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            <?php if ($color_scheme === 'dark'): ?>
-                background-color: #333;
-                color: #f8f9fa;
-            <?php else: ?>
-                background-color: #f8f9fa;
-                color: #333;
-            <?php endif; ?>
-            margin: 0;
-            padding: 0;
-            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
-            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
-        }
-        #box {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '000' : '#d7d9db'; ?>;
-            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
-        }
-        h1, h2 {
-            color: #333;
-            text-align: center;
-        }
-        h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
-            text-align: justify;
-        }
-        .image-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-        .image-container a {
-            width: calc(33.33% - 20px); /* 20px padding between images */
-            margin: 10px;
-            text-align: center;
-            text-decoration: none; 
-            color: inherit; 
-            height: 200px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            overflow: hidden; 
-        }
-        .image-container img {
-            max-width: 100%; /* Make images fill their containers */
-            max-height: 100%; /* Make images fill their containers */
-            height: auto; /* Ensure images maintain their aspect ratio */
-            border-radius: 10px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow effect */
-        }
-        /* Light Mode Styles */
-        .light-mode {
-            --text-color: #333;
-            --bg-color: #f8f9fa;
-        }
+        /* Light Mode Styling */
+body.light {
+    background-color: #f8f9fa;  /* Light background */
+    color: #333;  /* Dark text for light mode */
+}
 
-        /* Dark Mode Styles */
-        .dark-mode {
-            --text-color: #f8f9fa;
-            --bg-color: #333;
-        }
+/* Dark Mode Styling */
+body.dark {
+    background-color: #333;  /* Dark background for dark mode */
+    color: #fff;  /* White text for dark mode */
+}
 
-        /* Apply color variables to body */
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
+#box {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#222' : '#d7d9db'; ?>;
+    color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#fff' : '#333'; ?>;
+}
 
-        /* Form styles */
+/* Ensure the text is white in dark mode */
+body.dark {
+    color: #fff;  /* Global text color for dark mode */
+}
+
+/* Target specific elements for color adjustments */
+h1, h2, p, label {
+    color: inherit; /* Inherit color from parent (light or dark) */
+}
+
+/* Additional rule for like count text */
+#like-count {
+    color: inherit; /* Ensure like count text uses the same color */
+}
+
+/* Form Styles */
+#settings-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+button[type="submit"] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+
+        /* Form Styles */
         #settings-form {
-            margin-top: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -193,13 +135,44 @@ $conn->close();
             <!-- Notification Preferences Section -->
             <h2>Notification Preferences</h2>
             <input type="checkbox" name="receive_notifications" id="receive_notifications" 
-            <?php if ($_SESSION['receive_notifications'] == 1) echo 'checked'; ?>
+            <?php if ($_SESSION['receive_notifications'] == 1) echo 'checked'; ?>>
             <label for="receive_notifications">Receive Notifications</label>
 
             <!-- Submit Button -->
             <button type="submit">Save Settings</button>
-        
         </form>
     </div>
+
+    <script>
+        document.getElementById('settings-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent normal form submission
+
+            // Get form data
+            var formData = new FormData(this);
+            
+            // Send the data to the server via AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'update_settings.php', true);
+            xhr.onload = function () {
+                var response = JSON.parse(xhr.responseText);
+
+                if (response.success) {
+                    // Update UI (for example, change the page color scheme immediately)
+                    document.body.className = response.color_scheme; // Apply the updated color scheme
+
+                    // Show success message to the user
+                    alert('Settings updated successfully!');
+
+                    // Redirect to home screen after settings update
+                    window.location.href = '../pages/home.php';  
+                } else {
+                    // Show error message
+                    alert('Error updating settings: ' + response.error);
+                }
+            };
+            xhr.send(formData);
+        });
+    </script>
+
 </body>
 </html>
