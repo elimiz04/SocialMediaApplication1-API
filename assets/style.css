@@ -114,9 +114,9 @@ a:hover {
 /* Button and Link Container */
 .btn-container {
     display: flex;
-    justify-content: center; /* Center align the links */
-    gap: 20px; /* Add space between links */
-    margin-bottom: 30px; /* Add margin at the bottom */
+    justify-content: center; 
+    gap: 20px; 
+    margin-bottom: 30px; 
 }
 
 /* Each individual link */
@@ -130,29 +130,29 @@ a:hover {
 
 /* Add a vertical line between the links */
 .btn-container a:not(:last-child)::after {
-    content: '|'; /* Vertical separator */
+    content: '|'; 
     position: absolute;
-    right: -10px; /* Position it right next to the link */
+    right: -10px; 
     top: 50%;
-    transform: translateY(-50%); /* Center the separator vertically */
-    color: #ddd; /* Light grey color for the separator */
-    font-size: 1.5rem; /* Adjust separator size */
+    transform: translateY(-50%); 
+    color: #ddd; 
+    font-size: 1.5rem; 
 }
 
 /* Hover Effect for Links */
 .btn-container a:hover {
-    color: #3498db; /* Lighter blue on hover */
+    color: #3498db; 
 }
 
 
 /* Image Container (on the Home Page) */
 .image-container {
-    display: flex; /* Flexbox layout */
-    justify-content: space-between; /* Space images evenly */
-    gap: 30px;  /* Increased gap for better spacing */
-    flex-wrap: wrap; /* Allow images to wrap on smaller screens */
+    display: flex; 
+    justify-content: space-between; 
+    gap: 30px;  
+    flex-wrap: wrap; 
     margin-bottom: 30px; 
-    width: 100%; /* Ensure the container takes up full width */
+    width: 100%; 
 }
 
 /* Image Styles */
@@ -160,7 +160,7 @@ a:hover {
     display: block; 
     width: 30%;  /* Adjusted to fit 3 items in a row */
     margin-bottom: 20px; 
-    border-radius: 8px;  /* Keep rounded corners for images */
+    border-radius: 8px;  
     overflow: hidden;  /* Ensures rounded corners stay intact */
 }
 
@@ -197,24 +197,24 @@ a:hover {
 
 /* Container for follower and following counts */
 .count-container {
-    display: flex; /* Use flexbox to align items horizontally */
-    justify-content: center; /* Center the items */
-    gap: 20px; /* Add space between the two items */
-    margin-bottom: 20px; /* Add some space below the count container */
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    margin-bottom: 20px; 
 }
 
 /* Style for each paragraph (optional, adjust to your liking) */
 .count-container p {
     font-size: 1rem;
-    color: #333; /* Adjust color to match your design */
-    margin: 0; /* Remove margin for a more compact layout */
+    color: #333; 
+    margin: 0; 
 }
 
 /* CSS to display posts in 3 columns */
 .post-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Create 3 equal-width columns */
-    gap: 20px; /* Space between posts */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px; 
     padding: 20px;
 }
 
@@ -226,21 +226,21 @@ a:hover {
 }
 
 .post {
-    border: 1px solid #ccc; /* Optional: Add borders to posts for visibility */
-    border-radius: 8px; /* Optional: Rounded corners */
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
     overflow: hidden;
     padding: 10px;
-    background-color: #fff; /* Optional: Post background */
+    background-color: #fff; 
 }
 
 .post img {
-    width: 100%; /* Make images fill the container */
+    width: 100%; 
     height: auto;
 }
 
 .delete-btn {
     margin-top: 10px; /* Add some space between the image and delete button */
-    background-color: red; /* Optional: Style for the delete button */
+    background-color: red; 
     color: white;
     padding: 5px 10px;
     border: none;
@@ -254,8 +254,8 @@ a:hover {
 /* Style the post container with grid */
 .post-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns layout */
-    gap: 20px; /* Space between posts */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px; 
     padding: 20px;
 }
 
@@ -269,35 +269,275 @@ a:hover {
 /* Style each individual post */
 .post {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    justify-content: space-between; /* Push the content apart */
+    flex-direction: column; 
+    justify-content: space-between;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
     padding: 10px;
     background-color: #fff; /* Background color */
-    height: 350px; /* Set a fixed height to ensure space for the button at the bottom */
+    height: 350px; 
 }
 
 /* Ensure images inside the post are fully responsive */
 .post img {
-    width: 100%; /* Make images fill the container */
+    width: 100%;
     height: auto;
-    flex-grow: 1; /* Allow the image to grow and take available space */
+    flex-grow: 1; 
 }
 
 /* Style for the delete button */
 .delete-btn {
-    margin-top: 10px; /* Space between image and button */
-    background-color: blue; /* Change button color to blue */
+    margin-top: 10px; 
+    background-color: blue; 
     color: white;
-    padding: 8px 16px; /* Padding for better appearance */
+    padding: 8px 16px; 
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    align-self: flex-end; /* Position the button at the bottom */
+    align-self: flex-end; 
 }
 
 .delete-btn:hover {
-    background-color: darkblue; /* Change button color on hover */
+    background-color: darkblue; 
+}
+
+<style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: <?php echo $bg_color; ?>;
+            color: <?php echo $text_color; ?>;
+            margin: 0;
+            padding: 0;
+        }
+        #box {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: <?php echo $box_bg_color; ?>;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .like-button, .comment-submit {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 0;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .like-button:hover, .comment-submit:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Ensure the like count text is visible in both modes */
+    .like-count {
+        color: inherit; 
+        font-weight: bold; 
+    }
+
+    /* In case the like count is still not showing well, we can adjust the color for both modes explicitly */
+    body.light .like-count {
+        color: #333; /* Dark text for light mode */
+    }
+
+    body.dark .like-count {
+        color: #fff; /* White text for dark mode */
+    }
+
+        .comment-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        .comment-input:focus {
+            border-color: #007bff;
+        }
+        .comments {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .comment {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: <?php echo $color_scheme === 'dark' ? '#444' : '#f9f9f9'; ?>;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .comment p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        /* Like Button */
+.like-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.like-button:hover {
+    background-color: #0056b3;
+}
+
+/* Like Count */
+.like-count {
+    display: block;
+    font-weight: bold;
+    margin-top: 5px;
+    color: inherit; /* Inherits from body */
+}
+
+/* Fix for light/dark mode */
+body.light-mode .like-count {
+    color: #333;
+}
+
+body.dark-mode .like-count {
+    color: #fff;
+}
+
+/* Comment Input */
+.comment-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.comment-input:focus {
+    border-color: #007bff;
+}
+
+/* Comment Submit Button */
+.comment-submit {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.comment-submit:hover {
+    background-color: #0056b3;
+}
+
+/* Comments Section */
+.comments {
+    margin-top: 30px;
+    text-align: left;
+}
+
+/* Single Comment Style */
+.comment {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Comment Text */
+.comment p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* Dark mode comment background */
+body.dark-mode .comment {
+    background-color: #444;
+}
+
+/* Image Display Wrapper */
+.image-wrapper {
+    margin-bottom: 25px;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.image-wrapper img:hover {
+    transform: scale(1.02);
+}
+
+/* Interaction Bar (Like + Count) */
+.interaction-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+/* Enhanced Comment Form */
+#commentForm {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* No Comments Message */
+.no-comments {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* Enhanced Comment Structure */
+.comment-author {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #2c3e50;
+}
+
+body.dark-mode .comment-author {
+    color: #f0f0f0;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 600px) {
+    .interaction-bar {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .like-button, .comment-submit {
+        width: 100%;
+    }
+
+    .comment-input {
+        min-height: 80px;
+    }
 }
