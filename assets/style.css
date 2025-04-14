@@ -1,0 +1,303 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Light and Dark Mode Styles */
+body.light-mode {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+body.dark-mode {
+    background-color: #181818;
+    color: #ddd;
+}
+
+/* Container Box */
+#box {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: box-shadow 0.3s;
+}
+
+/* Heading Styles */
+h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #2980b9;
+}
+
+/* Paragraph Styles */
+p {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+
+/* Button Styles */
+button, .btn-link {
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s ease;
+    text-decoration: none;
+    display: inline-block; /* Ensures it behaves like a button */
+    margin: 20px 0; /* Increased space between buttons/links */
+}
+
+/* Button Hover Effect */
+button:hover, .btn-link:hover {
+    background-color: #3498db;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Add Post Button */
+.add-post-btn {
+    background-color: #27ae60; /* Green for 'Add Post' to signify action */
+    color: #fff;
+    border-radius: 35px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 30px;
+    margin-top: 20px;
+}
+
+.add-post-btn:hover {
+    background-color: #2ecc71;
+    transform: translateY(-4px);
+}
+
+/* Link Styling */
+a {
+    color: #2980b9;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #3498db; /* Lighter blue on hover */
+    text-decoration: underline;
+}
+
+/* Button and Link Container */
+.btn-container {
+    display: flex;
+    justify-content: center; /* Center align the links */
+    gap: 20px; /* Add space between links */
+    margin-bottom: 30px; /* Add margin at the bottom */
+}
+
+/* Each individual link */
+.btn-container a {
+    font-size: 1.1rem;
+    color: #2980b9;
+    text-decoration: none;
+    padding: 10px;
+    position: relative; /* Positioning for the line effect */
+}
+
+/* Add a vertical line between the links */
+.btn-container a:not(:last-child)::after {
+    content: '|'; /* Vertical separator */
+    position: absolute;
+    right: -10px; /* Position it right next to the link */
+    top: 50%;
+    transform: translateY(-50%); /* Center the separator vertically */
+    color: #ddd; /* Light grey color for the separator */
+    font-size: 1.5rem; /* Adjust separator size */
+}
+
+/* Hover Effect for Links */
+.btn-container a:hover {
+    color: #3498db; /* Lighter blue on hover */
+}
+
+
+/* Image Container (on the Home Page) */
+.image-container {
+    display: flex; /* Flexbox layout */
+    justify-content: space-between; /* Space images evenly */
+    gap: 30px;  /* Increased gap for better spacing */
+    flex-wrap: wrap; /* Allow images to wrap on smaller screens */
+    margin-bottom: 30px; 
+    width: 100%; /* Ensure the container takes up full width */
+}
+
+/* Image Styles */
+.image-container a {
+    display: block; 
+    width: 30%;  /* Adjusted to fit 3 items in a row */
+    margin-bottom: 20px; 
+    border-radius: 8px;  /* Keep rounded corners for images */
+    overflow: hidden;  /* Ensures rounded corners stay intact */
+}
+
+.image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  /* A little larger shadow for more emphasis */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* Hover Effect for Images */
+.image-container img:hover {
+    transform: scale(1.05); /* Slight zoom effect when hovering over the image */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .image-container {
+        justify-content: center; /* Center-align images on smaller screens */
+    }
+
+    .image-container a {
+        width: 45%; /* Make images take up 45% on medium-sized screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .image-container a {
+        width: 100%; /* Make images take up full width on smaller screens */
+    }
+}
+
+/* Container for follower and following counts */
+.count-container {
+    display: flex; /* Use flexbox to align items horizontally */
+    justify-content: center; /* Center the items */
+    gap: 20px; /* Add space between the two items */
+    margin-bottom: 20px; /* Add some space below the count container */
+}
+
+/* Style for each paragraph (optional, adjust to your liking) */
+.count-container p {
+    font-size: 1rem;
+    color: #333; /* Adjust color to match your design */
+    margin: 0; /* Remove margin for a more compact layout */
+}
+
+/* CSS to display posts in 3 columns */
+.post-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create 3 equal-width columns */
+    gap: 20px; /* Space between posts */
+    padding: 20px;
+}
+
+/* Optional: For responsiveness (1 column on smaller screens) */
+@media (max-width: 768px) {
+    .post-container {
+        grid-template-columns: 1fr; /* Stack posts vertically on smaller screens */
+    }
+}
+
+.post {
+    border: 1px solid #ccc; /* Optional: Add borders to posts for visibility */
+    border-radius: 8px; /* Optional: Rounded corners */
+    overflow: hidden;
+    padding: 10px;
+    background-color: #fff; /* Optional: Post background */
+}
+
+.post img {
+    width: 100%; /* Make images fill the container */
+    height: auto;
+}
+
+.delete-btn {
+    margin-top: 10px; /* Add some space between the image and delete button */
+    background-color: red; /* Optional: Style for the delete button */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: darkred; /* Change color when hovering */
+}
+/* Style the post container with grid */
+.post-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns layout */
+    gap: 20px; /* Space between posts */
+    padding: 20px;
+}
+
+/* Optional: For responsiveness (1 column on smaller screens) */
+@media (max-width: 768px) {
+    .post-container {
+        grid-template-columns: 1fr; /* Stack posts vertically on smaller screens */
+    }
+}
+
+/* Style each individual post */
+.post {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: space-between; /* Push the content apart */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 10px;
+    background-color: #fff; /* Background color */
+    height: 350px; /* Set a fixed height to ensure space for the button at the bottom */
+}
+
+/* Ensure images inside the post are fully responsive */
+.post img {
+    width: 100%; /* Make images fill the container */
+    height: auto;
+    flex-grow: 1; /* Allow the image to grow and take available space */
+}
+
+/* Style for the delete button */
+.delete-btn {
+    margin-top: 10px; /* Space between image and button */
+    background-color: blue; /* Change button color to blue */
+    color: white;
+    padding: 8px 16px; /* Padding for better appearance */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end; /* Position the button at the bottom */
+}
+
+.delete-btn:hover {
+    background-color: darkblue; /* Change button color on hover */
+}

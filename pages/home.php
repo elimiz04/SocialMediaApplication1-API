@@ -36,51 +36,8 @@ $box_bg_color = $color_scheme === 'dark' ? '#000' : '#d7d9db';
     <meta charset="UTF-8">
     <title>Home</title>
     <?php include "../includes/header.php"; ?> 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: <?php echo $bg_color; ?>;
-            color: <?php echo $text_color; ?>;
-            margin: 0;
-            padding: 0;
-        }
-        #box {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: <?php echo $box_bg_color; ?>;
-            border-radius: 10px;
-            text-align: center;
-        }
-        h1, h2 {
-            text-align: center;
-        }
-        h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-        p {
-            line-height: 1.6;
-        }
-        .image-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-        .image-container a {
-            width: calc(33.33% - 20px);
-            margin: 10px;
-            text-decoration: none;
-        }
-        .image-container img {
-            max-width: 100%;
-            border-radius: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/style.css">
+
 </head>
 <body>
     <div id="box">

@@ -141,179 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
     <meta charset="UTF-8">
     <title>Profile</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
-            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
-        }
-        h1, h2 {
-            color: #333;
-            text-align: center;
-        }
-        p {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
-            text-align: justify;
-        }
-        /* Box Styles */
-        #box {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '000' : '#d7d9db'; ?>;
-            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
-        }
-
-        /* Style for follower and following counts */
-        .count-container p {
-            color: inherit; /* Make it inherit the body text color */
-            font-weight: bold;
-            font-size: 16px;
-            margin: 5px;
-        }
-
-        /* Specifically for dark mode */
-        body.dark-mode .count-container p {
-            color: #fff; /* Ensure it's white in dark mode */
-        }
-
-        /* Specifically for light mode */
-        body.light-mode .count-container p {
-            color: #333; /* Ensure it's dark in light mode */
-        }
-        /* Style for Welcome Message */
-        h1 {
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        /* Dark Mode Styles for Welcome Message */
-        body.dark-mode h1 {
-            color: #fff;  /* White color in dark mode */
-        }
-
-        /* Light Mode Styles for Welcome Message */
-        body.light-mode h1 {
-            color: #333;  /* Dark color in light mode */
-        }
-
-
-        
-        /* Button Styles */
-        .btn-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .minimal-btn, .message-btn {
-            padding: 10px 20px;
-            background-color: transparent;
-            color: #337ab7;
-            border: 1px solid #337ab7;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        }
-        .minimal-btn:hover, .message-btn:hover {
-            background-color: #337ab7;
-            color: white;
-            border-color: #337ab7;
-        }
-
-        /* Post Styles */
-        .post {
-            width: calc(33.33% - 20px);
-            margin: 10px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            position: relative; 
-        }
-
-        .delete-form {
-            position: absolute;
-            bottom: 0PX; 
-            left: 50%; 
-            transform: translateX(-50%);
-        }
-
-        .post img {
-            width: 100%;
-            height: auto;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        .post-content {
-            padding: 10px;
-        }
-
-
-        .delete-form {
-            display: flex;
-            justify-content: center;
-        }
-        .delete-btn {
-            margin-top: 10px;
-        }
-        .notification-badge {
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 4px 8px;
-            font-size: 12
-        }
-            .notification-badge {
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            padding: 4px 8px;
-            font-size: 12px;
-            position: absolute;
-            top: -10px;
-            right: -10px;
-        }
-
-        .message-button-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        /* Follower Styles */
-        .follower-container {
-            margin-top: 20px;
-        }
-        .follower {
-            margin-bottom: 10px;
-        }
-
-        .count-container {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-        }
-        .notification {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border: 1px solid #f5c6cb;
-            border-radius: 5px;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 
         <div id="box">
@@ -331,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
             <a href="../pages/follow_users.php" class="minimal-btn">Follow</a>
         </div>
         <br><br>
-       <!-- Display follow/unfollow buttons -->
+<!-- Display follow/unfollow buttons -->
 <div class="follower-container">
     <?php if (isset($follower_result) && $follower_result && $follower_result->num_rows > 0): ?>
         <h2>Your Followers:</h2>
@@ -409,11 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
         ?>
         <div class="post-container">
             <?php if ($result && $result->num_rows > 0): ?>
-                <?php $count = 0; ?>
                 <?php while($post = $result->fetch_assoc()): ?>
-                    <?php if ($count % 3 == 0): ?>
-                        <div class="row">
-                    <?php endif; ?>
                     <div class="post">
                         <a href="post_handler.php?post_id=<?php echo $post['post_id']; ?>">
                             <img src="../assets/<?php echo $post['image']; ?>" alt="Post Image">
@@ -423,17 +247,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
                             <input type="hidden" name="image" value="<?php echo $post['image']; ?>">
                             <button type="submit" class="minimal-btn delete-btn">Delete</button>
                         </form>
-
                     </div>
-                    <?php $count++; ?>
-                    <?php if ($count % 3 == 0 || $count == $result->num_rows): ?>
-                        </div> <!-- Close row -->
-                    <?php endif; ?>
                 <?php endwhile; ?>
             <?php else: ?>
                 <p>No posts found.</p>
             <?php endif; ?>
         </div>
+
 
         
 
