@@ -711,3 +711,62 @@ h2 {
 .edit-form button:hover {
     background-color: #27ae60;
 }
+
+/* Extended Light/Dark Mode with PHP Logic */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
+    color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Adjusted Box Styling for Dark Mode via PHP */
+#box {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#000' : '#d7d9db'; ?>;
+    color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Headings (if not already styled elsewhere) */
+h1, h2 {
+    color: #333;
+    text-align: center;
+}
+
+/* Minimal Button Styles */
+.minimal-btn {
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #337ab7;
+    border: 1px solid #337ab7;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.minimal-btn:hover {
+    background-color: #337ab7;
+    color: white;
+    border-color: #337ab7;
+}
+
+/* Button Container if not already defined */
+.btn-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.post-container h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+}
