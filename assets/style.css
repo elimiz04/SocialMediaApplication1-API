@@ -541,3 +541,173 @@ body.dark-mode .comment-author {
         min-height: 80px;
     }
 }
+
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7fb;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#box {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #2980b9;
+}
+
+.post-content {
+    margin-bottom: 30px;
+}
+
+.post-content img {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Comment Form Styles */
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.comment-form textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    resize: vertical;
+}
+
+.comment-form button {
+    padding: 10px 20px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.comment-form button:hover {
+    background-color: #3498db;
+}
+
+/* Comment Form Styles */
+.comment-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.comment-form textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    resize: vertical;
+}
+
+.comment-form button {
+    padding: 10px 20px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: #3498db;
+}
+
+/* Comment Section Styles */
+.comment {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Align the comment text */
+.comment-text {
+    flex: 1;
+    margin-right: 10px;
+}
+
+/* Styling the comment buttons container */
+.comment-buttons {
+    display: flex;
+    gap: 10px; /* Space between the buttons */
+    align-items: center; /* Align buttons vertically in the center */
+}
+
+/* Styling for all buttons */
+.comment-buttons .btn {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.comment-buttons .btn:hover {
+    background-color: #2980b9;
+}
+
+/* Specific styling for the delete button */
+.comment-buttons .delete-btn {
+    background-color: red;
+}
+
+.comment-buttons .delete-btn:hover {
+    background-color: darkred;
+}
+
+/* Styling the edit form */
+.edit-form {
+    display: none;
+    margin-top: 15px;
+}
+
+.edit-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.edit-form button {
+    background-color: #2ecc71;
+}
+
+.edit-form button:hover {
+    background-color: #27ae60;
+}

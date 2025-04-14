@@ -153,10 +153,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
                 <p>Following: <?php echo $following_count; ?></p>
             </div>
         <div class="btn-container">
-            <a href="posts.php" class="minimal-btn">Add Post</a>
+            <a href="posts.php" class="message-btn">Add Post</a>
             <a href="messages.php"id="messageButton" class="message-btn">Messages<span id="notificationIndicator"></span> <?php if ($unread_count > 0) { echo '<span class="notification-badge">' . $unread_count . '</span>'; } ?></a>
-            <a href="settings.php" class="minimal-btn">Settings</a>
-            <a href="../pages/follow_users.php" class="minimal-btn">Follow</a>
+            <a href="settings.php" class="message-btn">Settings</a>
+            <a href="../pages/follow_users.php" class="message-btn">Follow</a>
         </div>
         <br><br>
 <!-- Display follow/unfollow buttons -->
