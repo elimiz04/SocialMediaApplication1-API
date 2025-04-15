@@ -51,7 +51,6 @@ $notification_result = $stmt_notifications->get_result();
 $notification_count = $notification_result->fetch_assoc()['unread_count'];
 $stmt_notifications->close();
 
-
 // Check if the user has set a color mode preference
 if (!isset($_SESSION['color_mode'])) {
     // If not, set a default color mode (e.g., light mode)
@@ -63,7 +62,6 @@ function getColorModeClass() {
     return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
 }
 ?>
-
 
 
 <!DOCTYPE html>
@@ -92,94 +90,92 @@ function getColorModeClass() {
             });
         });
     </script>
-        <link rel="stylesheet" href="../assets/style.css">
-
-    
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body class="<?php echo getColorModeClass(); ?>">
 <div id="box">
-        <h1>Messages</h1>
+    <h1>Messages</h1>
 
-        <!-- List of users -->
-        <h2>Select User to Message</h2>
-        <form method="post" action="">
-            <select name="receiver_id" onchange="this.form.submit()">
-                <?php while ($user_row = $users_result->fetch_assoc()): ?>
-                    <option value="<?php echo $user_row['user_id']; ?>" <?php echo $receiver_id == $user_row['user_id'] ? 'selected' : ''; ?>>
-                        <?php echo htmlspecialchars($user_row['username']); ?>
-                    </option>
-                <?php endwhile; ?>
-            </select>
-        </form>
-
-        <div class="message-container">
-            
-
-            <?php while ($row = $result->fetch_assoc()): ?>
-                <div class="message <?php echo $row['sender_id'] == $user_id ? 'sent' : 'received'; ?>">
-    <div class="message-header">
-            <p class="message-content">
-                <strong><?php echo htmlspecialchars($row['sender_username']); ?>:</strong> 
-                <?php echo htmlspecialchars($row['content']); ?>
-            </p>
-            <?php if ($row['sender_id'] == $user_id): ?>
-                <div class="message-actions">
-                    <button onclick="showEditForm(<?php echo $row['message_id']; ?>, '<?php echo htmlspecialchars(addslashes($row['content'])); ?>')">Edit</button>
-                    <form method="post" action="delete_message.php" style="display: inline;">
-                        <input type="hidden" name="message_id" value="<?php echo $row['message_id']; ?>">
-                        <button type="submit">Delete</button>
-                    </form>
-                </div>
-            <?php endif; ?>
-        </div>
-        <span class="message-time"><?php echo $row['created_at']; ?></span>
-    </div>
-
+    <!-- List of users -->
+    <h2>Select User to Message</h2>
+    <form method="post" action="">
+        <select name="receiver_id" onchange="this.form.submit()">
+            <?php while ($user_row = $users_result->fetch_assoc()): ?>
+                <option value="<?php echo $user_row['user_id']; ?>" <?php echo $receiver_id == $user_row['user_id'] ? 'selected' : ''; ?>>
+                    <?php echo htmlspecialchars($user_row['username']); ?>
+                </option>
             <?php endwhile; ?>
-
-
-
-
-        </div>
-        <form method="post" action="send_message.php" class="chat-form">
-    <input type="hidden" name="receiver_id" value="<?php echo $receiver_id; ?>">
-    <input type="hidden" name="sender_id" value="<?php echo $user_id; ?>">
-
-    <div class="chat-input-wrapper">
-        <textarea name="content" class="chat-textarea" placeholder="Type your message..." required></textarea>
-        <button type="submit" class="send-btn">➤</button>
-    </div>
-</form>
-
-
-
-    </div>
-
-    <!-- Edit Message Modal -->
-    <div id="editModal" style="display:none;">
-        <form method="post" action="edit_message.php">
-            <textarea name="content" id="editContent" class="chat-input" placeholder="Edit your message..." required></textarea>
-    <input type="hidden" name="message_id" id="editMessageId">
-    <button type="submit" class="minimal-btn">Update</button>
-    <button type="button" onclick="hideEditForm()" class="minimal-btn">Cancel</button>
+        </select>
     </form>
-    </div>
-    <script>
-        function showEditForm(messageId, content) {
-            document.getElementById('editMessageId').value = messageId;
-            document.getElementById('editContent').value = content;
-            document.getElementById('editModal').style.display = 'block';
-        }
 
-        function hideEditForm() {
-            document.getElementById('editModal').style.display = 'none';
-        }
-    </script>
-    </body>
-    </html>
-    <?php
-    $stmt->close();
-    $stmt_users->close();
-    $stmt_update_read->close();
-    $conn->close();
-    ?>
+    <div class="message-container">
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <div class="message <?php echo $row['sender_id'] == $user_id ? 'sent' : 'received'; ?>">
+                <div class="message-header">
+                    <p class="message-content">
+                        <strong><?php echo htmlspecialchars($row['sender_username']); ?>:</strong> 
+                        <?php echo htmlspecialchars($row['content']); ?>
+                    </p>
+                </div>
+
+                <!-- Time and Date -->
+                <div class="message-footer">
+                    <span class="message-time"><?php echo $row['created_at']; ?></span>
+
+                    <?php if ($row['sender_id'] == $user_id): ?>
+                        <div class="message-actions">
+                            <button class="action-btn" onclick="showEditForm(<?php echo $row['message_id']; ?>, '<?php echo htmlspecialchars(addslashes($row['content'])); ?>')">Edit</button>
+                            <form method="post" action="delete_message.php" style="display: inline;">
+                                <input type="hidden" name="message_id" value="<?php echo $row['message_id']; ?>">
+                                <button type="submit" class="action-btn">Delete</button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
+
+
+                </div>
+            </div>
+        <?php endwhile; ?>
+    </div>
+
+    <form method="post" action="send_message.php" class="chat-form">
+        <input type="hidden" name="receiver_id" value="<?php echo $receiver_id; ?>">
+        <input type="hidden" name="sender_id" value="<?php echo $user_id; ?>">
+
+        <div class="chat-input-wrapper">
+            <textarea name="content" class="chat-textarea" placeholder="Type your message..." required></textarea>
+            <button type="submit" class="send-btn">➤</button>
+        </div>
+    </form>
+</div>
+
+<!-- Edit Message Modal -->
+<div id="editModal" style="display:none;">
+    <form method="post" action="edit_message.php">
+        <textarea name="content" id="editContent" class="chat-input" placeholder="Edit your message..." required></textarea>
+        <input type="hidden" name="message_id" id="editMessageId">
+        <button type="submit" class="minimal-btn">Update</button>
+        <button type="button" onclick="hideEditForm()" class="minimal-btn">Cancel</button>
+    </form>
+</div>
+
+<script>
+    function showEditForm(messageId, content) {
+        document.getElementById('editMessageId').value = messageId;
+        document.getElementById('editContent').value = content;
+        document.getElementById('editModal').style.display = 'block';
+    }
+
+    function hideEditForm() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+</script>
+</body>
+</html>
+
+<?php
+$stmt->close();
+$stmt_users->close();
+$stmt_update_read->close();
+$conn->close();
+?>

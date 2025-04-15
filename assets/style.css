@@ -1723,7 +1723,6 @@ p {
             resize: none;
         }
         button {
-            padding: 10px 20px;
             background-color: #337ab7;
             color: white;
             border: none;
@@ -1731,3 +1730,27 @@ p {
             cursor: pointer;
             width: 75px;
         }
+        .message-actions {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;            
+            gap: 10px;                       
+        }
+        
+        .action-btn {
+            width: 100px;                   
+            height: 40px;                  
+            font-size: 14px;                
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            justify-content: center;        
+            align-items: center;            
+            transition: background-color 0.3s ease;
+        }
+        
+        
+        
