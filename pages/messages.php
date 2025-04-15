@@ -92,92 +92,9 @@ function getColorModeClass() {
             });
         });
     </script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
-            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
-        }
-        h1, h2 {
-            color: #333;
-            text-align: center;
-        }
-        p {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
-            text-align: justify;
-        }
-        #box {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '000' : '#d7d9db'; ?>;
-            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
-        }
-        .btn-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .minimal-btn {
-            padding: 10px 20px;
-            background-color: transparent;
-            color: #337ab7;
-            border: 1px solid #337ab7;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        }
-        .minimal-btn:hover {
-            background-color: #337ab7;
-            color: white;
-            border-color: #337ab7;
-        }
-        .message-container {
-            margin: 20px 0;
-        }
-        .message {
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            position: relative;
-        }
-        .message.sent {
-            background-color: #d1e7dd;
-            text-align: right;
-        }
-        .message.received {
-            background-color: #f8d7da;
-            text-align: left;
-        }
-        .chat-input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .message-actions {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-        .message-actions button {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            margin-left: 5px;
-        }
-    </style>
+        <link rel="stylesheet" href="../assets/style.css">
+
+    
 </head>
 <body class="<?php echo getColorModeClass(); ?>">
 <div id="box">
@@ -200,32 +117,41 @@ function getColorModeClass() {
 
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="message <?php echo $row['sender_id'] == $user_id ? 'sent' : 'received'; ?>">
-                    <p><strong><?php echo htmlspecialchars($row['sender_username']); ?>:</strong> <?php echo htmlspecialchars($row['content']); ?></p>
-                    <span><?php echo $row['created_at']; ?></span>
-                    <div class="message-actions">
-                        <?php if ($row['sender_id'] == $user_id): ?>
-                            <!-- Edit button -->
-                            <button onclick="showEditForm(<?php echo $row['message_id']; ?>, '<?php echo htmlspecialchars(addslashes($row['content'])); ?>')">Edit</button>
-                            <!-- Delete button -->
-                            <form method="post" action="delete_message.php" style="display: inline;">
-                                <input type="hidden" name="message_id" value="<?php echo $row['message_id']; ?>">
-                                <button type="submit">Delete</button>
-                            </form>
-                        <?php endif; ?>
-                    </div>
+    <div class="message-header">
+            <p class="message-content">
+                <strong><?php echo htmlspecialchars($row['sender_username']); ?>:</strong> 
+                <?php echo htmlspecialchars($row['content']); ?>
+            </p>
+            <?php if ($row['sender_id'] == $user_id): ?>
+                <div class="message-actions">
+                    <button onclick="showEditForm(<?php echo $row['message_id']; ?>, '<?php echo htmlspecialchars(addslashes($row['content'])); ?>')">Edit</button>
+                    <form method="post" action="delete_message.php" style="display: inline;">
+                        <input type="hidden" name="message_id" value="<?php echo $row['message_id']; ?>">
+                        <button type="submit">Delete</button>
+                    </form>
                 </div>
+            <?php endif; ?>
+        </div>
+        <span class="message-time"><?php echo $row['created_at']; ?></span>
+    </div>
+
             <?php endwhile; ?>
 
 
 
 
         </div>
-        <form method="post" action="send_message.php">
-            <textarea name="content" class="chat-input" placeholder="Type your message..." required></textarea>
-            <input type="hidden" name="receiver_id" value="<?php echo $receiver_id; ?>">
-            <input type="hidden" name="sender_id" value="<?php echo $user_id; ?>">
-            <button type="submit" class="minimal-btn">Send</button>
-        </form>
+        <form method="post" action="send_message.php" class="chat-form">
+    <input type="hidden" name="receiver_id" value="<?php echo $receiver_id; ?>">
+    <input type="hidden" name="sender_id" value="<?php echo $user_id; ?>">
+
+    <div class="chat-input-wrapper">
+        <textarea name="content" class="chat-textarea" placeholder="Type your message..." required></textarea>
+        <button type="submit" class="send-btn">➤</button>
+    </div>
+</form>
+
+
 
     </div>
 
