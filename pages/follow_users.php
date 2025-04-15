@@ -22,7 +22,7 @@ $users_result = $stmt->get_result();
 </head>
 <body class="<?php echo $_SESSION['color_scheme']; ?>">
     <div id="box">
-        <h2>Follow Users</h2>
+        <h1>Follow Users</h1>
         <?php
         if ($users_result->num_rows > 0) {
             while ($user_row = $users_result->fetch_assoc()) {

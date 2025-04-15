@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['post_id'])) {
     <link rel="stylesheet" href="../assets/style.css">
 </head>
 
-        <div id="box">
+<div id="box">
         <h1>Welcome, <?php echo isset($user['username']) ? $user['username'] : 'User'; ?></h1>
         <!--Display follower and following counts regardless of whether there are followers or not-->
             <!-- Container for follower and following counts -->

@@ -50,60 +50,7 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <title>Group Chat</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
-            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
-            
-        }
-        .chat-container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            
-        }
-        .chat {
-            width: 100%;
-            height: 400px;
-            background-color: #f2f2f2;
-            overflow-y: scroll;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            
-        }
-        .chat-message {
-            margin-bottom: 10px;
-        }
-        .chat-message span {
-            font-weight: bold;
-        }
-        textarea {
-            width: calc(100% - 85px);
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            resize: none;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #337ab7;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 75px;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
     <div class="chat-container">

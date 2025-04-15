@@ -51,7 +51,7 @@ $box_bg_color = $color_scheme === 'dark' ? '#000' : '#d7d9db';
         $user_data = get_user_data($conn, $user_id); // Fetch user data using the function
 
         if (isset($user_data['username'])): ?>
-            <h2>Hello, <?php echo htmlspecialchars($user_data['username']); ?></h2>
+            <h1>Hello, <?php echo htmlspecialchars($user_data['username']); ?></h1>
         <?php endif; ?>
 
         <div class="image-container">

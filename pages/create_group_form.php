@@ -29,97 +29,11 @@ $groups_result = $stmt_get_groups->get_result();
 <head>
     <meta charset="UTF-8">
     <title>Create Group</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 0;
-            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#333' : '#f8f9fa'; ?>;
-            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
-        }
-        h1, h2 {
-            color: #333;
-            text-align: center;
-        }
-        p {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
-            text-align: justify;
-        }
-        /* Box Styles */
-        #box {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            background-color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '000' : '#d7d9db'; ?>;
-            color: <?php echo $_SESSION['color_scheme'] === 'dark' ? '#f8f9fa' : '#333'; ?>;
-        }
-
-        
-        /* Button Styles */
-        .btn-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .minimal-btn, .message-btn {
-            padding: 10px 20px;
-            background-color: transparent;
-            color: #337ab7;
-            border: 1px solid #337ab7;
-            border-radius: 5px;
-            text-decoration: none;
-            margin: 0 5px;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-        }
-        .minimal-btn:hover, .message-btn:hover {
-            background-color: #337ab7;
-            color: white;
-            border-color: #337ab7;
-        }
-
-        /* Form Styles */
-        form {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            padding: 10px 20px;
-            background-color: #337ab7;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        input[type="submit"]:hover {
-            background-color: #135688;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
     <div id="box">
-        <h2>Create a New Group</h2>
+        <h1>Create a New Group</h1>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <label for="name">Group Name:</label><br>
             <input type="text" id="name" name="name" required><br>
