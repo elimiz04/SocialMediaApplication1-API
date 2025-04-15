@@ -66,7 +66,7 @@ function getColorModeClass() {
 <body class="<?php echo getColorModeClass(); ?>">
 
     <div class="post-container">
-        <h1>Add New Post</h1>
+        <h1 class="post-title">Add New Post</h1> 
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
             <textarea name="content" placeholder="What's on your mind?" required></textarea>
             <input type="file" name="image" accept="image/*">

@@ -1328,4 +1328,211 @@ body.dark-mode #editModal form {
     color: #888;
     margin-top: 4px;
 }
+/* General styling for the messages */
+.message {
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    position: relative;
+    max-width: 80%;
+    background: #f5f5f5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
 
+.message.sent {
+    margin-left: auto;
+    background-color: #e0f7fa;
+}
+
+.message.received {
+    margin-right: auto;
+    background-color: #f0f0f0;
+}
+
+/* Flex layout for the message header and actions */
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.message-content {
+    flex-grow: 1;
+}
+
+/* Styling for the actions (buttons) in the message */
+.message-actions {
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+.message-actions button {
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #1976d2;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.message-actions form button {
+    background-color: #d32f2f;
+}
+
+.message-actions button:hover {
+    opacity: 0.9;
+}
+
+/* Styling for the timestamp or message time */
+.message-time {
+    display: block;
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* Styling for the chat form and buttons */
+.chat-form {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.chat-input-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.chat-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    resize: none;
+    height: 50px;
+}
+
+.send-btn {
+    position: absolute;
+    right: 10px;
+    padding: 8px 12px;
+    background-color: #1976d2;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.send-btn:hover {
+    background-color: #1565c0;
+}
+
+
+/* Flex container for user item */
+.user-item {
+    display: flex; /* Use flexbox to align items */
+    justify-content: space-between; /* Space between username and button */
+    align-items: center; /* Vertically center the items */
+    margin-bottom: 10px; /* Space between each user */
+}
+
+/* Styling for the username */
+.username {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px; /* Space between username and button */
+}
+
+/* Follow/Unfollow buttons */
+button {
+    background-color: #007bff; /* Default blue color */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Specific styles for follow/unfollow buttons */
+.follow-btn {
+    background-color: #28a745; /* Green color for follow */
+}
+
+.follow-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.unfollow-btn {
+    background-color: #dc3545; /* Red color for unfollow */
+}
+
+.unfollow-btn:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+/* Optional: You can add some extra styling if needed */
+button:focus {
+    outline: none;
+}
+
+.post-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.post-title {
+    margin-bottom: 15px;
+    font-size: 28px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    margin-bottom: 15px;
+}
+
+input[type="file"] {
+    display: block;
+    margin-bottom: 15px;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
