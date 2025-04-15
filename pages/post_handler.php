@@ -90,8 +90,9 @@ if (isset($_POST['edit_comment_id']) && isset($_POST['edit_comment_content'])) {
         
         <form method="post" action="" class="comment-form">
             <textarea name="comment_content" placeholder="Write a comment..." required></textarea>
-            <button type="submit" class="btn">Add Comment</button>
+            <button type="submit" class="btn comment-submit">Add Comment</button>
         </form>
+
 
         <div class="comment-container">
             <h2>Comments</h2>

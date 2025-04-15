@@ -440,19 +440,30 @@ body.dark-mode .like-count {
 
 /* Comment Submit Button */
 .comment-submit {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px 0;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+    padding: 12px 24px; 
+    font-size: 16px; 
+    line-height: 1.5; 
+    border-radius: 25px; 
+    background-color: #007BFF; 
+    color: white; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+    margin-top: 10px; 
+    width: 100%; 
+    max-width: 400px; 
+    box-sizing: border-box; 
+    text-align: center; 
 }
 
+/* Hover Effect for Comment Submit Button */
 .comment-submit:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Darker shade when hovered */
+}
+
+/* Focus Effect for Comment Submit Button */
+.comment-submit:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Subtle focus ring */
 }
 
 /* Comments Section */
@@ -597,15 +608,14 @@ h2 {
 .comment-form {
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
+    gap: 12px; /* space between textarea and button */
+    padding: 12px; /* overall padding inside the form */
 }
 
 .comment-form textarea {
-    padding: 12px;
-    border: 1px solid #ddd;
+    padding: 10px;
     border-radius: 8px;
-    font-size: 1rem;
-    margin-bottom: 10px;
+    border: 1px solid #ccc;
     resize: vertical;
 }
 
@@ -617,40 +627,49 @@ h2 {
     border-radius: 25px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: inline-block;
+    width: auto; /* ensures the button adjusts to content width */
+    text-align: center; /* aligns the text inside the button */
 }
 
-.comment-form button:hover {
-    background-color: #3498db;
-}
-
-/* Comment Form Styles */
-.comment-form {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 30px;
-}
-
-.comment-form textarea {
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1rem;
-    margin-bottom: 10px;
-    resize: vertical;
-}
-
-.comment-form button {
-    padding: 10px 20px;
-    background-color: #2980b9;
-    color: white;
-    border: none;
+/* Specific Button for "Add Comment" */
+.comment-form .comment-submit {
+    padding: 12px 24px; /* slightly more padding to fit the text */
+    font-size: 16px; /* adjust text size */
+    line-height: 1.5; /* ensure proper line height */
+    box-sizing: border-box; /* ensures padding is included in the element’s total size */
     border-radius: 25px;
+    background-color: #007BFF;
+    color: white;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* optional space between textarea and button */
+    width: auto; /* ensures button width fits its content */
+    text-align: center;
 }
 
-.comment-form button:hover {
-    background-color: #3498db;
+/* Button Hover Effect */
+.comment-form .comment-submit:hover {
+    background-color: #0056b3;
 }
+
+/* Base Button Style (optional) */
+.comment-form .btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+}
+
+.comment-form .btn:hover {
+    background-color: #0056b3;
+}
+
 
 /* Comment Section Styles */
 .comment {
