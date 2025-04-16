@@ -1,51 +1,50 @@
 <?php
-    session_start();
+session_start();
 
-        include("../includes/connection.php");
+include("../includes/connection.php");
 
-        $error_message ="";
+$error_message = "";
 
-        if($_SERVER['REQUEST_METHOD'] == "POST")
-        {
-            //something was posted
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    // Something was posted
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-            if(!empty($username) && !empty($email) && !empty($password))
-            {
+    if (!empty($username) && !empty($email) && !empty($password)) {
 
-                //save to database
-                $user_id = random_num(20);
-                $query = "INSERT INTO users (user_id, username, email, password) VALUES ('$user_id', '$username','$email', '$password')";
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT); // Using BCRYPT algorithm
 
-               if(mysqli_query($conn, $query)){
+        // Save to database
+        $user_id = random_num(20);
+        $query = "INSERT INTO users (user_id, username, email, password) VALUES ('$user_id', '$username', '$email', '$hashed_password')";
 
-               header("Location: login.php");
-               die;
-        }else{
+        if (mysqli_query($conn, $query)) {
+            header("Location: login.php");
+            die;
+        } else {
             $error_message = "Database query failed!";
         }
-    }else{
-        $error_message = "Please enter some valid information!"; 
+    } else {
+        $error_message = "Please enter some valid information!";
     }
 }
 
-function random_num($length){
+function random_num($length) {
     $text = "";
-    if($length <5){
+    if ($length < 5) {
         $length = 5;
     }
 
     $len = rand(4, $length);
 
-    for($i = 0; $i< $le; $i++){
-        $text .= rand (0,9);
+    for ($i = 0; $i < $len; $i++) {
+        $text .= rand(0, 9);
     }
 
-    return $text; 
+    return $text;
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -55,10 +54,9 @@ function random_num($length){
     <title>Sign up</title>
 </head>
 <body>
-    <style type= "text/css"> 
-        
-         /* CSS styling for form elements */
-         body, html {
+    <style type="text/css"> 
+        /* CSS styling for form elements */
+        body, html {
             height: 100%;
             margin: 0;
             padding: 0;
@@ -67,7 +65,7 @@ function random_num($length){
             align-items: center;
             background-color: #f0f0f0; /* Background color for the entire page */
         }
-         #text {
+        #text {
             height: 25px;
             border-radius: 5px;
             padding: 4px;
@@ -96,7 +94,7 @@ function random_num($length){
             font-size: 16px;
             color: white;
             text-align: center;
-            display:block;
+            display: block;
             margin-top: 20px;
         }
         .form-label {
@@ -107,7 +105,6 @@ function random_num($length){
             color: white;
             display: block;
         }
-
     </style>
     <script>
         function showError(message){
@@ -115,25 +112,24 @@ function random_num($length){
         }
     </script>
 
-    <div id = "box">
+    <div id="box">
         <form method="post">
-
-            <div style=" font-size: 24px;margin: 20px;color: white; text-align: center;">Sign up</div>
+            <div style="font-size: 24px; margin: 20px; color: white; text-align: center;">Sign up</div>
             <label for="username" class="form-label">Username:</label>
-            <input id="text" type="text" name="username"> <br><br>
+            <input id="text" type="text" name="username" required> <br><br>
             <label for="email" class="form-label">Email:</label>
-            <input id="text" type="email" name="email"> <br><br>
+            <input id="text" type="email" name="email" required> <br><br>
             <label for="password" class="form-label">Password:</label>
-            <input id="text" type="password" name="password"><br><br>
+            <input id="text" type="password" name="password" required><br><br>
 
             <input id="button" type="submit" value="Signup"><br><br>
 
-            <a href="login.php" style="color: white";>Click to Login</a><br><br>
+            <a href="login.php" style="color: white;">Click to Login</a><br><br>
         </form>
     </div>
 
     <?php
-    if(!empty($error_message)){
+    if (!empty($error_message)) {
         echo "<script type='text/javascript'>showError('$error_message');</script>";
     }
     ?>

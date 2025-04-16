@@ -94,7 +94,7 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
 if (isset($_GET['logout'])) {
     session_unset();
     session_destroy();
-    header('Location: admin_login.php');
+    header('Location: ../login.php');
     exit();
 }
 ?>
