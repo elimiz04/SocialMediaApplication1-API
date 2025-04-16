@@ -1,12 +1,15 @@
 <?php
-
 session_start();
 
-if(isset($_SESSION['user_id']))
-{
-    unset($_SESSION['user_id']);
+// Destroy session if the user is logged in
+if (isset($_SESSION['user_id'])) {
+    unset($_SESSION['user_id']);  
 }
 
+// Destroy the session completely
+session_destroy();
+
+// Redirect to the login page
 header("Location: login.php");
-die;
+exit;
 ?>

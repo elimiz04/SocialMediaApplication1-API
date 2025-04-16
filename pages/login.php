@@ -6,38 +6,46 @@ include("../includes/connection.php");
 $error_message = "";
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
-    // Something was posted
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     if (!empty($username) && !empty($password)) {
-        // Read from database
-        $query = "SELECT * FROM users WHERE username = '$username' LIMIT 1";
-        $result = mysqli_query($conn, $query);
+        // Use a prepared statement to prevent SQL injection
+        $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? LIMIT 1");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if ($result) {
-            if (mysqli_num_rows($result) > 0) {
-                $user_data = mysqli_fetch_assoc($result);
+        if ($result && $result->num_rows > 0) {
+            $user_data = $result->fetch_assoc();
 
-                if ($user_data['password'] === $password) {
-                    $_SESSION['user_id'] = $user_data['user_id'];
-                    header("Location: index.php");
+            // Check if user is blocked
+            if (isset($user_data['status']) && $user_data['status'] === 'blocked') {
+                $error_message = "Your account has been blocked. Please contact support.";
+            } elseif ($user_data['password'] === $password) {
+                $_SESSION['user_id'] = $user_data['user_id'];
+
+                // Check if the user is an admin
+                if ($user_data['username'] === 'asd' && $user_data['password'] === '123') {
+                    header("Location: admin/admin_dashboard.php");
                     die;
                 } else {
-                    $error_message = "Wrong username or password!";
+                    header("Location: ../pages/index.php");
+                    die;
                 }
             } else {
                 $error_message = "Wrong username or password!";
             }
         } else {
-            $error_message = "Database error!";
+            $error_message = "Wrong username or password!";
         }
+        $stmt->close();
     } else {
         $error_message = "Please enter some valid information!";
     }
 }
-
 ?>
+
 
 
 <!DOCTYPE html>
