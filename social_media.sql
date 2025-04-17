@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2024 at 04:47 AM
+-- Generation Time: Apr 17, 2025 at 06:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -61,7 +61,14 @@ INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `content`, `created_
 (21, 1, 1, 'hi', '2024-06-03 00:47:32', '2024-06-03 00:47:32', NULL),
 (24, 25, 3, 'hi', '2024-06-05 14:18:45', '2024-06-05 14:18:45', NULL),
 (25, 1, 3, 'gorg!', '2024-06-05 22:23:32', '2024-06-05 22:23:32', NULL),
-(26, 9, 1, 'wow!', '2024-06-06 02:07:14', '2024-06-06 02:07:14', NULL);
+(26, 9, 1, 'wow!', '2024-06-06 02:07:14', '2024-06-06 02:07:14', NULL),
+(27, 9, 1, 'hiii', '2024-11-06 12:01:18', '2024-11-06 12:01:18', NULL),
+(28, 9, 1, 'hoo', '2025-01-08 08:52:31', '2025-01-08 08:52:31', NULL),
+(29, 1, 1, 'hii', '2025-04-13 01:45:10', '2025-04-13 01:45:10', NULL),
+(30, 32, 1, 'HIII i am testing to see whether this will work or not', '2025-04-15 21:54:24', '2025-04-15 21:54:24', NULL),
+(31, 1, 2, 'Hiii, I am rechecking all of my work to make sure everything is working as it should', '2025-04-17 18:13:18', '2025-04-17 18:13:18', NULL),
+(32, 20, 2, 'Will this work?', '2025-04-17 18:14:08', '2025-04-17 18:14:08', NULL),
+(33, 20, 2, 'Yes it will, it is even saving in the database ', '2025-04-17 18:14:24', '2025-04-17 18:14:24', NULL);
 
 -- --------------------------------------------------------
 
@@ -94,7 +101,6 @@ CREATE TABLE `follows` (
 
 INSERT INTO `follows` (`follow_id`, `follower_id`, `followed_id`, `created_at`, `status`) VALUES
 (2, 1, 3, '2024-06-05 11:30:08', 'active'),
-(3, 1, 2, '2024-06-05 12:04:55', 'active'),
 (4, 3, 1, '2024-06-05 12:31:26', 'active'),
 (5, 3, 2, '2024-06-05 14:51:51', 'active'),
 (6, 3, 4, '2024-06-05 14:51:52', 'active'),
@@ -288,28 +294,22 @@ CREATE TABLE `group_messages` (
 --
 
 CREATE TABLE `images` (
-  `id` int(11) NOT NULL,
-  `filename` varchar(255) NOT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `image_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `image_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `images`
 --
 
-INSERT INTO `images` (`id`, `filename`, `user_id`) VALUES
-(1, 'Image1.jpg', NULL),
-(2, 'Image2.jpg', NULL),
-(3, 'Image3.jpg', NULL),
-(4, 'Image4.jpg', NULL),
-(5, 'Image5.jpg', NULL),
-(6, 'Image6.jpg', NULL),
-(7, 'Image8.jpg', NULL),
-(8, 'Image8.jpg', NULL),
-(9, 'Image9.jpg', NULL),
-(10, 'Image10.jpg', NULL),
-(11, 'Image11.jpg', NULL),
-(12, 'Image12.jpg', NULL);
+INSERT INTO `images` (`image_id`, `user_id`, `image_url`, `description`, `created_at`, `image_name`) VALUES
+(1, 1, 'assets/image1.jpg', 'Description for image 1', '2025-04-12 23:38:20', 'image1.jpg'),
+(2, 1, 'assets/image2.jpg', 'Description for image 2', '2025-04-12 23:38:20', 'image2.jpg'),
+(3, 1, 'assets/image3.jpg', 'Description for image 3', '2025-04-12 23:38:20', 'image3.jpg');
 
 -- --------------------------------------------------------
 
@@ -322,8 +322,19 @@ CREATE TABLE `imagesdata` (
   `user_id` int(11) DEFAULT NULL,
   `image_name` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL
+  `updated_at` datetime DEFAULT NULL,
+  `image_id` int(11) NOT NULL,
+  `filename` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `imagesdata`
+--
+
+INSERT INTO `imagesdata` (`image`, `user_id`, `image_name`, `created_at`, `updated_at`, `image_id`, `filename`) VALUES
+(7, NULL, NULL, NULL, NULL, 1, 'image1.jpg'),
+(8, NULL, NULL, NULL, NULL, 2, 'image2.jpg'),
+(9, NULL, NULL, NULL, NULL, 3, 'image3.jpg');
 
 -- --------------------------------------------------------
 
@@ -335,30 +346,19 @@ CREATE TABLE `likes` (
   `like_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` enum('liked','unliked') DEFAULT 'unliked'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `likes`
 --
 
-INSERT INTO `likes` (`like_id`, `post_id`, `user_id`, `created_at`) VALUES
-(1, 1, 1, '2024-05-31 19:08:53'),
-(2, 1, 1, '2024-05-31 19:08:55'),
-(3, 1, 1, '2024-05-31 19:10:05'),
-(4, 1, 1, '2024-05-31 19:15:50'),
-(5, 1, 1, '2024-05-31 19:17:30'),
-(6, 1, 1, '2024-05-31 19:17:33'),
-(7, 1, 1, '2024-05-31 19:17:34'),
-(9, 1, 1, '2024-05-31 19:19:57'),
-(10, 1, 1, '2024-05-31 19:19:59'),
-(11, 1, 1, '2024-05-31 19:20:09'),
-(12, 1, 1, '2024-05-31 19:20:26'),
-(13, 1, 1, '2024-05-31 19:20:44'),
-(14, 1, 1, '2024-05-31 19:21:02'),
-(15, 1, 1, '2024-05-31 19:23:08'),
-(16, 1, 4, '2024-06-05 00:49:11'),
-(17, 1, 3, '2024-06-05 22:23:37');
+INSERT INTO `likes` (`like_id`, `post_id`, `user_id`, `created_at`, `status`) VALUES
+(16, 1, 4, '2024-06-05 00:49:11', 'unliked'),
+(17, 1, 3, '2024-06-05 22:23:37', 'unliked'),
+(23, 1, 1, '2025-04-13 02:02:54', 'unliked'),
+(24, 1, 2, '2025-04-15 21:43:17', 'liked');
 
 -- --------------------------------------------------------
 
@@ -428,7 +428,7 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `received_id`, `content`, `cr
 (48, 1, 0, 'hi', '2024-06-06 01:11:25', '2024-06-06 01:11:25', NULL, 0, NULL),
 (49, 1, 0, 'hi', '2024-06-06 01:11:26', '2024-06-06 01:11:26', NULL, 0, NULL),
 (50, 1, 0, 'hi', '2024-06-06 01:29:46', '2024-06-06 01:29:46', 7, 0, NULL),
-(51, 1, 0, 'nice', '2024-06-06 01:39:41', '2024-06-06 01:39:41', 2, 1, NULL),
+(51, 1, 0, 'How are you?', '2024-06-06 01:39:41', '2024-06-06 01:39:41', 2, 1, NULL),
 (52, 1, 0, 'hi', '2024-06-06 01:41:30', '2024-06-06 01:41:30', 7, 0, NULL),
 (53, 1, 0, 'how are you?', '2024-06-06 01:45:56', '2024-06-06 01:45:56', 7, 0, NULL),
 (54, 1, 0, 'how are you?', '2024-06-06 01:45:57', '2024-06-06 01:45:57', 7, 0, NULL),
@@ -455,7 +455,9 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `received_id`, `content`, `cr
 (371, 2, 0, 'bye', '2024-06-06 04:34:14', '2024-06-06 04:34:14', 4, 1, NULL),
 (372, 4, 0, 'bye', '2024-06-06 04:38:12', '2024-06-06 04:38:12', 2, 1, NULL),
 (373, 2, 0, 'hi', '2024-06-06 04:40:37', '2024-06-06 04:40:37', 4, 1, NULL),
-(374, 2, 0, 'hey', '2024-06-06 04:43:51', '2024-06-06 04:43:51', 4, 1, NULL);
+(374, 2, 0, 'hey', '2024-06-06 04:43:51', '2024-06-06 04:43:51', 4, 1, NULL),
+(375, 1, 0, 'hi ', '2025-04-15 21:41:29', '2025-04-15 21:41:29', 7, 0, NULL),
+(376, 1, 0, 'hi ', '2025-04-15 21:41:29', '2025-04-15 21:41:29', 7, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -818,7 +820,9 @@ INSERT INTO `notifications` (`notification_id`, `user_id`, `message`, `is_read`,
 (340, 4, 'You have received a new message.', 0, '2024-06-06 04:34:14'),
 (341, 2, 'You have received a new message.', 0, '2024-06-06 04:38:12'),
 (342, 4, 'You have received a new message.', 0, '2024-06-06 04:40:37'),
-(343, 4, 'You have received a new message.', 0, '2024-06-06 04:43:51');
+(343, 4, 'You have received a new message.', 0, '2024-06-06 04:43:51'),
+(344, 7, 'You have received a new message.', 0, '2025-04-15 21:41:29'),
+(345, 7, 'You have received a new message.', 0, '2025-04-15 21:41:29');
 
 -- --------------------------------------------------------
 
@@ -850,11 +854,10 @@ INSERT INTO `posts` (`post_id`, `user_id`, `content`, `created_at`, `updated_at`
 (19, 1, 'hi', '2024-06-03 13:06:33', '2024-06-03 13:06:33', 'post_image_665da3b91a134.jpg', NULL, NULL, NULL),
 (20, 2, 'gorg', '2024-06-04 01:06:45', '2024-06-04 01:06:45', 'post_image_665e4c8517196.jpg', NULL, NULL, NULL),
 (21, 1, 'wow', '2024-06-05 11:55:56', '2024-06-05 11:55:56', 'post_image_6660362cb9897.jpg', NULL, NULL, NULL),
-(22, 1, '', '2024-06-05 12:13:16', '2024-06-05 12:13:16', 'post_image_66603a3c810e9.jpg', NULL, NULL, NULL),
 (23, 1, '', '2024-06-05 12:16:00', '2024-06-05 12:16:00', 'post_image_66603ae080f0a.jpg', NULL, NULL, NULL),
 (25, 3, '', '2024-06-05 14:08:12', '2024-06-05 14:08:12', 'post_image_6660552c29032.jpg', NULL, NULL, NULL),
 (26, 3, 'yaas', '2024-06-05 14:52:20', '2024-06-05 14:52:20', 'post_image_66605f84d73f0.jpg', NULL, NULL, NULL),
-(31, 1, '', '2024-06-06 03:52:04', '2024-06-06 03:52:04', 'post_image_666116443ac3c.jpg', NULL, NULL, NULL);
+(32, 1, 'hiii', '2024-12-11 12:02:17', '2024-12-11 12:02:17', 'post_image_67597139384f5.jpg', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -934,7 +937,11 @@ INSERT INTO `settings` (`setting_id`, `user_id`, `privacy`, `receive_notificatio
 (113, 1, 'public', NULL, '2024-06-06 04:04:43', NULL, NULL, NULL, NULL, NULL, NULL, 'dark', 1, NULL),
 (114, 1, 'public', NULL, '2024-06-06 04:04:54', NULL, NULL, NULL, NULL, NULL, NULL, 'dark', 1, NULL),
 (115, 1, 'public', NULL, '2024-06-06 04:21:27', NULL, NULL, NULL, NULL, NULL, NULL, 'light', 1, NULL),
-(116, 4, 'public', NULL, '2024-06-06 04:23:12', NULL, NULL, NULL, NULL, NULL, NULL, 'light', 1, NULL);
+(116, 4, 'public', NULL, '2024-06-06 04:23:12', NULL, NULL, NULL, NULL, NULL, NULL, 'light', 1, NULL),
+(117, 1, 'public', NULL, '2025-04-13 02:12:21', NULL, NULL, NULL, NULL, NULL, NULL, 'dark', 0, NULL),
+(118, 1, 'public', NULL, '2025-04-13 02:13:11', NULL, NULL, NULL, NULL, NULL, NULL, 'dark', 0, NULL),
+(119, 1, 'public', NULL, '2025-04-13 02:13:14', NULL, NULL, NULL, NULL, NULL, NULL, 'dark', 0, NULL),
+(120, 1, 'public', NULL, '2025-04-13 02:14:10', NULL, NULL, NULL, NULL, NULL, NULL, 'dark', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -965,18 +972,21 @@ CREATE TABLE `users` (
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `receive_notifications` tinyint(1) NOT NULL DEFAULT 0,
   `profile_image_id` int(11) DEFAULT NULL,
-  `notifications_count` int(11) NOT NULL DEFAULT 0
+  `notifications_count` int(11) NOT NULL DEFAULT 0,
+  `profile_image` varchar(255) DEFAULT 'default-profile.png',
+  `status` enum('active','blocked') NOT NULL DEFAULT 'active',
+  `is_admin` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `bio`, `created_at`, `updated_at`, `receive_notifications`, `profile_image_id`, `notifications_count`) VALUES
-(1, 'asd', 'mizzi@gmail.com', '123', '', '2024-05-31 10:50:14', '2024-06-05 00:20:53', 1, NULL, 0),
-(2, 'mar', 'mar@gf', 'asd', '', '2024-05-31 19:24:54', '2024-06-04 23:12:24', 1, NULL, 0),
-(3, 'mc', 'mark@mc', '147', '', '2024-06-03 23:18:29', '2024-06-03 23:18:29', 0, NULL, 0),
-(4, 'marf', 'mar@ghml', '123', '', '2024-06-05 00:27:36', '2024-06-05 00:27:36', 0, NULL, 0);
+INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `bio`, `created_at`, `updated_at`, `receive_notifications`, `profile_image_id`, `notifications_count`, `profile_image`, `status`, `is_admin`) VALUES
+(1, 'asd', 'mizzi@gmail.com', '123', '', '2024-05-31 10:50:14', '2025-04-16 19:12:38', 1, NULL, 0, 'default-profile.png', 'active', 1),
+(2, 'mar', 'mar@gf', 'asd', '', '2024-05-31 19:24:54', '2024-06-04 23:12:24', 1, NULL, 0, 'default-profile.png', 'active', 0),
+(3, 'mc', 'mark@mc', '147', '', '2024-06-03 23:18:29', '2024-06-03 23:18:29', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(4, 'marf', 'mar@ghml', '123', '', '2024-06-05 00:27:36', '2024-06-05 00:27:36', 0, NULL, 0, 'default-profile.png', 'active', 0);
 
 -- --------------------------------------------------------
 
@@ -995,7 +1005,7 @@ CREATE TABLE `user_settings` (
 --
 
 INSERT INTO `user_settings` (`user_id`, `color_scheme`, `receive_notifications`) VALUES
-(1, 'light', 1),
+(1, 'light', 0),
 (4, 'light', 1);
 
 --
@@ -1043,20 +1053,23 @@ ALTER TABLE `group_messages`
 -- Indexes for table `images`
 --
 ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`image_id`);
 
 --
 -- Indexes for table `imagesdata`
 --
 ALTER TABLE `imagesdata`
   ADD PRIMARY KEY (`image`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `fk_images_image_id` (`image_id`);
 
 --
 -- Indexes for table `likes`
 --
 ALTER TABLE `likes`
-  ADD PRIMARY KEY (`like_id`);
+  ADD PRIMARY KEY (`like_id`),
+  ADD UNIQUE KEY `unique_like` (`post_id`,`user_id`),
+  ADD UNIQUE KEY `unique_like_index` (`post_id`,`user_id`);
 
 --
 -- Indexes for table `messages`
@@ -1109,7 +1122,7 @@ ALTER TABLE `user_settings`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `follows`
@@ -1139,43 +1152,43 @@ ALTER TABLE `group_messages`
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `image_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `imagesdata`
 --
 ALTER TABLE `imagesdata`
-  MODIFY `image` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `image` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=375;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=344;
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=346;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `setting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `userpreferences`
@@ -1204,6 +1217,7 @@ ALTER TABLE `followers`
 -- Constraints for table `imagesdata`
 --
 ALTER TABLE `imagesdata`
+  ADD CONSTRAINT `fk_images_image_id` FOREIGN KEY (`image_id`) REFERENCES `images` (`image_id`),
   ADD CONSTRAINT `imagesdata_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 
 --
