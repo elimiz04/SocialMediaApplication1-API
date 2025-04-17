@@ -1752,6 +1752,40 @@ p {
             align-items: center;            
             transition: background-color 0.3s ease;
         }
+
+        .message-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 6px;
+            font-size: 0.75em;
+            color: #666;
+            margin-top: 6px;
+            border-top: 1px solid #eee;
+        }
+        
+        .message-timestamp {
+            font-style: italic;
+        }
+        
+        .message-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            padding: 3px 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.75em;
+        }
+        
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
         
         
         

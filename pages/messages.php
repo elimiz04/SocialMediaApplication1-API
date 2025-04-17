@@ -42,7 +42,7 @@ $stmt_update_read = $conn->prepare($update_read_query);
 $stmt_update_read->bind_param("ii", $user_id, $receiver_id);
 $stmt_update_read->execute();
 
-// Fetch unread notifications count for the logged-in user
+// Fetch unread notifications count
 $notification_count_query = "SELECT COUNT(*) as unread_count FROM Notifications WHERE user_id = ? AND is_read = 0";
 $stmt_notifications = $conn->prepare($notification_count_query);
 $stmt_notifications->bind_param("i", $user_id);
@@ -51,18 +51,14 @@ $notification_result = $stmt_notifications->get_result();
 $notification_count = $notification_result->fetch_assoc()['unread_count'];
 $stmt_notifications->close();
 
-// Check if the user has set a color mode preference
+// Set color mode
 if (!isset($_SESSION['color_mode'])) {
-    // If not, set a default color mode (e.g., light mode)
     $_SESSION['color_mode'] = 'light';
 }
-
-// Function to apply the appropriate CSS class based on the color mode
 function getColorModeClass() {
     return $_SESSION['color_mode'] === 'light' ? 'light-mode' : 'dark-mode';
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,18 +68,14 @@ function getColorModeClass() {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            // When the user clicks the "Messages" button
             $('#message-button').click(function() {
-                // Make an AJAX request to update the notification count
                 $.ajax({
                     type: 'POST',
                     url: 'update_notification.php',
-                    success: function(response) {
-                        // Update the notification badge to 0
+                    success: function() {
                         $('.notification-badge').text('0');
                     },
-                    error: function(xhr, status, error) {
-                        // Handle errors
+                    error: function(xhr) {
                         console.error(xhr.responseText);
                     }
                 });
@@ -96,7 +88,7 @@ function getColorModeClass() {
 <div id="box">
     <h1>Messages</h1>
 
-    <!-- List of users -->
+    <!-- User Selector -->
     <h2>Select User to Message</h2>
     <form method="post" action="">
         <select name="receiver_id" onchange="this.form.submit()">
@@ -108,36 +100,37 @@ function getColorModeClass() {
         </select>
     </form>
 
+    <!-- Message Display -->
     <div class="message-container">
         <?php while ($row = $result->fetch_assoc()): ?>
             <div class="message <?php echo $row['sender_id'] == $user_id ? 'sent' : 'received'; ?>">
                 <div class="message-header">
                     <p class="message-content">
-                        <strong><?php echo htmlspecialchars($row['sender_username']); ?>:</strong> 
+                        <strong><?php echo htmlspecialchars($row['sender_username']); ?>:</strong>
                         <?php echo htmlspecialchars($row['content']); ?>
                     </p>
                 </div>
 
-                <!-- Time and Date -->
                 <div class="message-footer">
-                    <span class="message-time"><?php echo $row['created_at']; ?></span>
+                    <div class="message-timestamp">
+                        <?php echo date('Y-m-d', strtotime($row['created_at'])); ?> · <?php echo date('H:i', strtotime($row['created_at'])); ?>
+                    </div>
 
                     <?php if ($row['sender_id'] == $user_id): ?>
                         <div class="message-actions">
                             <button class="action-btn" onclick="showEditForm(<?php echo $row['message_id']; ?>, '<?php echo htmlspecialchars(addslashes($row['content'])); ?>')">Edit</button>
-                            <form method="post" action="delete_message.php" style="display: inline;">
+                            <form method="post" action="delete_message.php" style="display:inline;">
                                 <input type="hidden" name="message_id" value="<?php echo $row['message_id']; ?>">
-                                <button type="submit" class="action-btn">Delete</button>
+                                <button type="submit" class="action-btn delete-btn">Delete</button>
                             </form>
                         </div>
                     <?php endif; ?>
-
-
                 </div>
             </div>
         <?php endwhile; ?>
     </div>
 
+    <!-- Message Sending Form -->
     <form method="post" action="send_message.php" class="chat-form">
         <input type="hidden" name="receiver_id" value="<?php echo $receiver_id; ?>">
         <input type="hidden" name="sender_id" value="<?php echo $user_id; ?>">
@@ -147,17 +140,17 @@ function getColorModeClass() {
             <button type="submit" class="send-btn">➤</button>
         </div>
     </form>
-</div>
 
-<!-- Edit Message Modal -->
-<div id="editModal" style="display:none;">
-    <form method="post" action="edit_message.php">
-        <textarea name="content" id="editContent" class="chat-input" placeholder="Edit your message..." required></textarea>
-        <input type="hidden" name="message_id" id="editMessageId">
-        <button type="submit" class="minimal-btn">Update</button>
-        <button type="button" onclick="hideEditForm()" class="minimal-btn">Cancel</button>
-    </form>
-</div>
+    <!-- Edit Modal (INSIDE #box) -->
+    <div id="editModal" style="display:none;">
+        <form method="post" action="edit_message.php">
+            <textarea name="content" id="editContent" class="chat-input" placeholder="Edit your message..." required></textarea>
+            <input type="hidden" name="message_id" id="editMessageId">
+            <button type="submit" class="minimal-btn">Update</button>
+            <button type="button" onclick="hideEditForm()" class="minimal-btn">Cancel</button>
+        </form>
+    </div>
+</div> <!-- END of #box -->
 
 <script>
     function showEditForm(messageId, content) {
