@@ -123,6 +123,23 @@ $stmt->bind_param("i", $image_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $like_count = $result->fetch_assoc()['like_count'];
+
+// Handle comment submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['content']) && !empty(trim($_POST['content']))) {
+    $comment = trim($_POST['content']);
+    $user_id = $_SESSION['user_id'];
+    $post_id = $image_id;
+
+    $insertQuery = "INSERT INTO comments (user_id, post_id, content) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($insertQuery);
+    $stmt->bind_param("iis", $user_id, $post_id, $comment);
+    $stmt->execute();
+
+    // Optional: redirect to prevent form resubmission on refresh
+    header("Location: view_image.php?image_id=" . $image_id);
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
