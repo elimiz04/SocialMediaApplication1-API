@@ -79,10 +79,10 @@ SocialHive is for anyone who loves social networking and wants to meet like-mind
 - **Admin Panel**: Admins can manage users, posts, and comments.
 
 ### How We Document
-1. **Code Comments**: We’ve included comments in the code to make it easier to follow for other developers. Each function is clearly explained.
+1. **Code Comments**: I’ve included comments in the code to make it easier to follow for other developers. Each function is clearly explained.
 2. **README.md**: This document serves as the go-to guide for understanding the project, how to use it, and where everything is located.
-3. **Code Documentation**: We use tools like PHPDoc to document the code in detail, so you can easily understand the purpose and usage of functions and classes.
-4. **Version Control**: We keep track of all changes with descriptive commit messages on GitHub, so you can see the history of the project.
+3. **Code Documentation**: I use tools like PHPDoc to document the code in detail, so you can easily understand the purpose and usage of functions and classes.
+4. **Version Control**: I keep track of all changes with descriptive commit messages on GitHub, so you can see the history of the project.
 
 ## How to Use SocialHive
 
