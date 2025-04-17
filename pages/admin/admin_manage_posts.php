@@ -6,7 +6,7 @@ include("../../includes/connection.php");
 if (isset($_GET['logout'])) {
     session_unset();
     session_destroy();
-    header("Location: admin_login.php");
+    header("Location: login.php");
     exit();
 }
 

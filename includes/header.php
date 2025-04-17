@@ -1,7 +1,7 @@
 <?php
-// Start session and set color scheme
-session_start();
-$color_scheme = isset($_SESSION['color_scheme']) ? $_SESSION['color_scheme'] : 'light'; // Default to light mode if not set
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}$color_scheme = isset($_SESSION['color_scheme']) ? $_SESSION['color_scheme'] : 'light';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,15 +18,13 @@ $color_scheme = isset($_SESSION['color_scheme']) ? $_SESSION['color_scheme'] : '
             width: 100%;
             z-index: 1000;
         }
-
         body {
-            padding-top: 72px; /* adjust as needed for your header height */
+            padding-top: 72px;
         }
     </style>
 </head>
 <body class="<?php echo $color_scheme; ?>-mode">
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-header">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-header">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">SocialHive</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -36,7 +34,7 @@ $color_scheme = isset($_SESSION['color_scheme']) ? $_SESSION['color_scheme'] : '
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="home.php">Home</a>
+                        <a class="nav-link active" href="home.php">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="profile.php">Profile</a>
