@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2025 at 06:51 PM
+-- Generation Time: May 13, 2025 at 07:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,24 +42,21 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `content`, `created_at`, `updated_at`, `image_id`) VALUES
-(1, 0, 1, 'Test1', '2024-05-31 19:03:39', '2024-05-31 19:03:39', 1),
 (2, 0, 1, 'Test1', '2024-05-31 19:04:14', '2024-05-31 19:04:14', 1),
 (3, 0, 1, 'Test1', '2024-05-31 19:06:10', '2024-05-31 19:06:10', 1),
 (4, 0, 1, '1234', '2024-05-31 19:23:22', '2024-05-31 19:23:22', 1),
 (5, 0, 2, 'gorgeous!!!!!!', '2024-05-31 19:39:11', '2024-05-31 19:39:11', 1),
 (6, 0, 2, 'gorgeous!!!!!!', '2024-05-31 19:42:08', '2024-05-31 19:42:08', 1),
-(7, 0, 2, 'gorgeous!!!!!!', '2024-05-31 19:42:14', '2024-05-31 19:42:14', 1),
+(7, 0, 2, 'Updated comment content', '2025-05-13 16:26:02', '2025-05-13 16:26:02', 1),
 (8, 0, 2, 'gorgeous!!!!!!', '2024-05-31 20:07:15', '2024-05-31 20:07:15', 1),
-(9, 0, 2, 'gorgeous!!!!!!', '2024-05-31 20:10:36', '2024-05-31 20:10:36', 1),
+(9, 0, 2, 'Updated comment content', '2025-05-10 15:13:55', '2025-05-10 15:13:55', 1),
 (10, 1, 2, 'gorgeous!!!!!!', '2024-05-31 20:17:55', '2024-05-31 20:17:55', NULL),
 (11, 1, 2, 'hi', '2024-05-31 20:18:10', '2024-05-31 20:18:10', NULL),
 (13, 3, 1, 'wow\r\n', '2024-05-31 20:59:58', '2024-05-31 20:59:58', NULL),
 (14, 3, 1, 'wow\r\n', '2024-05-31 21:00:26', '2024-05-31 21:00:26', NULL),
 (15, 3, 1, 'wow\r\n', '2024-05-31 21:00:57', '2024-05-31 21:00:57', NULL),
 (16, 3, 1, 'yess', '2024-05-31 21:01:05', '2024-05-31 21:01:05', NULL),
-(20, 1, 1, 'hi', '2024-06-03 00:41:07', '2024-06-03 00:41:07', NULL),
 (21, 1, 1, 'hi', '2024-06-03 00:47:32', '2024-06-03 00:47:32', NULL),
-(24, 25, 3, 'hi', '2024-06-05 14:18:45', '2024-06-05 14:18:45', NULL),
 (25, 1, 3, 'gorg!', '2024-06-05 22:23:32', '2024-06-05 22:23:32', NULL),
 (26, 9, 1, 'wow!', '2024-06-06 02:07:14', '2024-06-06 02:07:14', NULL),
 (27, 9, 1, 'hiii', '2024-11-06 12:01:18', '2024-11-06 12:01:18', NULL),
@@ -68,7 +65,10 @@ INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `content`, `created_
 (30, 32, 1, 'HIII i am testing to see whether this will work or not', '2025-04-15 21:54:24', '2025-04-15 21:54:24', NULL),
 (31, 1, 2, 'Hiii, I am rechecking all of my work to make sure everything is working as it should', '2025-04-17 18:13:18', '2025-04-17 18:13:18', NULL),
 (32, 20, 2, 'Will this work?', '2025-04-17 18:14:08', '2025-04-17 18:14:08', NULL),
-(33, 20, 2, 'Yes it will, it is even saving in the database ', '2025-04-17 18:14:24', '2025-04-17 18:14:24', NULL);
+(33, 20, 2, 'Yes it will, it is even saving in the database ', '2025-04-17 18:14:24', '2025-04-17 18:14:24', NULL),
+(34, 9, 1, 'Great post!', '2025-05-10 13:38:40', '2025-05-10 13:38:40', NULL),
+(35, 36, 22, 'Updated comment content added', '2025-05-13 16:26:20', '2025-05-13 16:26:20', NULL),
+(36, 10, 22, 'This is a test comment', '2025-05-13 16:30:50', '2025-05-13 16:30:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,11 @@ INSERT INTO `follows` (`follow_id`, `follower_id`, `followed_id`, `created_at`, 
 (4, 3, 1, '2024-06-05 12:31:26', 'active'),
 (5, 3, 2, '2024-06-05 14:51:51', 'active'),
 (6, 3, 4, '2024-06-05 14:51:52', 'active'),
-(7, 1, 4, '2024-06-06 00:19:13', 'active');
+(7, 1, 4, '2024-06-06 00:19:13', 'active'),
+(8, 1, 2, '2025-05-12 08:33:45', 'active'),
+(9, 2, 7, '2025-05-13 16:36:24', 'active'),
+(10, 21, 17, '2025-05-13 16:39:12', 'active'),
+(11, 23, 17, '2025-05-13 16:39:29', 'active');
 
 -- --------------------------------------------------------
 
@@ -127,10 +131,10 @@ CREATE TABLE `groups` (
 
 INSERT INTO `groups` (`group_id`, `name`, `description`, `created_at`, `uodated_at`, `updated_at`) VALUES
 (7, '1', 'test', '2024-06-05 16:28:28', '2024-06-05 16:28:28', NULL),
-(8, '1', 'test', '2024-06-05 16:38:59', '2024-06-05 16:38:59', NULL),
-(9, 'jaz', 'chat for friends', '2024-06-05 18:05:36', '2024-06-05 18:05:36', NULL),
 (10, 'jaz', 'chat for friends', '2024-06-05 18:08:34', '2024-06-05 18:08:34', NULL),
-(11, 'wHATCHA', 'Randm', '2024-06-05 22:09:37', '2024-06-05 22:09:37', NULL);
+(11, 'wHATCHA', 'Randm', '2024-06-05 22:09:37', '2024-06-05 22:09:37', NULL),
+(12, 'Chess Club', 'A group for chess lovers.', '2025-05-12 09:39:12', '2025-05-12 09:39:12', NULL),
+(13, 'Checking 1', 'A group for chess lovers.', '2025-05-13 16:49:27', '2025-05-13 16:49:27', NULL);
 
 -- --------------------------------------------------------
 
@@ -151,126 +155,51 @@ CREATE TABLE `group_members` (
 --
 
 INSERT INTO `group_members` (`group_member_id`, `group_id`, `user_id`, `joined_at`, `selected`) VALUES
-(1, 7, 1, '2024-06-05 17:18:27', 0),
-(2, 7, 1, '2024-06-05 17:19:48', 0),
-(3, 7, 1, '2024-06-05 17:21:41', 0),
 (4, 7, 2, '2024-06-05 17:21:41', 0),
-(5, 7, 1, '2024-06-05 17:22:53', 0),
 (6, 7, 2, '2024-06-05 17:22:53', 0),
-(7, 7, 1, '2024-06-05 17:24:03', 0),
 (8, 7, 2, '2024-06-05 17:24:03', 0),
-(9, 7, 1, '2024-06-05 17:25:00', 0),
 (10, 7, 2, '2024-06-05 17:25:00', 0),
-(11, 7, 1, '2024-06-05 17:25:42', 0),
 (12, 7, 2, '2024-06-05 17:25:42', 0),
-(13, 7, 1, '2024-06-05 17:26:09', 0),
 (14, 7, 2, '2024-06-05 17:26:09', 0),
-(15, 7, 1, '2024-06-05 17:28:12', 0),
 (16, 7, 2, '2024-06-05 17:28:12', 0),
-(17, 7, 1, '2024-06-05 18:42:34', 0),
 (18, 7, 2, '2024-06-05 18:42:34', 0),
-(19, 7, 1, '2024-06-05 18:44:34', 0),
 (20, 7, 2, '2024-06-05 18:44:34', 0),
-(21, 8, 1, '2024-06-05 18:54:49', 0),
-(22, 8, 2, '2024-06-05 18:54:49', 0),
-(23, 8, 1, '2024-06-05 18:55:02', 0),
-(24, 8, 2, '2024-06-05 18:55:02', 0),
-(25, 8, 1, '2024-06-05 18:55:24', 0),
-(26, 8, 2, '2024-06-05 18:55:24', 0),
-(27, 8, 1, '2024-06-05 18:55:32', 0),
-(28, 8, 2, '2024-06-05 18:55:32', 0),
-(29, 8, 1, '2024-06-05 18:56:26', 0),
-(30, 8, 2, '2024-06-05 18:56:26', 0),
-(31, 8, 1, '2024-06-05 18:57:41', 0),
-(32, 8, 2, '2024-06-05 18:57:41', 0),
-(33, 8, 1, '2024-06-05 19:03:10', 0),
-(34, 8, 2, '2024-06-05 19:03:10', 0),
-(35, 8, 1, '2024-06-05 19:04:48', 0),
-(36, 8, 2, '2024-06-05 19:04:48', 0),
-(37, 8, 1, '2024-06-05 19:05:43', 0),
-(38, 8, 2, '2024-06-05 19:05:43', 0),
-(39, 8, 1, '2024-06-05 19:05:58', 0),
-(40, 8, 2, '2024-06-05 19:05:58', 0),
-(41, 8, 1, '2024-06-05 19:06:15', 0),
-(42, 8, 2, '2024-06-05 19:06:15', 0),
-(43, 8, 1, '2024-06-05 19:06:23', 0),
-(44, 8, 2, '2024-06-05 19:06:23', 0),
-(45, 8, 1, '2024-06-05 19:07:39', 0),
-(46, 8, 2, '2024-06-05 19:07:39', 0),
-(47, 8, 1, '2024-06-05 19:07:47', 0),
-(48, 8, 2, '2024-06-05 19:07:47', 0),
-(49, 8, 1, '2024-06-05 19:08:02', 0),
-(50, 8, 2, '2024-06-05 19:08:02', 0),
-(51, 8, 1, '2024-06-05 19:08:07', 0),
-(52, 8, 2, '2024-06-05 19:08:07', 0),
-(53, 8, 1, '2024-06-05 19:10:05', 0),
-(54, 8, 2, '2024-06-05 19:10:05', 0),
-(55, 8, 1, '2024-06-05 19:10:08', 0),
-(56, 8, 2, '2024-06-05 19:10:08', 0),
-(57, 8, 1, '2024-06-05 19:10:24', 0),
-(58, 8, 2, '2024-06-05 19:10:24', 0),
-(59, 7, 1, '2024-06-05 19:29:38', 0),
 (60, 7, 2, '2024-06-05 19:29:38', 0),
-(61, 8, 1, '2024-06-05 19:32:30', 0),
-(62, 8, 2, '2024-06-05 19:32:30', 0),
-(63, 7, 1, '2024-06-05 19:32:51', 0),
 (64, 7, 2, '2024-06-05 19:32:51', 0),
-(65, 7, 1, '2024-06-05 19:35:09', 0),
 (66, 7, 2, '2024-06-05 19:35:09', 0),
-(67, 7, 1, '2024-06-05 19:35:13', 0),
 (68, 7, 2, '2024-06-05 19:35:13', 0),
-(69, 7, 1, '2024-06-05 19:35:48', 0),
 (70, 7, 2, '2024-06-05 19:35:48', 0),
-(71, 7, 1, '2024-06-05 19:36:06', 0),
 (72, 7, 2, '2024-06-05 19:36:06', 0),
-(73, 7, 1, '2024-06-05 19:36:28', 0),
 (74, 7, 2, '2024-06-05 19:36:28', 0),
-(75, 7, 1, '2024-06-05 19:37:00', 0),
 (76, 7, 2, '2024-06-05 19:37:00', 0),
 (77, 7, 2, '2024-06-05 19:38:13', 0),
-(78, 7, 4, '2024-06-05 19:38:13', 0),
 (79, 7, 2, '2024-06-05 19:38:34', 0),
-(80, 7, 4, '2024-06-05 19:38:34', 0),
 (81, 7, 2, '2024-06-05 19:48:01', 0),
-(82, 7, 4, '2024-06-05 19:48:01', 0),
 (83, 7, 2, '2024-06-05 19:59:09', 0),
-(84, 7, 4, '2024-06-05 19:59:09', 0),
 (85, 7, 2, '2024-06-05 19:59:32', 0),
-(86, 7, 4, '2024-06-05 19:59:32', 0),
 (87, 7, 2, '2024-06-05 20:04:13', 0),
-(88, 7, 4, '2024-06-05 20:04:13', 0),
 (89, 7, 2, '2024-06-05 20:05:23', 0),
-(90, 7, 4, '2024-06-05 20:05:23', 0),
 (91, 7, 2, '2024-06-05 20:06:57', 0),
-(92, 7, 4, '2024-06-05 20:06:57', 0),
 (93, 7, 2, '2024-06-05 20:14:22', 0),
-(94, 7, 4, '2024-06-05 20:14:22', 0),
 (95, 7, 2, '2024-06-05 20:15:24', 0),
-(96, 7, 4, '2024-06-05 20:15:24', 0),
 (97, 7, 2, '2024-06-05 20:16:08', 0),
-(98, 7, 4, '2024-06-05 20:16:08', 0),
 (99, 7, 2, '2024-06-05 20:25:07', 0),
-(100, 7, 4, '2024-06-05 20:25:07', 0),
 (101, 7, 2, '2024-06-05 20:26:30', 0),
-(102, 7, 4, '2024-06-05 20:26:30', 0),
 (103, 7, 2, '2024-06-05 20:26:34', 0),
-(104, 7, 4, '2024-06-05 20:26:34', 0),
 (105, 7, 2, '2024-06-05 20:26:43', 0),
-(106, 7, 4, '2024-06-05 20:26:43', 0),
 (107, 7, 2, '2024-06-05 20:27:17', 0),
-(108, 7, 4, '2024-06-05 20:27:17', 0),
 (109, 7, 2, '2024-06-05 20:28:00', 0),
-(110, 7, 4, '2024-06-05 20:28:00', 0),
 (111, 7, 2, '2024-06-05 20:35:55', 0),
-(112, 7, 4, '2024-06-05 20:35:55', 0),
 (113, 7, 2, '2024-06-05 20:36:31', 0),
-(114, 7, 4, '2024-06-05 20:36:31', 0),
 (115, 11, 3, '2024-06-05 22:31:43', 0),
 (116, 11, 4, '2024-06-05 22:31:43', 0),
 (117, 11, 2, '2024-06-05 22:32:01', 0),
 (118, 11, 3, '2024-06-05 22:32:01', 0),
 (119, 11, 3, '2024-06-05 22:32:20', 0),
-(120, 11, 4, '2024-06-05 22:32:20', 0);
+(120, 11, 4, '2024-06-05 22:32:20', 0),
+(121, 1, 2, '2025-05-12 10:16:18', 0),
+(122, 12, 22, '2025-05-13 16:50:30', 0),
+(123, 12, 23, '2025-05-13 16:50:47', 0);
 
 -- --------------------------------------------------------
 
@@ -358,7 +287,13 @@ INSERT INTO `likes` (`like_id`, `post_id`, `user_id`, `created_at`, `status`) VA
 (16, 1, 4, '2024-06-05 00:49:11', 'unliked'),
 (17, 1, 3, '2024-06-05 22:23:37', 'unliked'),
 (23, 1, 1, '2025-04-13 02:02:54', 'unliked'),
-(24, 1, 2, '2025-04-15 21:43:17', 'liked');
+(24, 1, 2, '2025-04-15 21:43:17', 'liked'),
+(25, 3, 1, '2025-05-10 16:28:11', 'unliked'),
+(26, 3, 2, '2025-05-10 17:08:32', 'unliked'),
+(27, 9, 16, '2025-05-13 17:05:29', 'unliked'),
+(28, 9, 23, '2025-05-13 17:08:42', 'liked'),
+(29, 36, 1, '2025-05-13 17:25:34', 'liked'),
+(30, 37, 1, '2025-05-13 17:25:49', 'liked');
 
 -- --------------------------------------------------------
 
@@ -394,7 +329,7 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `received_id`, `content`, `cr
 (10, 3, 0, 'no', '2024-06-04 00:18:49', '2024-06-04 00:18:49', 1, 1, NULL),
 (12, 2, 0, 'hi', '2024-06-04 00:29:26', '2024-06-04 00:29:26', 3, 1, NULL),
 (13, 1, 0, 'bye', '2024-06-04 00:56:41', '2024-06-04 00:56:41', 2, 1, NULL),
-(14, 1, 0, 'no', '2024-06-04 01:04:50', '2024-06-04 01:04:50', 2, 1, NULL),
+(14, 1, 0, 'Updated message text', '2024-06-04 01:04:50', '2025-05-12 23:42:23', 2, 1, NULL),
 (15, 2, 0, 'hi', '2024-06-04 01:06:10', '2024-06-04 01:06:10', 3, 1, NULL),
 (18, 2, 0, 'bye', '2024-06-04 19:36:26', '2024-06-04 19:36:26', 1, 1, NULL),
 (19, 2, 0, 'bye', '2024-06-04 19:47:10', '2024-06-04 19:47:10', 1, 1, NULL),
@@ -405,7 +340,6 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `received_id`, `content`, `cr
 (24, 1, 0, 'hi', '2024-06-05 23:22:21', '2024-06-05 23:22:21', NULL, 0, 7),
 (25, 1, 0, 'hi', '2024-06-05 23:23:52', '2024-06-05 23:23:52', NULL, 0, 11),
 (26, 1, 0, 'does it work?\r\n', '2024-06-05 23:30:29', '2024-06-05 23:30:29', NULL, 0, 11),
-(27, 1, 0, 'yes it does it saves in messages!!\r\n', '2024-06-05 23:31:15', '2024-06-05 23:31:15', NULL, 0, 11),
 (28, 1, 0, 'hi', '2024-06-06 00:01:14', '2024-06-06 00:01:14', 2, 1, NULL),
 (29, 1, 0, 'hi', '2024-06-06 00:01:24', '2024-06-06 00:01:24', 4, 1, NULL),
 (31, 1, 0, 'bye', '2024-06-06 00:20:09', '2024-06-06 00:20:09', 3, 0, NULL),
@@ -457,7 +391,13 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `received_id`, `content`, `cr
 (373, 2, 0, 'hi', '2024-06-06 04:40:37', '2024-06-06 04:40:37', 4, 1, NULL),
 (374, 2, 0, 'hey', '2024-06-06 04:43:51', '2024-06-06 04:43:51', 4, 1, NULL),
 (375, 1, 0, 'hi ', '2025-04-15 21:41:29', '2025-04-15 21:41:29', 7, 0, NULL),
-(376, 1, 0, 'hi ', '2025-04-15 21:41:29', '2025-04-15 21:41:29', 7, 0, NULL);
+(376, 1, 0, 'hi ', '2025-04-15 21:41:29', '2025-04-15 21:41:29', 7, 0, NULL),
+(377, 2, 0, 'hi', '2025-04-17 19:06:47', '2025-04-17 19:06:47', 1, 1, NULL),
+(378, 2, 0, 'I adjusted the date and time to be shown clearly underneath the message', '2025-04-17 19:18:23', '2025-04-17 19:18:23', 1, 1, NULL),
+(379, 1, 0, 'Hello from the API!', '2025-05-12 22:47:53', '2025-05-12 22:47:53', 2, 0, NULL),
+(380, 33, 0, 'Hello from the API!', '2025-05-13 17:28:45', '2025-05-13 17:28:45', 29, 0, NULL),
+(381, 1, 0, 'Hello from the API!', '2025-05-13 17:36:08', '2025-05-13 17:36:08', 2, 0, NULL),
+(382, 1, 0, 'Updated message text', '2025-05-13 17:36:14', '2025-05-13 17:46:42', 2, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -478,16 +418,16 @@ CREATE TABLE `notifications` (
 --
 
 INSERT INTO `notifications` (`notification_id`, `user_id`, `message`, `is_read`, `created_at`) VALUES
-(1, 1, 'You have received a new message.', 0, '2024-06-04 19:36:26'),
-(2, 1, 'You have received a new message.', 0, '2024-06-04 19:47:10'),
-(3, 2, 'You have received a new message.', 0, '2024-06-04 23:05:54'),
-(4, 1, 'You have received a new message.', 0, '2024-06-05 19:12:49'),
+(1, 1, 'You have received a new message.', 1, '2024-06-04 19:36:26'),
+(2, 1, 'You have received a new message.', 1, '2024-06-04 19:47:10'),
+(3, 2, 'You have received a new message.', 1, '2024-06-04 23:05:54'),
+(4, 1, 'You have received a new message.', 1, '2024-06-05 19:12:49'),
 (5, 4, 'You have received a new message.', 0, '2024-06-05 22:24:35'),
-(6, 2, 'You have received a new message.', 0, '2024-06-06 00:01:14'),
+(6, 2, 'You have received a new message.', 1, '2024-06-06 00:01:14'),
 (7, 4, 'You have received a new message.', 0, '2024-06-06 00:01:24'),
-(8, 2, 'You have received a new message.', 0, '2024-06-06 00:19:57'),
+(8, 2, 'You have received a new message.', 1, '2024-06-06 00:19:57'),
 (9, 3, 'You have received a new message.', 0, '2024-06-06 00:20:09'),
-(10, 2, 'You have received a new message.', 0, '2024-06-06 00:48:44'),
+(10, 2, 'You have received a new message.', 1, '2024-06-06 00:48:44'),
 (11, 4, 'You have received a new message.', 0, '2024-06-06 00:52:52'),
 (12, 0, 'You have received a new message.', 0, '2024-06-06 00:53:25'),
 (13, 0, 'You have received a new message.', 0, '2024-06-06 00:54:44'),
@@ -497,7 +437,7 @@ INSERT INTO `notifications` (`notification_id`, `user_id`, `message`, `is_read`,
 (17, 0, 'You have received a new message.', 0, '2024-06-06 01:07:06'),
 (18, 4, 'You have received a new message.', 0, '2024-06-06 01:07:20'),
 (19, 7, 'You have received a new message.', 0, '2024-06-06 01:29:46'),
-(20, 2, 'You have received a new message.', 0, '2024-06-06 01:39:41'),
+(20, 2, 'You have received a new message.', 1, '2024-06-06 01:39:41'),
 (21, 7, 'You have received a new message.', 0, '2024-06-06 01:41:30'),
 (22, 7, 'You have received a new message.', 0, '2024-06-06 01:45:56'),
 (23, 7, 'You have received a new message.', 0, '2024-06-06 01:45:57'),
@@ -815,14 +755,16 @@ INSERT INTO `notifications` (`notification_id`, `user_id`, `message`, `is_read`,
 (335, 7, 'You have received a new message.', 0, '2024-06-06 02:06:39'),
 (336, 7, 'You have received a new message.', 0, '2024-06-06 02:06:39'),
 (337, 4, 'You have received a new message.', 0, '2024-06-06 04:22:32'),
-(338, 1, 'You have received a new message.', 0, '2024-06-06 04:27:14'),
+(338, 1, 'You have received a new message.', 1, '2024-06-06 04:27:14'),
 (339, 4, 'You have received a new message.', 0, '2024-06-06 04:32:12'),
 (340, 4, 'You have received a new message.', 0, '2024-06-06 04:34:14'),
-(341, 2, 'You have received a new message.', 0, '2024-06-06 04:38:12'),
+(341, 2, 'You have received a new message.', 1, '2024-06-06 04:38:12'),
 (342, 4, 'You have received a new message.', 0, '2024-06-06 04:40:37'),
 (343, 4, 'You have received a new message.', 0, '2024-06-06 04:43:51'),
 (344, 7, 'You have received a new message.', 0, '2025-04-15 21:41:29'),
-(345, 7, 'You have received a new message.', 0, '2025-04-15 21:41:29');
+(345, 7, 'You have received a new message.', 0, '2025-04-15 21:41:29'),
+(346, 1, 'You have received a new message.', 1, '2025-04-17 19:06:47'),
+(347, 1, 'You have received a new message.', 1, '2025-04-17 19:18:23');
 
 -- --------------------------------------------------------
 
@@ -847,17 +789,19 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `user_id`, `content`, `created_at`, `updated_at`, `image`, `tagline`, `image_filename`, `profile_image_id`) VALUES
-(9, 1, 'geez', '2024-06-03 00:15:36', '2024-06-03 00:15:36', 'post_image_665cef08b7060.jpg', NULL, NULL, NULL),
+(9, 1, 'Updated content Test 2!', '2024-06-03 00:15:36', '2025-05-10 13:01:12', 'new_image.jpg', NULL, NULL, NULL),
 (10, 1, 'no', '2024-06-03 00:15:52', '2024-06-03 00:15:52', 'post_image_665cef18d8b8b.jpg', NULL, NULL, NULL),
-(11, 1, '', '2024-06-03 00:27:01', '2024-06-03 00:27:01', 'post_image_665cf1b5bf380.jpg', NULL, NULL, NULL),
 (16, 1, 'nice', '2024-06-03 01:27:48', '2024-06-03 01:27:48', 'post_image_665cfff4a8db7.jpg', NULL, NULL, NULL),
 (19, 1, 'hi', '2024-06-03 13:06:33', '2024-06-03 13:06:33', 'post_image_665da3b91a134.jpg', NULL, NULL, NULL),
 (20, 2, 'gorg', '2024-06-04 01:06:45', '2024-06-04 01:06:45', 'post_image_665e4c8517196.jpg', NULL, NULL, NULL),
 (21, 1, 'wow', '2024-06-05 11:55:56', '2024-06-05 11:55:56', 'post_image_6660362cb9897.jpg', NULL, NULL, NULL),
-(23, 1, '', '2024-06-05 12:16:00', '2024-06-05 12:16:00', 'post_image_66603ae080f0a.jpg', NULL, NULL, NULL),
-(25, 3, '', '2024-06-05 14:08:12', '2024-06-05 14:08:12', 'post_image_6660552c29032.jpg', NULL, NULL, NULL),
 (26, 3, 'yaas', '2024-06-05 14:52:20', '2024-06-05 14:52:20', 'post_image_66605f84d73f0.jpg', NULL, NULL, NULL),
-(32, 1, 'hiii', '2024-12-11 12:02:17', '2024-12-11 12:02:17', 'post_image_67597139384f5.jpg', NULL, NULL, NULL);
+(32, 1, 'hiii', '2024-12-11 12:02:17', '2024-12-11 12:02:17', 'post_image_67597139384f5.jpg', NULL, NULL, NULL),
+(33, 1, 'Hello world!', '2025-05-09 21:42:17', '2025-05-09 21:42:17', 'optional_image.jpg', NULL, NULL, NULL),
+(34, 1, 'Hello world!', '2025-05-09 21:43:07', '2025-05-09 21:43:07', 'Image1.jpg', NULL, NULL, NULL),
+(36, 1, 'Hello world!', '2025-05-13 16:16:36', '2025-05-13 16:16:36', 'Image2.jpg', NULL, NULL, NULL),
+(37, 22, 'Updated content Test 3!', '2025-05-13 18:00:12', '2025-05-13 18:10:10', 'new_image.jpg', NULL, NULL, NULL),
+(38, 23, 'Hello world!', '2025-05-13 18:00:55', '2025-05-13 18:00:55', 'Image12.jpg', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -986,7 +930,24 @@ INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `bio`, `created
 (1, 'asd', 'mizzi@gmail.com', '123', '', '2024-05-31 10:50:14', '2025-04-16 19:12:38', 1, NULL, 0, 'default-profile.png', 'active', 1),
 (2, 'mar', 'mar@gf', 'asd', '', '2024-05-31 19:24:54', '2024-06-04 23:12:24', 1, NULL, 0, 'default-profile.png', 'active', 0),
 (3, 'mc', 'mark@mc', '147', '', '2024-06-03 23:18:29', '2024-06-03 23:18:29', 0, NULL, 0, 'default-profile.png', 'active', 0),
-(4, 'marf', 'mar@ghml', '123', '', '2024-06-05 00:27:36', '2024-06-05 00:27:36', 0, NULL, 0, 'default-profile.png', 'active', 0);
+(5, 'newuser123', 'newuser@example.com', '$2y$10$ayd6Mi0.Y4IYb.iyOrIJGO8njpab8jTIWHgy7yLLnYgmRTlkmBeiC', '', '2025-05-09 17:57:46', '2025-05-09 17:57:46', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(6, 'newuser123', 'newuser@example.com', '$2y$10$ayd6Mi0.Y4IYb.iyOrIJGO8njpab8jTIWHgy7yLLnYgmRTlkmBeiC', '', '2025-05-09 17:57:47', '2025-05-09 17:57:47', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(7, 'newuser123', 'newuser@example.com', '$2y$10$dwuiSZHIZ.tGZkC44fE2ju4gYdm6YRJUp7Je9NeyNiSdcHdl3NyiK', '', '2025-05-09 17:58:51', '2025-05-09 17:58:51', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(8, 'newuser123', 'newuser@example.com', '$2y$10$dwuiSZHIZ.tGZkC44fE2ju4gYdm6YRJUp7Je9NeyNiSdcHdl3NyiK', '', '2025-05-09 17:58:51', '2025-05-09 17:58:51', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(9, 'newuser123', 'newuser@example.com', '$2y$10$iZ.kTRGumlzdX/LZ7mLJ2eSJvQNTklZgnrXuDcloi8R4bLA5kLdG6', '', '2025-05-09 18:08:35', '2025-05-09 18:08:35', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(10, 'newuser123', 'newuser@example.com', '$2y$10$iZ.kTRGumlzdX/LZ7mLJ2eSJvQNTklZgnrXuDcloi8R4bLA5kLdG6', '', '2025-05-09 18:08:35', '2025-05-09 18:08:35', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(11, 'newuser123', 'newuser@example.com', '$2y$10$OF9.66HePAORvi0rDGJkW.4IkuHUTGv03XyLGl1EbrWYokor/3wN2', '', '2025-05-09 18:09:13', '2025-05-09 18:09:13', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(12, 'newuser123', 'newuser@example.com', '$2y$10$OF9.66HePAORvi0rDGJkW.4IkuHUTGv03XyLGl1EbrWYokor/3wN2', '', '2025-05-09 18:09:13', '2025-05-09 18:09:13', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(13, 'newuser123', 'newuser@example.com', '$2y$10$sKU/v55Gm68MXrhxaefCsu.qDe/Y1asg7SwcpOQB796DwQ1ZHCXRW', '', '2025-05-09 19:42:46', '2025-05-09 19:42:46', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(14, 'newuser123', 'newuser@example.com', '$2y$10$sKU/v55Gm68MXrhxaefCsu.qDe/Y1asg7SwcpOQB796DwQ1ZHCXRW', '', '2025-05-09 19:42:46', '2025-05-09 19:42:46', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(15, 'newuser123', 'newuser2@example.com', '$2y$10$CRdWC8dNMVMhUe7xNv//rus4Up/Wx307NO0vwtoB4/ktwcKsW4S5e', '', '2025-05-09 19:42:54', '2025-05-09 19:42:54', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(16, 'newuser123', 'newuser2@example.com', '$2y$10$CRdWC8dNMVMhUe7xNv//rus4Up/Wx307NO0vwtoB4/ktwcKsW4S5e', '', '2025-05-09 19:42:54', '2025-05-09 19:42:54', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(17, 'newuser123890', 'newuser4@example.com', '$2y$10$hPvegC.Zoi1Q0dYb2vB/MO/jdqrvVXxUYVAeUx.n/G1CA01YfPrpW', '', '2025-05-09 19:43:26', '2025-05-09 19:43:26', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(18, 'newuser123890', 'newuser4@example.com', '$2y$10$hPvegC.Zoi1Q0dYb2vB/MO/jdqrvVXxUYVAeUx.n/G1CA01YfPrpW', '', '2025-05-09 19:43:26', '2025-05-09 19:43:26', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(19, 'updatedUser', 'updated@example.com', '$2y$10$glcb5KOIJz68q7MvBDqrs.2./zINyXiV2vyF7dMcRiJxi/semj2Wy', '', '2025-05-09 19:45:25', '2025-05-13 16:18:39', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(20, 'newuser90', 'newuser6@example.com', '$2y$10$VeM4QOpVJvXbMXNw8tat0emBsCQZMBfPbAJO1ybcWgFgYPH6H4oze', '', '2025-05-09 20:45:46', '2025-05-09 20:45:46', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(21, 'testuser', 'testuser@example.com', '$2y$10$cVk3HcybfvdTYnUXWvKTW.Yu7UhFjjHHYvYB6ed6u8yMjEOO1mPGu', '', '2025-05-09 21:30:12', '2025-05-09 21:30:12', 0, NULL, 0, 'default-profile.png', 'active', 0),
+(23, 'Martina Updated', 'updated@example.com', '$2y$10$UchrtsO0OsiKtooqHUctWee2kgLJAbbRXmfc//7DN.ep2G7fyiSDy', '', '2025-05-13 18:13:13', '2025-05-13 18:17:10', 0, NULL, 0, 'default-profile.png', 'active', 0);
 
 -- --------------------------------------------------------
 
@@ -1005,8 +966,7 @@ CREATE TABLE `user_settings` (
 --
 
 INSERT INTO `user_settings` (`user_id`, `color_scheme`, `receive_notifications`) VALUES
-(1, 'light', 0),
-(4, 'light', 1);
+(1, 'light', 0);
 
 --
 -- Indexes for dumped tables
@@ -1122,25 +1082,25 @@ ALTER TABLE `user_settings`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `follows`
 --
 ALTER TABLE `follows`
-  MODIFY `follow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `follow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `group_members`
 --
 ALTER TABLE `group_members`
-  MODIFY `group_member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `group_member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT for table `group_messages`
@@ -1164,25 +1124,25 @@ ALTER TABLE `imagesdata`
 -- AUTO_INCREMENT for table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `like_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=384;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=346;
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=348;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -1200,7 +1160,7 @@ ALTER TABLE `userpreferences`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables
