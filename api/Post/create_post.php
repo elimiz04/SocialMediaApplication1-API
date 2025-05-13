@@ -22,11 +22,20 @@ if (!empty($data->user_id) && !empty($data->content)) {
     $content = htmlspecialchars(strip_tags($data->content));
     $image = !empty($data->image) ? htmlspecialchars(strip_tags($data->image)) : null;
 
+    // Check if the user exists
+    $userCheck = $conn->prepare("SELECT user_id FROM users WHERE user_id = :user_id");
+    $userCheck->bindParam(':user_id', $user_id);
+    $userCheck->execute();
+
+    if ($userCheck->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode(["message" => "User not found."]);
+        exit;
+    }
+
     // Prepare SQL query
     $sql = "INSERT INTO posts (user_id, content, image, created_at) VALUES (:user_id, :content, :image, NOW())";
     $stmt = $conn->prepare($sql);
-
-    // Bind parameters
     $stmt->bindParam(':user_id', $user_id);
     $stmt->bindParam(':content', $content);
     $stmt->bindParam(':image', $image);
