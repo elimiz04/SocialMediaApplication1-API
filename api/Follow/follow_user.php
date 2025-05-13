@@ -20,9 +20,23 @@ if (!empty($data->follower_id) && !empty($data->followed_id) && !empty($data->ac
     $followed_id = intval($data->followed_id);
     $action = strtolower(trim($data->action));
 
+    // Prevent self-follow
     if ($follower_id === $followed_id) {
         http_response_code(400);
         echo json_encode(["message" => "You cannot follow yourself."]);
+        exit;
+    }
+
+    // Check if both users exist
+    $checkQuery = "SELECT user_id FROM users WHERE user_id IN (:follower_id, :followed_id)";
+    $stmt = $conn->prepare($checkQuery);
+    $stmt->bindParam(':follower_id', $follower_id);
+    $stmt->bindParam(':followed_id', $followed_id);
+    $stmt->execute();
+
+    if ($stmt->rowCount() < 2) {
+        http_response_code(404);
+        echo json_encode(["message" => "One or both users not found."]);
         exit;
     }
 
