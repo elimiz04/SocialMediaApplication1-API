@@ -9,13 +9,33 @@ include_once(__DIR__ . '/../utils/database.php');
 $db = new Database();
 $conn = $db->connect();
 
-// Get data
+// Get input
 $data = json_decode(file_get_contents("php://input"));
 
-// Validate
+// Validate required fields
 if (!empty($data->user_id) && !empty($data->post_id)) {
     $user_id = intval($data->user_id);
     $post_id = intval($data->post_id);
+
+    // Check if user exists
+    $userCheck = $conn->prepare("SELECT user_id FROM users WHERE user_id = :user_id");
+    $userCheck->bindParam(':user_id', $user_id);
+    $userCheck->execute();
+    if ($userCheck->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode(["message" => "User not found."]);
+        exit;
+    }
+
+    // Check if post exists
+    $postCheck = $conn->prepare("SELECT post_id FROM posts WHERE post_id = :post_id");
+    $postCheck->bindParam(':post_id', $post_id);
+    $postCheck->execute();
+    if ($postCheck->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode(["message" => "Post not found."]);
+        exit;
+    }
 
     // Check if already liked
     $check = $conn->prepare("SELECT * FROM likes WHERE user_id = :user_id AND post_id = :post_id");
@@ -24,7 +44,7 @@ if (!empty($data->user_id) && !empty($data->post_id)) {
     $check->execute();
 
     if ($check->rowCount() > 0) {
-        // Update to liked
+        // Update status
         $update = $conn->prepare("UPDATE likes SET status = 'liked' WHERE user_id = :user_id AND post_id = :post_id");
         $update->bindParam(':user_id', $user_id);
         $update->bindParam(':post_id', $post_id);
