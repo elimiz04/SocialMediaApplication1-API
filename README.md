@@ -67,22 +67,64 @@ SocialHive is for anyone who loves social networking and wants to meet like-mind
   - `script.js`: General JavaScript functions used across the site.
   - `settings.js`: Handles the management of user settings and preferences.
 
-## Documentation Process
+## API Documentation
 
-### Features
-- **User Authentication**: Easy sign up, log in, and log out for secure access.
-- **Profile Management**: Personalize your account and manage settings.
-- **Content Creation**: Share posts and images with your followers.
-- **Groups**: Create or join groups based on shared interests.
-- **Messaging**: Chat privately or in groups.
-- **Follow System**: Follow users and receive notifications about their activities.
-- **Admin Panel**: Admins can manage users, posts, and comments.
+### Overview
+The SocialHive API is built using PHP and follows RESTful principles. It provides all the core functionalities through endpoints, accessible via tools like Postman.
 
-### How We Document
-1. **Code Comments**: I’ve included comments in the code to make it easier to follow for other developers. Each function is clearly explained.
-2. **README.md**: This document serves as the go-to guide for understanding the project, how to use it, and where everything is located.
-3. **Code Documentation**: I use tools like PHPDoc to document the code in detail, so you can easily understand the purpose and usage of functions and classes.
-4. **Version Control**: I keep track of all changes with descriptive commit messages on GitHub, so you can see the history of the project.
+### API Features
+- User Management (Create, Read, Update, Delete)
+- Post Management (Create, Read, Update, Delete)
+- Likes & Comments
+- Messaging (User and Group)
+- Follows and Unfollows
+- Notifications
+
+### File Structure (API Specific)
+- **api/**
+  - **User/**
+    - `create_user.php`
+    - `get_user.php`
+    - `update_user.php`
+    - `delete_user.php`
+  - **Post/**
+    - `create_post.php`
+    - `get_posts.php`
+    - `get_post_by_id.php`
+    - `delete_post.php`
+  - **Comment/**
+    - `create_comment.php`
+    - `get_comments_by_post.php`
+    - `update_comment.php`
+  - **Like/**
+    - `like_post.php`
+    - `unlike_post.php`
+    - `get_likes_by_post.php`
+  - **Message/**
+    - `send_message.php`
+    - `get_messages_by_user.php`
+    - `mark_as_read.php`
+  - **Notification/**
+    - `get_notifications.php`
+    - `mark_notifications_read.php`
+
+### API Usage (Postman)
+1. Each endpoint was tested in Postman.
+2. Workspace created with Collections grouped by resource (e.g., Users, Posts).
+3. Each endpoint includes:
+   - Method (GET/POST/PUT/DELETE)
+   - Body/params
+   - Headers
+   - JSON response
+
+### Third-Party API
+A third-party API is integrated using cURL to retrieve inspirational quotes, enhancing user experience on the homepage.
+
+### Testing
+All endpoints are tested with:
+- Valid data
+- Invalid or missing fields
+- Edge cases (e.g., duplicate usernames, invalid IDs)
 
 ## How to Use SocialHive
 
@@ -90,8 +132,9 @@ SocialHive is for anyone who loves social networking and wants to meet like-mind
 2. Set up a PHP and MySQL environment on your web server.
 3. Import the database schema (`database_schema.sql`) into MySQL.
 4. Update the database connection settings in `connection.php`.
-5. Visit the application in your browser and sign up or log in.
-6. Explore the features and start connecting with others!
+5. Use Postman to test each API endpoint.
+6. Visit the application in your browser and sign up or log in.
+7. Explore the features and start connecting with others!
 
 ## Credits
 This project was developed by Elisea Mizzi.
