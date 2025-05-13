@@ -20,7 +20,27 @@ if (!empty($data->sender_id) && !empty($data->receiver_id) && !empty($data->cont
     $receiver_id = intval($data->receiver_id);
     $content = htmlspecialchars(strip_tags($data->content));
 
-    // Prepare insert query
+    // Check if sender exists
+    $checkSender = $conn->prepare("SELECT user_id FROM users WHERE user_id = :sender_id");
+    $checkSender->bindParam(':sender_id', $sender_id);
+    $checkSender->execute();
+    if ($checkSender->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode(["message" => "Sender not found."]);
+        exit;
+    }
+
+    // Check if receiver exists
+    $checkReceiver = $conn->prepare("SELECT user_id FROM users WHERE user_id = :receiver_id");
+    $checkReceiver->bindParam(':receiver_id', $receiver_id);
+    $checkReceiver->execute();
+    if ($checkReceiver->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode(["message" => "Receiver not found."]);
+        exit;
+    }
+
+    // Insert message
     $stmt = $conn->prepare("INSERT INTO messages (sender_id, receiver_id, content, is_read, created_at, updated_at) 
                             VALUES (:sender_id, :receiver_id, :content, 0, NOW(), NOW())");
 
