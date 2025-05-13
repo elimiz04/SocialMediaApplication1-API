@@ -19,6 +19,18 @@ if (!empty($data->comment_id) && !empty($data->content)) {
     $comment_id = intval($data->comment_id);
     $content = htmlspecialchars(strip_tags($data->content));
 
+    // First check if the comment exists
+    $checkQuery = "SELECT comment_id FROM comments WHERE comment_id = :comment_id";
+    $checkStmt = $conn->prepare($checkQuery);
+    $checkStmt->bindParam(':comment_id', $comment_id);
+    $checkStmt->execute();
+
+    if ($checkStmt->rowCount() === 0) {
+        http_response_code(404);
+        echo json_encode(["message" => "Comment not found."]);
+        exit;
+    }
+
     // Prepare update query
     $query = "UPDATE comments SET content = :content WHERE comment_id = :comment_id";
     $stmt = $conn->prepare($query);
