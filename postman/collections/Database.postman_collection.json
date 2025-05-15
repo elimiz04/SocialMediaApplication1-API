@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "2b1286a3-51dc-44be-ba3e-ba3198270a55",
+		"name": "Database",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41844265",
+		"_collection_link": "https://api888-8838.postman.co/workspace/API-SocialMediaApplication~e7d1f7c3-6d7b-4820-b9a3-cceafd9e981e/collection/41844265-2b1286a3-51dc-44be-ba3e-ba3198270a55?action=share&source=collection_link&creator=41844265"
+	},
+	"item": [
+		{
+			"name": "ConnectDatabase",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/utils/test.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"utils",
+						"test.php"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "ConnectDatabase",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/utils/test.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"utils",
+								"test.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:09:59 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Content-Length",
+							"value": "35"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\"message\":\"Connected to database\"}"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,1456 @@
+{
+	"info": {
+		"_postman_id": "e7915adf-9984-48e6-830c-9c69ee5c6d5b",
+		"name": "Groups",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41844265",
+		"_collection_link": "https://api888-8838.postman.co/workspace/API-SocialMediaApplication~e7d1f7c3-6d7b-4820-b9a3-cceafd9e981e/collection/41844265-e7915adf-9984-48e6-830c-9c69ee5c6d5b?action=share&source=collection_link&creator=41844265"
+	},
+	"item": [
+		{
+			"name": "CreateGroup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Chess Club\",\r\n  \"description\": \"A group for chess lovers.\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/create_group.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Groups",
+						"create_group.php"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 Ok Test",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Chess Club\",\r\n  \"description\": \"A group for chess lovers.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/create_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"create_group.php"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 12 May 2025 07:39:12 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Group created successfully.\"\n}"
+				},
+				{
+					"name": "200 Ok Test",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Checking 1\",\r\n  \"description\": \"A group for chess lovers.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/create_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"create_group.php"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:49:27 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Group created successfully.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "AddMembersToGroup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"group_id\": 1,\r\n  \"user_id\": 2\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/add_members_to_group.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Groups",
+						"add_members_to_group.php"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 Ok Test",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"group_id\": 1,\r\n  \"user_id\": 2\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/add_members_to_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"add_members_to_group.php"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 12 May 2025 08:16:18 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST"
+						},
+						{
+							"key": "Content-Length",
+							"value": "47"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User added to group successfully.\"\n}"
+				},
+				{
+					"name": "200 Ok Test",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"group_id\": 12,\r\n  \"user_id\": 22\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/add_members_to_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"add_members_to_group.php"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:50:30 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST"
+						},
+						{
+							"key": "Content-Length",
+							"value": "47"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User added to group successfully.\"\n}"
+				},
+				{
+					"name": "404 Not Found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"group_id\": 12,\r\n  \"user_id\": 23\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/add_members_to_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"add_members_to_group.php"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:54:17 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST"
+						},
+						{
+							"key": "Content-Length",
+							"value": "29"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User not found.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "GetGroupMmbers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/get_group_members.php?group_id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Groups",
+						"get_group_members.php"
+					],
+					"query": [
+						{
+							"key": "group_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/get_group_members.php?group_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"get_group_members.php"
+							],
+							"query": [
+								{
+									"key": "group_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 12 May 2025 20:02:09 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "49"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"user_id\": 2,\n        \"username\": \"mar\",\n        \"email\": \"mar@gf\"\n    }\n]"
+				},
+				{
+					"name": "404 No Members test",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/get_group_members.php?group_id=13",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"get_group_members.php"
+							],
+							"query": [
+								{
+									"key": "group_id",
+									"value": "13"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:55:08 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"No members found for this group.\"\n}"
+				},
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/get_group_members.php?group_id=11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"get_group_members.php"
+							],
+							"query": [
+								{
+									"key": "group_id",
+									"value": "11"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:56:37 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "193"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"user_id\": 3,\n        \"username\": \"mc\",\n        \"email\": \"mark@mc\"\n    },\n    {\n        \"user_id\": 2,\n        \"username\": \"mar\",\n        \"email\": \"mar@gf\"\n    },\n    {\n        \"user_id\": 3,\n        \"username\": \"mc\",\n        \"email\": \"mark@mc\"\n    },\n    {\n        \"user_id\": 3,\n        \"username\": \"mc\",\n        \"email\": \"mark@mc\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "GetAllGroups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/get_all_groups.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Groups",
+						"get_all_groups.php"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "New Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/get_all_groups.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"get_all_groups.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 12 May 2025 20:06:43 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "561"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"group_id\": 12,\n        \"name\": \"Chess Club\",\n        \"description\": \"A group for chess lovers.\",\n        \"created_at\": \"2025-05-12 09:39:12\"\n    },\n    {\n        \"group_id\": 11,\n        \"name\": \"wHATCHA\",\n        \"description\": \"Randm\",\n        \"created_at\": \"2024-06-05 22:09:37\"\n    },\n    {\n        \"group_id\": 10,\n        \"name\": \"jaz\",\n        \"description\": \"chat for friends\",\n        \"created_at\": \"2024-06-05 18:08:34\"\n    },\n    {\n        \"group_id\": 9,\n        \"name\": \"jaz\",\n        \"description\": \"chat for friends\",\n        \"created_at\": \"2024-06-05 18:05:36\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "GetUserGroups",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/get_user_groups.php?user_id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Groups",
+						"get_user_groups.php"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/get_user_groups.php?user_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"get_user_groups.php"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 12 May 2025 20:15:22 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "3199"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 8,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:38:59\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    },\n    {\n        \"group_id\": 7,\n        \"name\": \"1\",\n        \"description\": \"test\",\n        \"created_at\": \"2024-06-05 16:28:28\"\n    }\n]"
+				},
+				{
+					"name": "User not in any group 404",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/get_user_groups.php?user_id=16",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"get_user_groups.php"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "16"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:58:08 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "44"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"This user is not in any group.\"\n}"
+				},
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/get_user_groups.php?user_id=22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"get_user_groups.php"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "22"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:58:53 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "114"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"group_id\": 12,\n        \"name\": \"Chess Club\",\n        \"description\": \"A group for chess lovers.\",\n        \"created_at\": \"2025-05-12 09:39:12\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "RemoveUserFromGroup",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"group_id\": 7,\r\n  \"user_id\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/remove_user_from_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"remove_user_from_group.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 12 May 2025 20:27:11 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User removed from group successfully.\"\n}"
+				},
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"group_id\": 7,\r\n  \"user_id\": 4\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/remove_user_from_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"remove_user_from_group.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 15:00:16 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "51"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User removed from group successfully.\"\n}"
+				},
+				{
+					"name": "User not found in group 404",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"group_id\": 8,\r\n  \"user_id\": 4\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/remove_user_from_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"remove_user_from_group.php"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 15:00:53 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "42"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User not found in the group.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "DeleteGroups",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"group_id\": 8\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/delete_group.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Groups",
+						"delete_group.php"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"group_id\": 8\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/delete_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"delete_group.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 12 May 2025 20:29:16 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Group deleted successfully.\"\n}"
+				},
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"group_id\": 9\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/delete_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"delete_group.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 15:04:04 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Group deleted successfully.\"\n}"
+				},
+				{
+					"name": "Group Not found 404",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"group_id\": 14\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Groups/delete_group.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Groups",
+								"delete_group.php"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 15:04:40 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "30"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Group not found.\"\n}"
+				}
+			]
+		}
+	]
+}

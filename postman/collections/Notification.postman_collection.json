@@ -1,0 +1,458 @@
+{
+	"info": {
+		"_postman_id": "f13b5638-e79f-4895-8d1d-846c3cdf6a3a",
+		"name": "Notification",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41844265",
+		"_collection_link": "https://api888-8838.postman.co/workspace/API-SocialMediaApplication~e7d1f7c3-6d7b-4820-b9a3-cceafd9e981e/collection/41844265-f13b5638-e79f-4895-8d1d-846c3cdf6a3a?action=share&source=collection_link&creator=41844265"
+	},
+	"item": [
+		{
+			"name": "GetNotificationByUser",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Notification/get_notifications_by_user.php?user_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Notification",
+								"get_notifications_by_user.php"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 12 May 2025 22:05:12 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "691"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"notification_id\": 347,\n        \"message\": \"You have received a new message.\",\n        \"is_read\": 0,\n        \"created_at\": \"2025-04-17 19:18:23\"\n    },\n    {\n        \"notification_id\": 346,\n        \"message\": \"You have received a new message.\",\n        \"is_read\": 0,\n        \"created_at\": \"2025-04-17 19:06:47\"\n    },\n    {\n        \"notification_id\": 338,\n        \"message\": \"You have received a new message.\",\n        \"is_read\": 0,\n        \"created_at\": \"2024-06-06 04:27:14\"\n    },\n    {\n        \"notification_id\": 4,\n        \"message\": \"You have received a new message.\",\n        \"is_read\": 0,\n        \"created_at\": \"2024-06-05 19:12:49\"\n    },\n    {\n        \"notification_id\": 2,\n        \"message\": \"You have received a new message.\",\n        \"is_read\": 0,\n        \"created_at\": \"2024-06-04 19:47:10\"\n    },\n    {\n        \"notification_id\": 1,\n        \"message\": \"You have received a new message.\",\n        \"is_read\": 0,\n        \"created_at\": \"2024-06-04 19:36:26\"\n    }\n]"
+				},
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Notification/get_notifications_by_user.php?user_id=22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Notification",
+								"get_notifications_by_user.php"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "22"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 15:52:26 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "37"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"No notifications found.\"\n}"
+				},
+				{
+					"name": "User not found 404",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Notification/get_notifications_by_user.php?user_id=23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Notification",
+								"get_notifications_by_user.php"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "23"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 15:52:58 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "29"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User not found.\"\n}"
+				},
+				{
+					"name": "Missing or invalid user_id. 400",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Notification/get_notifications_by_user.php?user_id=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Notification",
+								"get_notifications_by_user.php"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 15:53:35 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Missing or invalid user_id.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "MarkNotificationsRead",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Notification/mark_notifications_read.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Notification",
+						"mark_notifications_read.php"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Notification/mark_notifications_read.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Notification",
+								"mark_notifications_read.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 12 May 2025 22:23:17 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST"
+						},
+						{
+							"key": "Content-Length",
+							"value": "43"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Notifications marked as read.\"\n}"
+				},
+				{
+					"name": "User not found 404",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": 23\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Notification/mark_notifications_read.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Notification",
+								"mark_notifications_read.php"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 15:59:14 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST"
+						},
+						{
+							"key": "Content-Length",
+							"value": "29"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User not found.\"\n}"
+				}
+			]
+		}
+	]
+}

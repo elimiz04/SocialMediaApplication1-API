@@ -1,0 +1,1119 @@
+{
+	"info": {
+		"_postman_id": "67510fe4-4485-4193-b356-6b8ebb77b06c",
+		"name": "Posts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41844265",
+		"_collection_link": "https://api888-8838.postman.co/workspace/API-SocialMediaApplication~e7d1f7c3-6d7b-4820-b9a3-cceafd9e981e/collection/41844265-67510fe4-4485-4193-b356-6b8ebb77b06c?action=share&source=collection_link&creator=41844265"
+	},
+	"item": [
+		{
+			"name": "CreatePost",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": 1,\r\n  \"content\": \"Hello world!\",\r\n  \"image\": \"Image2.jpg\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/create_post.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Post",
+						"create_post.php"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": 1,\r\n  \"content\": \"Hello world!\",\r\n  \"image\": \"Image2.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/create_post.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"create_post.php"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:16:36 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST"
+						},
+						{
+							"key": "Content-Length",
+							"value": "40"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Post created successfully.\"\n}"
+				},
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": 22,\r\n  \"content\": \"Hello world!\",\r\n  \"image\": \"Image12.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/create_post.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"create_post.php"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 16:00:12 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST"
+						},
+						{
+							"key": "Content-Length",
+							"value": "40"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Post created successfully.\"\n}"
+				},
+				{
+					"name": "User not found 404",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": 23,\r\n  \"content\": \"Hello world!\",\r\n  \"image\": \"Image12.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/create_post.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"create_post.php"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 16:07:54 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "POST"
+						},
+						{
+							"key": "Content-Length",
+							"value": "29"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"User not found.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "GetPosts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/get_posts.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Post",
+						"get_posts.php"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetPosts",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/get_posts.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"get_posts.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:16:46 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1592"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"post_id\": 36,\n        \"user_id\": 1,\n        \"username\": \"asd\",\n        \"content\": \"Hello world!\",\n        \"image\": \"Image2.jpg\",\n        \"created_at\": \"2025-05-13 16:16:36\"\n    },\n    {\n        \"post_id\": 34,\n        \"user_id\": 1,\n        \"username\": \"asd\",\n        \"content\": \"Hello world!\",\n        \"image\": \"Image1.jpg\",\n        \"created_at\": \"2025-05-09 21:43:07\"\n    },\n    {\n        \"post_id\": 33,\n        \"user_id\": 1,\n        \"username\": \"asd\",\n        \"content\": \"Hello world!\",\n        \"image\": \"optional_image.jpg\",\n        \"created_at\": \"2025-05-09 21:42:17\"\n    },\n    {\n        \"post_id\": 32,\n        \"user_id\": 1,\n        \"username\": \"asd\",\n        \"content\": \"hiii\",\n        \"image\": \"post_image_67597139384f5.jpg\",\n        \"created_at\": \"2024-12-11 12:02:17\"\n    },\n    {\n        \"post_id\": 26,\n        \"user_id\": 3,\n        \"username\": \"mc\",\n        \"content\": \"yaas\",\n        \"image\": \"post_image_66605f84d73f0.jpg\",\n        \"created_at\": \"2024-06-05 14:52:20\"\n    },\n    {\n        \"post_id\": 21,\n        \"user_id\": 1,\n        \"username\": \"asd\",\n        \"content\": \"wow\",\n        \"image\": \"post_image_6660362cb9897.jpg\",\n        \"created_at\": \"2024-06-05 11:55:56\"\n    },\n    {\n        \"post_id\": 20,\n        \"user_id\": 2,\n        \"username\": \"mar\",\n        \"content\": \"gorg\",\n        \"image\": \"post_image_665e4c8517196.jpg\",\n        \"created_at\": \"2024-06-04 01:06:45\"\n    },\n    {\n        \"post_id\": 19,\n        \"user_id\": 1,\n        \"username\": \"asd\",\n        \"content\": \"hi\",\n        \"image\": \"post_image_665da3b91a134.jpg\",\n        \"created_at\": \"2024-06-03 13:06:33\"\n    },\n    {\n        \"post_id\": 16,\n        \"user_id\": 1,\n        \"username\": \"asd\",\n        \"content\": \"nice\",\n        \"image\": \"post_image_665cfff4a8db7.jpg\",\n        \"created_at\": \"2024-06-03 01:27:48\"\n    },\n    {\n        \"post_id\": 11,\n        \"user_id\": 1,\n        \"username\": \"asd\",\n        \"content\": \"\",\n        \"image\": \"post_image_665cf1b5bf380.jpg\",\n        \"created_at\": \"2024-06-03 00:27:01\"\n    },\n    {\n        \"post_id\": 10,\n        \"user_id\": 1,\n        \"username\": \"asd\",\n        \"content\": \"no\",\n        \"image\": \"post_image_665cef18d8b8b.jpg\",\n        \"created_at\": \"2024-06-03 00:15:52\"\n    },\n    {\n        \"post_id\": 9,\n        \"user_id\": 1,\n        \"username\": \"asd\",\n        \"content\": \"Updated content Test 2!\",\n        \"image\": \"new_image.jpg\",\n        \"created_at\": \"2024-06-03 00:15:36\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "GetPostById",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/get_post_by_id.php?post_id=9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"get_post_by_id.php"
+							],
+							"query": [
+								{
+									"key": "post_id",
+									"value": "9"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:16:56 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "216"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"post_id\": 9,\n    \"user_id\": 1,\n    \"content\": \"Updated content Test 2!\",\n    \"created_at\": \"2024-06-03 00:15:36\",\n    \"updated_at\": \"2025-05-10 13:01:12\",\n    \"image\": \"new_image.jpg\",\n    \"tagline\": null,\n    \"image_filename\": null,\n    \"profile_image_id\": null\n}"
+				},
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/get_post_by_id.php?post_id=36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"get_post_by_id.php"
+							],
+							"query": [
+								{
+									"key": "post_id",
+									"value": "36"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 16:08:57 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "203"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"post_id\": 36,\n    \"user_id\": 1,\n    \"content\": \"Hello world!\",\n    \"created_at\": \"2025-05-13 16:16:36\",\n    \"updated_at\": \"2025-05-13 16:16:36\",\n    \"image\": \"Image2.jpg\",\n    \"tagline\": null,\n    \"image_filename\": null,\n    \"profile_image_id\": null\n}"
+				},
+				{
+					"name": "Post not found 404",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/get_post_by_id.php?post_id=40",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"get_post_by_id.php"
+							],
+							"query": [
+								{
+									"key": "post_id",
+									"value": "40"
+								}
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 16:09:34 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Length",
+							"value": "28"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Post not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "UpdatePost",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"post_id\":\"9\",\r\n  \"content\": \"Updated content Test 2!\",\r\n  \"image\": \"new_image.jpg\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/update_post.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Post",
+						"update_post.php"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"post_id\":\"9\",\r\n  \"content\": \"Updated content Test 2!\",\r\n  \"image\": \"new_image.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/update_post.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"update_post.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:17:06 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "PUT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "40"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Post updated successfully.\"\n}"
+				},
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"post_id\":\"37\",\r\n  \"content\": \"Updated content Test 3!\",\r\n  \"image\": \"new_image.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/update_post.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"update_post.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 16:10:10 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "PUT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "40"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Post updated successfully.\"\n}"
+				},
+				{
+					"name": "Post not found 404",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"post_id\":\"40\",\r\n  \"content\": \"Updated content Test 3!\",\r\n  \"image\": \"new_image.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/update_post.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"update_post.php"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 16:10:48 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "PUT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "29"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Post not found.\"\n}"
+				},
+				{
+					"name": "post_id and at least one field (content or image) are required 400",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"post_id\":\"\",\r\n  \"content\": \"Updated content Test 3!\",\r\n  \"image\": \"new_image.jpg\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/update_post.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"update_post.php"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 16:11:07 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "PUT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "77"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"post_id and at least one field (content or image) are required.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "DeletePost",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"post_id\": 35\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/delete_post.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SocialMediaApplication1",
+						"SocialMediaApplication1",
+						"api",
+						"Post",
+						"delete_post.php"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 Ok",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_id\": 11\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/delete_post.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"delete_post.php"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 14:17:36 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "40"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Post deleted successfully.\"\n}"
+				},
+				{
+					"name": "Post not found 404",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_id\": 40\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/delete_post.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"delete_post.php"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 16:11:38 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "29"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Post not found.\"\n}"
+				},
+				{
+					"name": "Missing required field: post_id 400",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"post_id\": \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/SocialMediaApplication1/SocialMediaApplication1/api/Post/delete_post.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"SocialMediaApplication1",
+								"SocialMediaApplication1",
+								"api",
+								"Post",
+								"delete_post.php"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 13 May 2025 16:12:07 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Access-Control-Allow-Methods",
+							"value": "DELETE"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Missing required field: post_id.\"\n}"
+				}
+			]
+		}
+	]
+}
